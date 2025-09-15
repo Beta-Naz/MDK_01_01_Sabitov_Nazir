@@ -27,6 +27,8 @@ namespace Практическая_работа_3
         /// </summary>
         public List<Classes.PersonInfo> Enemys = new List<Classes.PersonInfo>();
 
+        public Classes.PersonInfo Enemy;
+
         /// <summary>
         /// Данные игрока
         /// </summary>
@@ -39,7 +41,7 @@ namespace Практическая_работа_3
             //Добавляем данные о противниках в коллекцию
             Enemys.Add(new Classes.PersonInfo("Слайм", 100, 20, 1, 15, 5, 25));
             Enemys.Add(new Classes.PersonInfo("Голем", 200, 80, 1, 40, 5, 30));
-            Enemys.Add(new Classes.PersonInfo("Мимик", 40, 20, 1, 70, 10, 100));
+            Enemys.Add(new Classes.PersonInfo("Мимик", 40, 20, 1, 70, 10, 45));
 
             // Задаём настройки для таймера
             dispatcherTimer.Tick += AttackPlayer;
@@ -47,7 +49,26 @@ namespace Практическая_работа_3
             dispatcherTimer.Interval = new System.TimeSpan(0, 0, 10);
             // Запускаем таймер
             dispatcherTimer.Start();
+            //Случайный враг
+            SelectEnemy();
         }
+
+        /// <summary>
+        /// Выбор случайного противника
+        /// </summary>
+        public void SelectEnemy()
+        {
+            int Id = new Random().Next(0, Enemys.Count);
+            Enemy = new Classes.PersonInfo(
+                Enemys[Id].Name,
+                Enemys[Id].Health,
+                Enemys[Id].Armor,
+                Enemys[Id].Level,
+                Enemys[Id].Glasses,
+                Enemys[Id].Money,
+                Enemys[Id].Damage);
+        }
+
         /// <summary>
         /// Повышение уровня и обновление данных на UI
         /// </summary>
@@ -82,9 +103,8 @@ namespace Практическая_работа_3
         /// </summary>
         private void AttackPlayer(object sender, System.EventArgs e)
         {
-
+            Player.Health -= Convert.ToInt32(Enemy.Damage * 100f / (100f - Player.Armor));
+            UserInfoPlayer();
         }
-
-
     }
 }
