@@ -21,6 +21,8 @@ namespace Практическая_работа_3
     /// </summary>
     public partial class MainWindow : Window
     {
+        string[] imageMonster = new string[] { "Slime", "Golem", "Mimic" }; 
+
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         /// <summary>
         /// Коллекция противников
@@ -59,6 +61,7 @@ namespace Практическая_работа_3
         public void SelectEnemy()
         {
             int Id = new Random().Next(0, Enemys.Count);
+            emptyImage.Source = new BitmapImage(new Uri($"Image/{imageMonster[Id]}.png", UriKind.Relative));
             Enemy = new Classes.PersonInfo(
                 Enemys[Id].Name,
                 Enemys[Id].Health,
@@ -93,9 +96,21 @@ namespace Практическая_работа_3
             playerMoney.Content = "Монеты: " + Player.Money;
         }
 
-
         private void AttackEnemy(object sender, MouseButtonEventArgs e)
         {
+            Enemy.Health -= Convert.ToInt32(Player.Damage * 100f / (100f - Enemy.Armor));
+            if(Enemy.Health <= 0)
+            {
+                Player.Glasses += Enemy.Glasses;
+                Player.Money += Enemy.Money;
+                UserInfoPlayer();
+                SelectEnemy();
+            }
+            else
+            {
+                emptyHealth.Content = "Жизненные показатели: " + Enemy.Health;
+                emptyArmor.Content = "Броня: " + Enemy.Armor;
+            }
         }
 
         /// <summary>
