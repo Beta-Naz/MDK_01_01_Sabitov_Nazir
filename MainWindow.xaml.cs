@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Практическая_работа_3
 {
@@ -20,6 +21,12 @@ namespace Практическая_работа_3
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        /// <summary>
+        /// Коллекция противников
+        /// </summary>
+        public List<Classes.PersonInfo> Enemys = new List<Classes.PersonInfo>();
+
         /// <summary>
         /// Данные игрока
         /// </summary>
@@ -29,6 +36,17 @@ namespace Практическая_работа_3
             InitializeComponent();
             // Повышаем уровень персонажа и обновляем данные на UI
             UserInfoPlayer();
+            //Добавляем данные о противниках в коллекцию
+            Enemys.Add(new Classes.PersonInfo("Слайм", 100, 20, 1, 15, 5, 25));
+            Enemys.Add(new Classes.PersonInfo("Голем", 200, 80, 1, 40, 5, 30));
+            Enemys.Add(new Classes.PersonInfo("Мимик", 40, 20, 1, 70, 10, 100));
+
+            // Задаём настройки для таймера
+            dispatcherTimer.Tick += AttackPlayer;
+            // Задаём интервал с которым выполняется таймер
+            dispatcherTimer.Interval = new System.TimeSpan(0, 0, 10);
+            // Запускаем таймер
+            dispatcherTimer.Start();
         }
         /// <summary>
         /// Повышение уровня и обновление данных на UI
@@ -53,5 +71,20 @@ namespace Практическая_работа_3
             playerGlasses.Content = "Опыт: " + Player.Glasses;
             playerMoney.Content = "Монеты: " + Player.Money;
         }
+
+
+        private void AttackEnemy(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Метод, который наносит переодически урон игроку
+        /// </summary>
+        private void AttackPlayer(object sender, System.EventArgs e)
+        {
+
+        }
+
+
     }
 }

@@ -101,9 +101,11 @@
     <Resource Include="Image\knight.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Image\Golem.jfif" />
-    <Content Include="Image\Mimic.jfif" />
-    <Content Include="Image\Slime.jfif" />
+    <Resource Include="Image\Mimic.png" />
+    <Resource Include="Image\Slime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Golem.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
