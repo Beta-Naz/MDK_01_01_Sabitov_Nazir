@@ -21,8 +21,6 @@ namespace Практическая_работа_3
     /// </summary>
     public partial class MainWindow : Window
     {
-        string[] imageMonster = new string[] { "Slime", "Golem", "Mimic" }; 
-
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         DispatcherTimer dispatcherTimerTwo = new DispatcherTimer();
         /// <summary>
@@ -35,16 +33,16 @@ namespace Практическая_работа_3
         /// <summary>
         /// Данные игрока
         /// </summary>
-        public Classes.PersonInfo Player = new Classes.PersonInfo("Student", 100, 10, 1, 0, 0, 5);
+        public Classes.PersonInfo Player = new Classes.PersonInfo("Student", 100, 10, 1, 0, 0, 5, $"Image/knight.png");
         public MainWindow()
         {
             InitializeComponent();
             // Повышаем уровень персонажа и обновляем данные на UI
             UserInfoPlayer();
             //Добавляем данные о противниках в коллекцию
-            Enemys.Add(new Classes.PersonInfo("Слайм", 100, 20, 1, 15, 5, 25));
-            Enemys.Add(new Classes.PersonInfo("Голем", 200, 80, 1, 40, 5, 30));
-            Enemys.Add(new Classes.PersonInfo("Мимик", 40, 20, 1, 70, 10, 45));
+            Enemys.Add(new Classes.PersonInfo("Слайм", 100, 20, 1, 15, 5, 15, $"Image/Slime.png"));
+            Enemys.Add(new Classes.PersonInfo("Голем", 200, 80, 1, 40, 5, 20, $"Image/Golem.png"));
+            Enemys.Add(new Classes.PersonInfo("Мимик", 40, 20, 1, 70, 10, 25, $"Image/Mimic.png"));
 
             dispatcherTimerTwo.Tick += AutoAttackEnemy;
             dispatcherTimerTwo.Interval = new System.TimeSpan(0, 0, 2);
@@ -66,7 +64,6 @@ namespace Практическая_работа_3
         public void SelectEnemy()
         {
             int Id = new Random().Next(0, Enemys.Count);
-            emptyImage.Source = new BitmapImage(new Uri($"Image/{imageMonster[Id]}.png", UriKind.Relative));
             Enemy = new Classes.PersonInfo(
                 Enemys[Id].Name,
                 Enemys[Id].Health,
@@ -74,7 +71,9 @@ namespace Практическая_работа_3
                 Enemys[Id].Level,
                 Enemys[Id].Glasses,
                 Enemys[Id].Money,
-                Enemys[Id].Damage);
+                Enemys[Id].Damage,
+                Enemys[Id].EnemyImage);
+            emptyImage.Source = new BitmapImage(new Uri($"{Enemy.EnemyImage}", UriKind.Relative));
         }
 
         /// <summary>
@@ -104,7 +103,13 @@ namespace Практическая_работа_3
         private void AttackEnemy(object sender, MouseButtonEventArgs e)
         {
             Enemy.Health -= Convert.ToInt32(Player.Damage * 100f / (100f - Enemy.Armor));
-            if(Enemy.Health <= 0)
+            Random rd = new Random();
+            int Counterattack = rd.Next(1, 6);
+            if (Counterattack == 5)
+            {
+                AttackPlayer(null,null);
+            }
+            if (Enemy.Health <= 0)
             {
                 Player.Glasses += Enemy.Glasses;
                 Player.Money += Enemy.Money;
@@ -125,10 +130,22 @@ namespace Практическая_работа_3
         {
             Player.Health -= Convert.ToInt32(Enemy.Damage * 100f / (100f - Player.Armor));
             UserInfoPlayer();
+            if (Player.Health <= 0)
+            {
+                GameOver gameOver = new GameOver();
+                gameOver.Show();
+                this.Close();
+            }
         }
         private void AutoAttackEnemy(object sender, System.EventArgs e)
         {
             Enemy.Health -= Convert.ToInt32(Player.Damage * 100f / (100f - Enemy.Armor));
+            Random rd = new Random();
+            int Counterattack = rd.Next(1, 6);
+            if (Counterattack == 5)
+            {
+                AttackPlayer(null, null);
+            }
             if (Enemy.Health <= 0)
             {
                 Player.Glasses += Enemy.Glasses;

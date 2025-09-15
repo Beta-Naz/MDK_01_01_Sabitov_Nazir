@@ -30,7 +30,8 @@ namespace Практическая_работа_3.Classes
         ///
         public float Damage { get; set; }
 
-        public PersonInfo(string Name, int Health, int Armor, int Level, int Glasses, int Money, float Damage)
+        public string EnemyImage { get; set; }
+        public PersonInfo(string Name, int Health, int Armor, int Level, int Glasses, int Money, float Damage, string EnemyImage)
         {
             this.Name = Name;
             this.Health = Health;
@@ -39,6 +40,7 @@ namespace Практическая_работа_3.Classes
             this.Glasses = Glasses;
             this.Money = Money;
             this.Damage = Damage;
+            this.EnemyImage = EnemyImage;
         }
     }
 }
