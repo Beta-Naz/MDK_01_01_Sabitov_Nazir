@@ -24,6 +24,7 @@ namespace Практическая_работа_3
         string[] imageMonster = new string[] { "Slime", "Golem", "Mimic" }; 
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        DispatcherTimer dispatcherTimerTwo = new DispatcherTimer();
         /// <summary>
         /// Коллекция противников
         /// </summary>
@@ -44,6 +45,10 @@ namespace Практическая_работа_3
             Enemys.Add(new Classes.PersonInfo("Слайм", 100, 20, 1, 15, 5, 25));
             Enemys.Add(new Classes.PersonInfo("Голем", 200, 80, 1, 40, 5, 30));
             Enemys.Add(new Classes.PersonInfo("Мимик", 40, 20, 1, 70, 10, 45));
+
+            dispatcherTimerTwo.Tick += AutoAttackEnemy;
+            dispatcherTimerTwo.Interval = new System.TimeSpan(0, 0, 2);
+            dispatcherTimerTwo.Start();
 
             // Задаём настройки для таймера
             dispatcherTimer.Tick += AttackPlayer;
@@ -120,6 +125,22 @@ namespace Практическая_работа_3
         {
             Player.Health -= Convert.ToInt32(Enemy.Damage * 100f / (100f - Player.Armor));
             UserInfoPlayer();
+        }
+        private void AutoAttackEnemy(object sender, System.EventArgs e)
+        {
+            Enemy.Health -= Convert.ToInt32(Player.Damage * 100f / (100f - Enemy.Armor));
+            if (Enemy.Health <= 0)
+            {
+                Player.Glasses += Enemy.Glasses;
+                Player.Money += Enemy.Money;
+                UserInfoPlayer();
+                SelectEnemy();
+            }
+            else
+            {
+                emptyHealth.Content = "Жизненные показатели: " + Enemy.Health;
+                emptyArmor.Content = "Броня: " + Enemy.Armor;
+            }
         }
     }
 }
