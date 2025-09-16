@@ -24,5 +24,10 @@ namespace Chess_Сабитов2
         {
             InitializeComponent();
         }
+
+        private void SelectTile(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
