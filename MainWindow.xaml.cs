@@ -74,9 +74,5 @@ namespace Chess_Сабитов2
                 SelectFigure.Transform(X, Y);
             }
         }
-        public void Crik()
-        {
-            MessageBox.Show($"Да может атакавать");
-        }
     }
 }

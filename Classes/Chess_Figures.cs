@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows;
 
 namespace Chess_Сабитов2.Classes
 {
@@ -62,6 +63,7 @@ namespace Chess_Сабитов2.Classes
         }
         public void ChoosingFigure(string blackFigure, string whiteFigure, string selectedFigure)
         {
+            ImagesFigure.Clear();
             ImagesFigure.Add(blackFigure);
             ImagesFigure.Add(whiteFigure);
             ImagesFigure.Add(selectedFigure);
@@ -70,6 +72,7 @@ namespace Chess_Сабитов2.Classes
         public static void SwitchTurn()
         {
             ChessTurn = !ChessTurn;
+            Victory();
         }
 
         public void OnSelect(Chess_Figures selectedFigure)
@@ -108,6 +111,7 @@ namespace Chess_Сабитов2.Classes
         }
         public void HighlightTile(int x, int y, Color color)
         {
+            // Создаем хранилище для сохранения ориг цвета
             var tile = MainWindow.init.gameBoard.Children
                 .OfType<Grid>()
                 .FirstOrDefault(t => Grid.GetColumn(t) == x && Grid.GetRow(t) == y);
@@ -120,7 +124,7 @@ namespace Chess_Сабитов2.Classes
             }
         }
 
-        public void ResetAllHighlights()
+        public static void ResetAllHighlights()
         {
             foreach (var tile in MainWindow.init.gameBoard.Children.OfType<Grid>())
             {
@@ -129,6 +133,25 @@ namespace Chess_Сабитов2.Classes
                     tile.Background = (Brush)tile.Tag;
                     tile.Tag = null;
                 }
+            }
+        }
+        public static void Victory()
+        {
+            
+            bool hasBlack = MainWindow.init.ListChessFigures.Any(x => x.Black);
+            bool hasWhite = MainWindow.init.ListChessFigures.Any(x => !x.Black);
+
+            if (!hasBlack)
+            {
+                ResetAllHighlights();
+                MessageBox.Show("Победа за белыми");
+                MainWindow.init.Close();
+            }
+            else if (!hasWhite)
+            {
+                ResetAllHighlights();
+                MessageBox.Show("Победа за черными");
+                MainWindow.init.Close();
             }
         }
     }

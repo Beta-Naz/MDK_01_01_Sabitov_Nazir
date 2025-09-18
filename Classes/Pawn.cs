@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 
 namespace Chess_Сабитов2.Classes
 {
@@ -85,6 +86,10 @@ namespace Chess_Сабитов2.Classes
                 {
                     ResetAllHighlights();
                     HighlightPossibleMoves();
+                    if (this != targetFigure)
+                    {
+                        ResetSelect();
+                    }
                     targetFigure.ResetSelect();
                     if (!Select)
                     {
@@ -113,6 +118,7 @@ namespace Chess_Сабитов2.Classes
                 Grid.SetRow(Figure, Y);
                 this.X = X;
                 this.Y = Y;
+                Transformation();
             }
             ResetSelect();
         }
@@ -183,6 +189,30 @@ namespace Chess_Сабитов2.Classes
                 }
             }
         }
+        private void Transformation()
+        {
+            if ((Y == 7 || Y == 0) && TypeFigure == "Pawn")
+            {
+                MainWindow.init.gameBoard.Children.Remove(Figure);
+                MainWindow.init.ListChessFigures.Remove(this);
+                MainWindow.init.ListChessFigures.Add(new Classes.Queen(X, Y, Black));
+                Chess_Figures NewQueen = MainWindow.init.ListChessFigures.Find(x => x.X == X && x.Y == Y);
+                if (NewQueen != null)
+                {
+                    NewQueen.Figure = new Grid()
+                    {
+                        Width = 50,
+                        Height = 50
+                    };
+                    NewQueen.Figure.Background = new ImageBrush(new BitmapImage(new Uri(NewQueen.Black ? NewQueen.ImagesFigure[0] : NewQueen.ImagesFigure[1])));
+                    Grid.SetColumn(NewQueen.Figure, NewQueen.X);
+                    Grid.SetRow(NewQueen.Figure, NewQueen.Y);
+                    NewQueen.Figure.MouseDown += NewQueen.SelectFigure;
+                    MainWindow.init.gameBoard.Children.Add(NewQueen.Figure);
+                    ;
 
+                }
+            }
+        }
     }
 }

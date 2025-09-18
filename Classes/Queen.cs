@@ -56,7 +56,6 @@ namespace Chess_Сабитов2.Classes
                     return;
                 }
             }
-
             Chess_Figures targetFigure = MainWindow.init.ListChessFigures.Find(x => x.Select);
             if (targetFigure != null && targetFigure.TypeFigure == "Queen")
             {
@@ -84,6 +83,10 @@ namespace Chess_Сабитов2.Classes
                 }
                 else
                 {
+                    if(this != targetFigure)
+                    {
+                        ResetSelect();
+                    }
                     targetFigure.ResetSelect();
                     if (!Select)
                     {
@@ -166,7 +169,7 @@ namespace Chess_Сабитов2.Classes
                 }
             }
         }
-        public void HighlightPossibleMovesToQueen()
+        private void HighlightPossibleMovesToQueen()
         {
             ResetAllHighlights();
             ResetValidMovesForQueen();
