@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,75 +7,182 @@ using System.Windows.Media.Imaging;
 
 namespace Chess_Сабитов2.Classes
 {
-    public class Pawn
+    public class Pawn : Chess_Figures
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public bool Select, Black;
-        public Grid Figure { get; set; }
         public Pawn(int X, int Y, bool Black)
         {
             this.X = X;
             this.Y = Y;
             this.Black = Black;
+            TypeFigure = "Pawn";
+
+            ChoosingFigure(
+               "pack://application:,,,/Images/Pawn (black).png",
+               "pack://application:,,,/Images/Pawn.png",
+               "pack://application:,,,/Images/Pawn (select).png"
+           );
         }
-        public void SelectFigure(object sender, MouseButtonEventArgs e)
+        public override void SelectFigure(object sender, MouseButtonEventArgs e)
         {
-            Pawn SelectPawn = MainWindow.init.Pawns.Find(x => x.Select == true);
-            if (SelectPawn != null)
+            Chess_Figures targetAttaka = MainWindow.init.ListChessFigures.Find(x => x.Select);
+            if (targetAttaka != null && targetAttaka != this)
             {
-                if ((SelectPawn.Black && Y - 1 == SelectPawn.Y && (X == SelectPawn.X - 1 || X == SelectPawn.X + 1)) || 
-                    (SelectPawn.Black == false && Y + 1 == SelectPawn.Y && (X == SelectPawn.X - 1 || X == SelectPawn.X + 1)))
+                if (targetAttaka.TypeFigure == "Queen")
                 {
-                    MainWindow.init.gameBoard.Children.Remove(Figure);
-                    Grid.SetColumn(SelectPawn.Figure, X);
-                    Grid.SetRow(SelectPawn.Figure, Y);
+                    Queen queen = targetAttaka as Queen;
+                    queen.ResetValidMovesForQueen();
+                    bool isThereAttack = false;
+                    for (int i = 0; i < queen.ValidAttackToX.Count; i++)
+                    {
+                        if (queen.ValidAttackToX[i] == this.X && queen.ValidAttackToY[i] == this.Y)
+                        {
+                            isThereAttack = true;
+                            break;
+                        }
+                    }
+                    if (isThereAttack)
+                    {
+                        MainWindow.init.gameBoard.Children.Remove(Figure);
+                        MainWindow.init.ListChessFigures.Remove(this);
+                        Grid.SetColumn(targetAttaka.Figure, X);
+                        Grid.SetRow(targetAttaka.Figure, Y);
 
-                    SelectPawn.X = X;
-                    SelectPawn.Y = Y;
-
-                    SelectPawn.SelectFigure(null, null);
-                    return;
+                        targetAttaka.X = X;
+                        targetAttaka.Y = Y;
+                        SwitchTurn();
+                        queen.ResetSelect();
+                        ResetAllHighlights();
+                        return;
+                    }
+                    else
+                    {
+                        HighlightPossibleMoves();
+                        targetAttaka.ResetSelect();
+                        ResetSelect();
+                        return;
+                    }
                 }
             }
+            Chess_Figures targetFigure = MainWindow.init.ListChessFigures.Find(x => x.Select);
 
-            MainWindow.init.OnSelect(this);
-
-            if (Select)
+            if (targetFigure != null && targetFigure.TypeFigure == "Pawn")
             {
-                if (Black)
+                if ((targetFigure.Black && !Black && Y - 1 == targetFigure.Y && (X == targetFigure.X - 1 || X == targetFigure.X + 1)) ||
+                (!targetFigure.Black && Black && Y + 1 == targetFigure.Y && (X == targetFigure.X - 1 || X == targetFigure.X + 1)))
                 {
-                    Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (black).png")));
+                    MainWindow.init.gameBoard.Children.Remove(Figure);
+                    MainWindow.init.ListChessFigures.Remove(this);
+                    Grid.SetColumn(targetFigure.Figure, X);
+                    Grid.SetRow(targetFigure.Figure, Y);
+
+                    targetFigure.X = X;
+                    targetFigure.Y = Y;
+                    SwitchTurn();
+                    targetFigure.ResetSelect();
+                    ResetAllHighlights();
                 }
                 else
                 {
-                    Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn.png")));
+                    ResetAllHighlights();
+                    HighlightPossibleMoves();
+                    targetFigure.ResetSelect();
+                    if (!Select)
+                    {
+                        ResetAllHighlights();
+                    }
                 }
-                Select = false;
-            }
-            else
-            {
-                Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (select).png")));
-                Select = true;
-            }
-        }
-        public void Transform(int X, int Y)
-        {
-            if(X != this.X)
-            {
-                SelectFigure(null,null);
                 return;
             }
-            if(Black && ((this.Y == 1 && this.Y + 2 == Y) || this.Y + 1 == Y) ||
-                !Black && ((this.Y == 6 && this.Y - 2 == Y) || this.Y - 1 == Y))
+            ResetSelect();
+            OnSelect(this);
+            HighlightPossibleMoves();
+        }
+        public override void Transform(int X, int Y)
+        {
+            ResetAllHighlights();
+            if (X != this.X)
             {
+                ResetSelect();
+                return;
+            }
+            if (Black && ((this.Y == 1 && this.Y + 2 == Y && SearchValidMoves(this.X, this.Y + 1)) || this.Y + 1 == Y) ||
+                !Black && ((this.Y == 6 && this.Y - 2 == Y && SearchValidMoves(this.X, this.Y - 1)) || this.Y - 1 == Y))
+            {
+                SwitchTurn();
                 Grid.SetColumn(Figure, X);
                 Grid.SetRow(Figure, Y);
                 this.X = X;
                 this.Y = Y;
-            } 
-
-            SelectFigure(null,null);
+            }
+            ResetSelect();
         }
+
+        private void HighlightPossibleMoves()
+        {
+            ResetAllHighlights();
+            if (Black)
+            {
+                if (Y + 1 <= 7 && !ChessTurn)
+                {
+                    if (SearchValidMoves(X, Y + 1))
+                    {
+                        HighlightTile(X, Y + 1, Colors.Green);
+                    }
+                }
+                if (Y == 1 && Y + 2 <= 7 && !ChessTurn)
+                {
+                    if (SearchValidMoves(X, Y + 2) && SearchValidMoves(X, Y + 1))
+                    {
+                        HighlightTile(X, Y + 2, Colors.Green);
+                    }
+                }
+                if (X - 1 >= 0 && Y + 1 <= 7 && !ChessTurn)
+                {
+                    if (SearchAttack(X - 1, Y + 1))
+                    {
+                        HighlightTile(X - 1, Y + 1, Colors.Red);
+                    }
+                }
+                if (X + 1 <= 7 && Y + 1 <= 7 && !ChessTurn)
+                {
+                    if (SearchAttack(X + 1, Y + 1))
+                    {
+                        HighlightTile(X + 1, Y + 1, Colors.Red);
+                    }
+                }
+            }
+            else
+            {
+                if (Y - 1 >= 0 && ChessTurn)
+                {
+                    if (SearchValidMoves(X, Y - 1))
+                    {
+                        HighlightTile(X, Y - 1, Colors.Green);
+                    }
+                }
+                if (Y == 6 && Y - 2 >= 0 && ChessTurn)
+                {
+                    if (SearchValidMoves(X, Y - 2) && SearchValidMoves(X, Y - 1))
+                    {
+                        HighlightTile(X, Y - 2, Colors.Green);
+                    }
+                }
+                if (X - 1 >= 0 && Y - 1 >= 0 && ChessTurn)
+                {
+                    if (SearchAttack(X - 1, Y - 1))
+                    {
+                        HighlightTile(X - 1, Y - 1, Colors.Red);
+                    }
+                }
+                if (X + 1 <= 7 && Y - 1 >= 0 && ChessTurn)
+                {
+                    if (SearchAttack(X + 1, Y - 1))
+                    {
+                        HighlightTile(X + 1, Y - 1, Colors.Red);
+                    }
+                }
+            }
+        }
+
     }
 }

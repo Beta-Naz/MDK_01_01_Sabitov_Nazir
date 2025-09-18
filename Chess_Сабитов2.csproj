@@ -63,7 +63,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Chess_Figures.cs" />
     <Compile Include="Classes\Pawn.cs" />
+    <Compile Include="Classes\Queen.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,7 +97,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Queen %28Black%29.png" />
+    <Resource Include="Images\Queen %28Select%29.png" />
+    <Resource Include="Images\Queen.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Pawn %28black%29.png" />
     <Resource Include="Images\Pawn %28select%29.png" />
