@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Constructors_Сабитов.Elements.Student"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Constructors_Сабитов.Elements"
+             mc:Ignorable="d">
+    <Grid Height="50" Margin="0, 0, 0, 10" Background="#35363A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Height="30" VerticalAlignment="Top" Margin="10,10,0,0" HorizontalAlignment="Left" Width="30"
+           Stretch="UniformToFill" Source="/Constructors_Сабитов;component/Images/ic_user.png"/>
+        <Label x:Name="to_fio" Content="Фамилия Имя Отчество" VerticalContentAlignment="Center"
+           Margin="9.4,10,10.2,10" Grid.Column="1" Foreground="White" FontSize="14"/>
+        <Label x:Name="td_scholarship" Content="Стипендия: получает" VerticalContentAlignment="Center"
+           Margin="9.8,10" Grid.Column="2" Foreground="White" FontSize="14"/>
+        <Label x:Name="td_course" Content="Kypc: 4" VerticalContentAlignment="Center" Margin="9.2,10,9.6,10"
+           Grid.Column="3" Foreground="White" FontSize="14"/>
+        <Grid.Effect>
+            <DropShadowEffect Color="Black" Direction="315" Opacity="0.7" RenderingBias="Performance" BlurRadius="5"/>
+        </Grid.Effect>
+    </Grid>
+</UserControl>
