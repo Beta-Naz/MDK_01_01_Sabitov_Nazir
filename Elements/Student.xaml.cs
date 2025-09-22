@@ -20,9 +20,15 @@ namespace Constructors_Сабитов.Elements
     /// </summary>
     public partial class Student : UserControl
     {
-        public Student()
+        public Student(Classes.Student student)
         {
             InitializeComponent();
+
+            td_fio.Content = student.GetFIO();
+
+            td_scholarship.Content = student.Scholarship ? "Степендия: получает" : "Степендия: не получает";
+
+            td_course.Content = $"Курс: {student.Course}";
         }
     }
 }
