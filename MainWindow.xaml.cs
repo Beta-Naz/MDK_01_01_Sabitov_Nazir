@@ -83,21 +83,25 @@ namespace Geometria_Сабитов
                 StrokeThickness = 2,
                 Fill = Brushes.LightBlue
             };
+
             foreach (Point vertex in vertices)
             {
                 triangle.Points.Add(vertex);
             }
+
+            Canvas.SetLeft(triangle, 0);
+            Canvas.SetTop(triangle, 0);
             canvas.Children.Add(triangle);
         }
         public void DrawCircle(double centreX, double centreY, double radius)
         {
             Ellipse circle = new Ellipse()
             {
-                Width = radius * 2,
-                Height = radius * 2,
+                Width = radius,
+                Height = radius,
                 Stroke = Brushes.Black,
                 StrokeThickness = 2,
-                Fill = Brushes.LightBlue
+                Fill = Brushes.Red
             };
 
             Canvas.SetLeft(circle, centreX - radius);

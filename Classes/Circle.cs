@@ -15,7 +15,7 @@ namespace Geometria_Сабитов.Classes
         public double Radius;
         public Circle(double centreX, double centreY, double radius) : base(centreX, centreY)
         {
-            Radius = radius;
+            Radius = radius / 2;
         }
         public double Diameter
         {
