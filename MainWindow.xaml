@@ -11,17 +11,20 @@
             <ColumnDefinition Width="600"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Canvas x:Name="canvas"/>
         <Border x:Name="GeometricDoska" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0">
         </Border>
         <Border x:Name="GeometricDisplay" Background="Wheat" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="0"/>
-        <Grid Grid.Column="1" VerticalAlignment="Top" Height="355">
+        <Grid Grid.Column="1" VerticalAlignment="Top" Height="300">
             <TextBox x:Name="X" Text="Центральный X" VerticalAlignment="Top" Height="25" Margin="5,5,5,0"/>
             <TextBox x:Name="Y" Text="Центральный Y" VerticalAlignment="Top" Height="25" Margin="5,35,5,0"/>
             <TextBox x:Name="A" Text="Длина строны A" VerticalAlignment="Top" Height="25" Margin="5,65,5,0"/>
             <TextBox x:Name="B" Text="Длина строны B" VerticalAlignment="Top" Height="25" Margin="5,95,5,0"/>
             <TextBox x:Name="C" Text="Длина строны C" VerticalAlignment="Top" Height="25" Margin="5,125,5,0"/>
         </Grid>
-        <Button Click="SelectFigure_Click" VerticalAlignment="Bottom" x:Name="SelectFigure" Height="25" Margin="10, 0, 10, 45" Content="Выбрать тип фигуры" Grid.Column="1"/>
+        <Button Click="SelectFigure_Click" VerticalAlignment="Bottom" x:Name="SelectFigure" Height="25" Margin="10, 0, 10, 45" Content="Треугольник" Grid.Column="1"/>
         <Button Click="CreateFigure_Click" VerticalAlignment="Bottom" x:Name="CreateFigure" Height="25" Margin="10" Content="Создать фигуру" Grid.Column="1"/>
+        <Button Click="RandomCreateFigure_Click" VerticalAlignment="Bottom" x:Name="RandomCreateFigure" Height="25" Margin="10, 0, 10, 80" Content="Рандомно" Grid.Column="1"/>
+        <Button Click="Clear_Click" VerticalAlignment="Bottom" x:Name="Clear" Height="25" Margin="10, 0, 10, 115" Content="Отчистка" Grid.Column="1"/>
     </Grid>
 </Window>
