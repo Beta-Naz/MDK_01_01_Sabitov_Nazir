@@ -25,7 +25,7 @@ namespace Constructors_Сабитов
         public int Count = 10;
 
         public int Step = 0;
-
+        //фывфыв
         public MainWindow()
         {
             InitializeComponent();
