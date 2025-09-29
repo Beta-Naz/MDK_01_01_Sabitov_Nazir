@@ -24,5 +24,25 @@ namespace TV_Сабитов
         {
             InitializeComponent();
         }
+
+        private void BackChannel(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NextChannel(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Tishe(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Gromche(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
