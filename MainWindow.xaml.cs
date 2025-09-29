@@ -26,7 +26,7 @@ namespace Geometria_Сабитов
         }
         private void SelectFigure_Click(object sender, RoutedEventArgs e)
         {
-
+             
         }
 
         private void CreateFigure_Click(object sender, RoutedEventArgs e)
