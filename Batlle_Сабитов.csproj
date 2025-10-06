@@ -102,5 +102,8 @@
     <Resource Include="Images\Солдат_сб.png" />
     <Resource Include="Images\Солдат_тб.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
