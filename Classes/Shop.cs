@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop_Сабитов.Classes
 {
-    internal class Shop
+    public class Shop
     {
         public string Name { get; set; }
         public int Price { get; set; }
