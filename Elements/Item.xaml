@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Shop_Сабитов.Elements"
              mc:Ignorable="d">
     <Grid>
-        <Border Margin="20" Width="200" CornerRadius="20" Background="#FF5A5A5A">
+        <Border Margin="20" Width="250" CornerRadius="20" Background="#FF5A5A5A">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"/>

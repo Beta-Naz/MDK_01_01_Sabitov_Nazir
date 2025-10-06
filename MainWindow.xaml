@@ -10,8 +10,13 @@
         Width="800"
         MinHeight="450" 
         MinWidth="800">
-    <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden">
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="Search" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="25" TextChanged="TextBox_TextChanged"/>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden">
             <StackPanel x:Name="parent" Orientation="Horizontal">
                 
             </StackPanel>

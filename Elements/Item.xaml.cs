@@ -28,7 +28,6 @@ namespace Shop_Сабитов.Elements
 
             tb_Name.Content = ShopData.Name;
             tb_Price.Content = "Цена: " + ShopData.Price;
-
             if(ItemData is Classes.Children)
             {
                 Classes.Children ChilDate = ItemData as Classes.Children;
@@ -38,6 +37,12 @@ namespace Shop_Сабитов.Elements
             {
                 Classes.Sport SporDate = ItemData as Classes.Sport;
                 tb_Characteristic.Content = "Размер: " + SporDate.Size;
+            }
+            if (ItemData is Classes.Electronics)
+            {
+                Classes.Electronics ElectDate = ItemData as Classes.Electronics;
+                tb_Characteristic.Content = "Ёмкость аккумулятора: " + 
+                    ElectDate.BatteryCapacity + " (Ач)" + "\n" + "Скорость езды: " + ElectDate.DrivingSpeed + " (Км/ч)";
             }
         }
     }

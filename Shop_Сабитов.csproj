@@ -68,6 +68,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Children.cs" />
+    <Compile Include="Classes\Electronics.cs" />
     <Compile Include="Classes\RepoItems.cs" />
     <Compile Include="Classes\Shop.cs" />
     <Compile Include="Classes\Sport.cs" />
