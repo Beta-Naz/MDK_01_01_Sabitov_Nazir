@@ -10,7 +10,7 @@
         Width="900"
         MinHeight="450" 
         MinWidth="900">
-    <Grid x:Name="MainGameWindow" Background="DarkGoldenrod">
+    <Grid x:Name="MainWindow" Background="DarkGoldenrod">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="300"/>
