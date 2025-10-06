@@ -20,9 +20,25 @@ namespace Shop_Сабитов.Elements
     /// </summary>
     public partial class Item : UserControl
     {
-        public Item()
+        public Item(object ItemData)
         {
             InitializeComponent();
+            // Преобразование полученный объект в базовый класс
+            Classes.Shop ShopData = ItemData as Classes.Shop;
+
+            tb_Name.Content = ShopData.Name;
+            tb_Price.Content = "Цена: " + ShopData.Price;
+
+            if(ItemData is Classes.Children)
+            {
+                Classes.Children ChilDate = ItemData as Classes.Children;
+                tb_Characteristic.Content = "Возраст: " + ChilDate.Age;
+            }
+            if(ItemData is Classes.Sport)
+            {
+                Classes.Sport SporDate = ItemData as Classes.Sport;
+                tb_Characteristic.Content = "Размер: " + SporDate.Size;
+            }
         }
     }
 }
