@@ -92,7 +92,7 @@ namespace Batlle_Сабитов.Elements
 
         private void ThirdMonster_Click(object sender, MouseButtonEventArgs e)
         {
-
+             
         }
 
         private void FourthMonster_Click(object sender, MouseButtonEventArgs e)
