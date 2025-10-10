@@ -20,7 +20,7 @@
                 CornerRadius="5">
                     <Image x:Name="PlayerImages" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Солдат_лб.png"/>
                 </Border>
-                <Label x:Name="PlayerName" Content="Солдат в легкой броне" VerticalAlignment="Center" FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Aquamarine" Margin="0,135,0,0"/>
+                <Label x:Name="PlayerName" Content="Солдат в легкой броне" VerticalAlignment="Center" FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Aquamarine" Margin="0,85,0,0"/>
                 <Grid Margin="50,290,200,20" Background="#99B8860B">
                     <Label x:Name="PlayerHealt" Content="Здоровье:" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0"/>
                     <Label x:Name="PlayerDamage" Content="Урон:" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,25,0,0"/>
@@ -43,7 +43,7 @@
             <Border x:Name="TurnTwo" Grid.Column="1" Background="Green" Width="15" Height="15" CornerRadius="15"/>
             <Border x:Name="TurnThree" Grid.Column="2"  Background="Green" Width="15" Height="15" CornerRadius="15"/>
             <Border x:Name="TurnFour" Grid.Column="3" Background="Red" Width="15" Height="15" CornerRadius="15"/>
-            <Border x:Name="Turnfive" Grid.Column="4" Background="Red" Width="15" Height="15" CornerRadius="15"/>
+            <Border x:Name="TurnFive" Grid.Column="4" Background="Red" Width="15" Height="15" CornerRadius="15"/>
         </Grid>
         <Grid x:Name="BossHealt" VerticalAlignment="Bottom" Height="10" Margin="20,0,20,5">
             

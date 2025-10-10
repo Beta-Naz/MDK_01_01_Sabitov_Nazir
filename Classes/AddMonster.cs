@@ -8,17 +8,23 @@ namespace Batlle_Сабитов.Classes
 {
     public class AddMonster
     {
-        public static void AddOneMonster(AlwaysMonsters monsters)
-        {
-            Elements.Batlle.init.SpawnMonsters.Children.Clear();
-            Elements.Batlle.init.SpawnMonsters.Children.Add(new Elements.OneMonster(monsters));
-        }
         public static void AddBatlle()
         {
             Batlle_Сабитов.MainWindow.init.MinWidth = 800;
             Batlle_Сабитов.MainWindow.init.Width = 800;
+            Batlle_Сабитов.MainWindow.init.MinHeight = 500;
+            Batlle_Сабитов.MainWindow.init.MinHeight = 500;
             MainWindow.init.MainGameWindow.Children.Clear();
             MainWindow.init.MainGameWindow.Children.Add(new Elements.Batlle());
+        }
+        public static void AddZamok()
+        {
+            Batlle_Сабитов.MainWindow.init.MinWidth = 900;
+            Batlle_Сабитов.MainWindow.init.Width = 900;
+            Batlle_Сабитов.MainWindow.init.MinHeight = 450;
+            Batlle_Сабитов.MainWindow.init.MinHeight = 450;
+            MainWindow.init.MainGameWindow.Children.Clear();
+            MainWindow.init.MainGameWindow.Children.Add(new Elements.UserGameWindow());
         }
         public static void AddСhoiceCharacter()
         {

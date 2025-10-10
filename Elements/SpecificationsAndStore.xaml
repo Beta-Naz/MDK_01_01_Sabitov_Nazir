@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="Batlle_Сабитов.Elements.SpecificationsAndStore"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800">
+    <Grid>
+        <Image Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/background/гильдия.png"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Background="#CC2A1B0F" CornerRadius="8" Padding="5" Margin="10">
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible">
+                    <StackPanel x:Name="parent" Orientation="Vertical">
+                        
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <Border Grid.Column="1" Background="#CC2A1B0F" CornerRadius="8" Padding="5" Margin="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Image Source="/Batlle_Сабитов;component/Images/солдат_лб.png"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Label x:Name="PlayerName" Content="Солдат в легкой броне" VerticalAlignment="Top" FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Aquamarine"/>
+                        <Grid Margin="0,35,0,0"  Background="#801A1007">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="1.75*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" x:Name="PlayerLevel" Content="Уровень: 1" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left"/>
+                                <Label Grid.Column="1" x:Name="PlayerEXP" Content="Опыт: " VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label x:Name="PlayerHealt" Content="Здоровье:" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left"/>
+                                    <Label Grid.Row="1" x:Name="PlayerDamage" Content="Урон:" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left"/>
+                                    <Label Grid.Row="2" x:Name="PlayerDexterity" Content="Ловкость:" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left"/>
+                                    <Label Grid.Row="3" x:Name="TypeWeapon" Content="Оружие:" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left"/>
+                                    <Label Grid.Row="4" x:Name="LbArmor" Content="Броня: 10" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left"/>
+                                    <Label Grid.Row="5" x:Name="TypeArmor" Content="Тип брони:" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left"/>
+                                </Grid>
+                                <Grid  Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="3*"/>
+                                    </Grid.RowDefinitions>
+                                    <Button Click="UppHealt_Click" Margin="1" Padding="0" Background="DarkGray" Foreground="White" FontSize="10" Content="Прокачать" FontWeight="Bold" BorderBrush="DarkGray"/>
+                                    <Button Grid.Row="1" Click="UppDamage_Click" Margin="1" Padding="0" Background="DarkGray" Foreground="White" FontSize="10" Content="Прокачать" FontWeight="Bold" BorderBrush="DarkGray"/>
+                                    <Button Grid.Row="2"  Click="UppDexterity_Click" Margin="1" Padding="0" Background="DarkGray" Foreground="White" FontSize="10" Content="Прокачать" FontWeight="Bold" BorderBrush="DarkGray"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" CornerRadius="8" Padding="5" Margin="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid  Background="#CC2A1B0F">
+                        
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Button Click="Yes_Click" Grid.Column="1" Margin="2" Padding="0" Background="Red" Foreground="White" FontSize="20" Content="Вернуться" FontWeight="Bold" BorderBrush="Red"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

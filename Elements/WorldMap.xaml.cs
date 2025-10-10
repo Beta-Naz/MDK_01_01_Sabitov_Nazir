@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Batlle_Сабитов.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Batlle_Сабитов.Elements
         }
         private void Zamok_Click(object sender, MouseButtonEventArgs e)
         {
-            
+            AddMonster.AddZamok();
         }
         private void SpecificationsAndStore_Click(object sender, MouseButtonEventArgs e)
         {
@@ -40,6 +41,10 @@ namespace Batlle_Сабитов.Elements
             {
                 return;
             }
+            Classes.AlwaysMonsters.ChanceCountSpawnMonster = new int[] { 50, 30};
+
+            Classes.NeedMetod.ResetWhatSpawnMosters(Classes.RepoAllLocations.AllLocations()[0].NameLocations);
+
             Confirmation.Children.Add(new Elements.Confirmation(Classes.RepoAllLocations.AllLocations()[0].NameLocations,
                 Classes.RepoAllLocations.AllLocations()[0].BackgroundLocations));
         }
@@ -49,6 +54,10 @@ namespace Batlle_Сабитов.Elements
             {
                 return;
             }
+            Classes.AlwaysMonsters.ChanceCountSpawnMonster = new int[] { 35, 40};
+
+            Classes.NeedMetod.ResetWhatSpawnMosters(Classes.RepoAllLocations.AllLocations()[1].NameLocations);
+
             Confirmation.Children.Add(new Elements.Confirmation(Classes.RepoAllLocations.AllLocations()[1].NameLocations,
                 Classes.RepoAllLocations.AllLocations()[1].BackgroundLocations));
         }
@@ -58,6 +67,10 @@ namespace Batlle_Сабитов.Elements
             {
                 return;
             }
+
+            Classes.NeedMetod.ResetWhatSpawnMosters(Classes.RepoAllLocations.AllLocations()[2].NameLocations);
+
+            Classes.AlwaysMonsters.ChanceCountSpawnMonster = new int[] { 25, 30};
             Confirmation.Children.Add(new Elements.Confirmation(Classes.RepoAllLocations.AllLocations()[2].NameLocations,
                 Classes.RepoAllLocations.AllLocations()[2].BackgroundLocations));
         }
@@ -67,6 +80,10 @@ namespace Batlle_Сабитов.Elements
             {
                 return;
             }
+
+            Classes.NeedMetod.ResetWhatSpawnMosters(Classes.RepoAllLocations.AllLocations()[3].NameLocations);
+
+            Classes.AlwaysMonsters.ChanceCountSpawnMonster = new int[] { 10, 25};
             Confirmation.Children.Add(new Elements.Confirmation(Classes.RepoAllLocations.AllLocations()[3].NameLocations,
                 Classes.RepoAllLocations.AllLocations()[3].BackgroundLocations));
         }
@@ -76,6 +93,10 @@ namespace Batlle_Сабитов.Elements
             {
                 return;
             }
+
+            Classes.NeedMetod.ResetWhatSpawnMosters(Classes.RepoAllLocations.AllLocations()[4].NameLocations);
+
+            Classes.AlwaysMonsters.ChanceCountSpawnMonster = new int[] { 1, 10};
             Confirmation.Children.Add(new Elements.Confirmation(Classes.RepoAllLocations.AllLocations()[4].NameLocations,
                 Classes.RepoAllLocations.AllLocations()[4].BackgroundLocations));
         }

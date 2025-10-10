@@ -30,5 +30,8 @@ namespace Batlle_Сабитов.Classes
             this.Name = Name;
             this.Images = Images;
         }
+        public static int[] ChanceCountSpawnMonster;
+        public static List<AlwaysMonsters> WhatSpawnMonsters = new List<AlwaysMonsters>();
+        public static double[] ChanceSpawnMonster = new double[] {2,1.75,1.5,1};
     }
 }

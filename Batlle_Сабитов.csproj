@@ -71,7 +71,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Elements\Object.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\ObjectProductToInvent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Elements\OneMonster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\SpecificationsAndStore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,9 +116,15 @@
     <Compile Include="Classes\Locations\CreateLocations.cs" />
     <Compile Include="Classes\AlwaysMonsters.cs" />
     <Compile Include="Classes\NeedMetod.cs" />
+    <Compile Include="Classes\Object\Items.cs" />
+    <Compile Include="Classes\Object\MedicinalPotions.cs" />
+    <Compile Include="Classes\Object\RepoMedicinalPorions.cs" />
+    <Compile Include="Classes\Object\RepoWeapon.cs" />
+    <Compile Include="Classes\Object\Weapon.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Locations\RepoAllLocations.cs" />
     <Compile Include="Classes\RepoAlwaysMonsters.cs" />
+    <Compile Include="Classes\Turn.cs" />
     <Compile Include="Elements\Batlle.xaml.cs">
       <DependentUpon>Batlle.xaml</DependentUpon>
     </Compile>
@@ -119,8 +137,17 @@
     <Compile Include="Elements\FourMonster.xaml.cs">
       <DependentUpon>FourMonster.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Elements\Object.xaml.cs">
+      <DependentUpon>Object.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\ObjectProductToInvent.xaml.cs">
+      <DependentUpon>ObjectProductToInvent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Elements\OneMonster.xaml.cs">
       <DependentUpon>OneMonster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\SpecificationsAndStore.xaml.cs">
+      <DependentUpon>SpecificationsAndStore.xaml</DependentUpon>
     </Compile>
     <Compile Include="Elements\StripOfLifeToBoss.xaml.cs">
       <DependentUpon>StripOfLifeToBoss.xaml</DependentUpon>
@@ -215,6 +242,26 @@
     <Resource Include="Images\The end\Фон_праздник_X.png" />
     <Resource Include="Images\The end\Фон_тронный_зал.png" />
     <Resource Include="Images\The end\Фон_Хаос.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\Гильдия.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Object\Парные_двух_метровые_мечи.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Object\Короткий_меч.png" />
+    <Resource Include="Images\Object\Меч.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Object\Большое_зелье_здоровья.png" />
+    <Resource Include="Images\Object\Малое_зелье_здоровья.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Object\Среднее_зелье_здоровья.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Object\Эльфийский_лук.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

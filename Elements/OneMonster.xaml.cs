@@ -22,27 +22,34 @@ namespace Batlle_Сабитов.Elements
     /// </summary>
     public partial class OneMonster : UserControl
     {
-        AlwaysMonsters FirstMonsters;
-        public OneMonster(Classes.AlwaysMonsters FirstMonsters)
+        AlwaysMonsters firstMonsters;
+        public OneMonster(List<Classes.AlwaysMonsters> Monsters)
         {
             InitializeComponent();
-            this.FirstMonsters = FirstMonsters;
+
+            NeedMetod.death = 1;
+
+            firstMonsters = Monsters[0];
             FirstMonsterBorder.BorderBrush = NeedMetod.PowerAndVulnerabilityMonster
-    [NeedMetod.SelectVulnerability(FirstMonsters.Vulnerability)];
-            ImageMonster.Source = new BitmapImage(new Uri(FirstMonsters.Images));
-            OneMonstrPower.Content = FirstMonsters.Name;
+    [NeedMetod.SelectVulnerability(firstMonsters.Vulnerability)];
+            ImageMonster.Source = new BitmapImage(new Uri(firstMonsters.Images));
+            OneMonstrPower.Content = firstMonsters.Name;
         }
         private void FirstMonster_Click(object sender, MouseButtonEventArgs e)
         {
-            double damage = NeedMetod.MinusHealt(FirstHealtMaxBarMonster.Width, FirstMonsters.Healt, FirstMonsters.Armor);
-            if(FirstHealtBarMonster.Width - damage < 0)
+            if (Player.ValidAttack)
             {
-                FirstHealtBarMonster.Width = 0;
-                AddMonster.AddWorldMap();
-            }
-            else
-            {
-                FirstHealtBarMonster.Width -= damage;
+                double damage = NeedMetod.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.Healt, firstMonsters.Armor);
+                if (FirstHealtBarMonster.Width - damage < 0)
+                {
+                    FirstHealtBarMonster.Width = 0;
+                    AddMonster.AddWorldMap();
+                }
+                else
+                {
+                    FirstHealtBarMonster.Width -= damage;
+                }
+                Batlle.СhangeTurn();
             }
         }
     }

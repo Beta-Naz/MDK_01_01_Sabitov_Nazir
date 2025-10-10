@@ -19,5 +19,6 @@ namespace Batlle_Сабитов.Classes
         public static string TypeArmor { get; set; }
         public static string Images { get; set; }
         public static string ColorName { get; set; }
+        public static bool ValidAttack { get; set; }
     }
 }

@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Timers;
+using System.Threading;
 
 namespace Batlle_Сабитов.Elements
 {
@@ -24,19 +26,20 @@ namespace Batlle_Сабитов.Elements
         Classes.AlwaysMonsters firstMonsters;
         Classes.AlwaysMonsters secondMonsters;
         public static TwoMonster init;
-        public TwoMonster(Classes.AlwaysMonsters FirstMonsters, Classes.AlwaysMonsters SecondMonsters)
+        public TwoMonster(List<Classes.AlwaysMonsters> Monsters)
         {
             InitializeComponent();
-            init = this;
 
-            firstMonsters = FirstMonsters;
+            NeedMetod.death = 2;
+
+            firstMonsters = Monsters[0];
             FirstImageMonster.Source = new BitmapImage(new Uri(firstMonsters.Images));
             FirstMonsterBorder.BorderBrush = NeedMetod.PowerAndVulnerabilityMonster
                 [NeedMetod.SelectVulnerability(firstMonsters.Vulnerability)];
             FirstMonsterPower.Content = firstMonsters.Name;
             FirstMonsterPower.Foreground = NeedMetod.PowerAndVulnerabilityMonster[firstMonsters.Power];
 
-            secondMonsters = SecondMonsters;
+            secondMonsters = Monsters[1];
             SecondImageMonster.Source = new BitmapImage(new Uri(secondMonsters.Images));
             SecondMonsterBorder.BorderBrush = NeedMetod.PowerAndVulnerabilityMonster
                 [NeedMetod.SelectVulnerability(secondMonsters.Vulnerability)];
@@ -46,31 +49,41 @@ namespace Batlle_Сабитов.Elements
 
         private void FirstMonster_Click(object sender, MouseButtonEventArgs e)
         {
-            double damage = NeedMetod.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.Healt, firstMonsters.Armor);
-            if (FirstHealtBarMonster.Width - damage < 0)
+            if (Player.ValidAttack)
             {
-                FirstHealtBarMonster.Width = 0;
-                FirstMonster.Children.Clear();
-                NeedMetod.DeadMonsters(firstMonsters.EXP);
-            }
-            else
-            {
-                FirstHealtBarMonster.Width -= damage;
+                double damage = NeedMetod.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.Healt, firstMonsters.Armor);
+                if (FirstHealtBarMonster.Width - damage < 0)
+                {
+                    FirstHealtBarMonster.Width = 0;
+                    NeedMetod.DeadMonsters(firstMonsters.EXP);
+                    Turn.RemoveTurn("First");
+                    FirstMonster.Children.Clear();
+                }
+                else
+                {
+                    FirstHealtBarMonster.Width -= damage;
+                }
+                Batlle.СhangeTurn();
             }
         }
 
         private void SecondMonster_Click(object sender, MouseButtonEventArgs e)
         {
-            double damage = NeedMetod.MinusHealt(SecondHealtMaxBarMonster.Width, secondMonsters.Healt, secondMonsters.Armor);
-            if (SecondHealtBarMonster.Width - damage < 0)
+            if (Player.ValidAttack)
             {
-                SecondHealtBarMonster.Width = 0;
-                SecondMonster.Children.Clear();
-                NeedMetod.DeadMonsters(secondMonsters.EXP);
-            }
-            else
-            {
-                SecondHealtBarMonster.Width -= damage;
+                double damage = NeedMetod.MinusHealt(SecondHealtMaxBarMonster.Width, secondMonsters.Healt, secondMonsters.Armor);
+                if (SecondHealtBarMonster.Width - damage < 0)
+                {
+                    SecondHealtBarMonster.Width = 0;
+                    NeedMetod.DeadMonsters(secondMonsters.EXP);
+                    Turn.RemoveTurn("Second");
+                    SecondMonster.Children.Clear();
+                }
+                else
+                {
+                    SecondHealtBarMonster.Width -= damage;
+                }
+                Batlle.СhangeTurn();
             }
         }
     }
