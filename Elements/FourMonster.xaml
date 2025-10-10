@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="Batlle_Сабитов.Elements.FourMonster"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
+             mc:Ignorable="d" 
+                                        d:DesignHeight="450" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="225"/>
+            <RowDefinition Height="225"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="FirstMonster" MouseLeftButtonDown="FirstMonster_Click">
+            <Border x:Name="FirstMonsterBorder" VerticalAlignment="Top" Width="150" Height="150" Margin="0,10,0,0"
+         BorderBrush="DarkCyan"
+         BorderThickness="4"
+         CornerRadius="5">
+                <Image x:Name="FirstImageMonster" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Скелет.png"/>
+            </Border>
+            <Label x:Name="FirstMonsterPower" Content="???" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" FontSize="20" Foreground="Green" Margin="0,0,0,30"/>
+            <Border Background="#40000000" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Height="15">
+                <Border Background="#7F8B0000" x:Name="FirstHealtMaxBarMonster"
+         CornerRadius="1"
+         Margin="2"
+         Width="180">
+                    <Border x:Name="FirstHealtBarMonster" Background="Red" HorizontalAlignment="Left" Width="180" CornerRadius="1">
+                    </Border>
+                </Border>
+            </Border>
+        </Grid>
+        <Grid x:Name="SecondMonster" Grid.Row="1" MouseLeftButtonDown="SecondMonster_Click">
+            <Border x:Name="SecondMonsterBorder" VerticalAlignment="Top" Width="150" Height="150" Margin="0,10,0,0"
+          BorderBrush="DarkCyan"
+          BorderThickness="4"
+          CornerRadius="5">
+                <Image x:Name="SecondImageMonster" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Скелет.png"/>
+            </Border>
+            <Label x:Name="SecondMonsterPower" Content="???" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" FontSize="20" Foreground="Green" Margin="0,0,0,30"/>
+            <Border Background="#40000000" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Height="15">
+                <Border Background="#7F8B0000" x:Name="SecondHealtMaxBarMonster"
+             CornerRadius="1"
+             Margin="2"
+             Width="180">
+                    <Border x:Name="SecondHealtBarMonster" Background="Red" HorizontalAlignment="Left" Width="180" CornerRadius="1">
+                    </Border>
+                </Border>
+            </Border>
+        </Grid>
+        <Grid x:Name="ThirdMonster" MouseLeftButtonDown="ThirdMonster_Click">
+            <Border x:Name="ThirdMonsterBorder" VerticalAlignment="Top" Width="150" Height="150" Margin="0,10,0,0"
+                    BorderBrush="DarkCyan"
+                    BorderThickness="4"
+                    CornerRadius="5">
+                <Image x:Name="ThirdImageMonster" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Скелет.png"/>
+            </Border>
+            <Label x:Name="ThirdMonsterPower" Content="???" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" FontSize="20" Foreground="Green" Margin="0,0,0,30"/>
+            <Border Background="#40000000" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Height="15">
+                <Border Background="#7F8B0000" x:Name="ThirdHealtMaxBarMonster"
+                         CornerRadius="1"
+                         Margin="2"
+                         Width="180">
+                    <Border x:Name="ThirdHealtBarMonster" Background="Red" HorizontalAlignment="Left" Width="180" CornerRadius="1">
+                    </Border>
+                </Border>
+            </Border>
+        </Grid>
+        <Grid x:Name="FourthMonster" Grid.Row="1" MouseLeftButtonDown="FourthMonster_Click">
+            <Border x:Name="FourthMonsterBorder" VerticalAlignment="Top" Width="150" Height="150" Margin="0,10,0,0"
+                    BorderBrush="DarkCyan"
+                    BorderThickness="4"
+                    CornerRadius="5">
+                <Image x:Name="FourthImageMonster" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Скелет.png"/>
+            </Border>
+            <Label x:Name="FourthMonsterPower" Content="???" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" FontSize="20" Foreground="Green" Margin="0,0,0,30"/>
+            <Border Background="#40000000" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Height="15">
+                <Border Background="#7F8B0000" x:Name="FourthHealtMaxBarMonster"
+                        CornerRadius="1"
+                        Margin="2"
+                        Width="180">
+                    <Border x:Name="FourthHealtBarMonster" Background="Red" HorizontalAlignment="Left" Width="180" CornerRadius="1">
+                    </Border>
+                </Border>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

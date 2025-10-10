@@ -1,20 +1,16 @@
-﻿<Window x:Class="KingBattle_Сабитов.MainWindow"
+﻿<Window x:Class="Batlle_Сабитов.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KingBattle_Сабитов"
+        xmlns:local="clr-namespace:Batlle_Сабитов"
         mc:Ignorable="d"
         Title="MainWindow"         
         Height="450" 
         Width="900"
         MinHeight="450" 
         MinWidth="900">
-    <Grid x:Name="MainWindow" Background="DarkGoldenrod">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
-        </Grid.ColumnDefinitions>
+    <Grid x:Name="MainGameWindow">
+        
     </Grid>
 </Window>

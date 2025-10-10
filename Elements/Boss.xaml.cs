@@ -1,5 +1,4 @@
-﻿using Batlle_Сабитов.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,19 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Batlle_Сабитов
+namespace Batlle_Сабитов.Elements
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Boss.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Boss : UserControl
     {
-        public static MainWindow init;
-        public MainWindow()
+        public Boss()
         {
             InitializeComponent();
-            init = this;
-            AddMonster.AddСhoiceCharacter();
+
+        }
+        private void Boss_Click(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

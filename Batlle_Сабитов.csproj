@@ -55,7 +55,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Elements\Batlle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\Boss.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\Confirmation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\FourMonster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\OneMonster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\StripOfLifeToBoss.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\TwoMonster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Elements\UserGameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\WorldMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,8 +99,40 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\AddMonster.cs" />
+    <Compile Include="Classes\Locations\CreateEndLocations.cs" />
+    <Compile Include="Classes\Locations\CreateLocations.cs" />
+    <Compile Include="Classes\AlwaysMonsters.cs" />
+    <Compile Include="Classes\NeedMetod.cs" />
+    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Locations\RepoAllLocations.cs" />
+    <Compile Include="Classes\RepoAlwaysMonsters.cs" />
+    <Compile Include="Elements\Batlle.xaml.cs">
+      <DependentUpon>Batlle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\Boss.xaml.cs">
+      <DependentUpon>Boss.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\Confirmation.xaml.cs">
+      <DependentUpon>Confirmation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\FourMonster.xaml.cs">
+      <DependentUpon>FourMonster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\OneMonster.xaml.cs">
+      <DependentUpon>OneMonster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\StripOfLifeToBoss.xaml.cs">
+      <DependentUpon>StripOfLifeToBoss.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\TwoMonster.xaml.cs">
+      <DependentUpon>TwoMonster.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Elements\UserGameWindow.xaml.cs">
       <DependentUpon>UserGameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\WorldMap.xaml.cs">
+      <DependentUpon>WorldMap.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -110,7 +174,47 @@
     <Resource Include="Images\Солдат_тб.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
+    <Resource Include="Images\Колмисильма.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\Фон_локация_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Зараженный.png" />
+    <Resource Include="Images\Неизвестный.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Скелет.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\Карта мира.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Пожиратель.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Шепчущие-Капканы.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\Фон_локация_2.png" />
+    <Resource Include="Images\Background\Фон_локация_3.png" />
+    <Resource Include="Images\Background\Фон_локация_4.png" />
+    <Resource Include="Images\Background\Фон_локация_5.png" />
+    <Resource Include="Images\Background\Фон_финал.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\The end\Фон_конец.png" />
+    <Resource Include="Images\The end\Фон_локация_1_%28мирное_время%29.png" />
+    <Resource Include="Images\The end\Фон_локация_2_%28мирное_время%29.png" />
+    <Resource Include="Images\The end\Фон_локация_3_%28мирное_время%29.png" />
+    <Resource Include="Images\The end\Фон_локация_4_%28мирное_время%29.jpg" />
+    <Resource Include="Images\The end\Фон_локация_5_%28мирное_время%29.png" />
+    <Resource Include="Images\The end\Фон_обрущение_пещеры.png" />
+    <Resource Include="Images\The end\Фон_Победа.png" />
+    <Resource Include="Images\The end\Фон_побежденный_бог.png" />
+    <Resource Include="Images\The end\Фон_праздник_X.png" />
+    <Resource Include="Images\The end\Фон_тронный_зал.png" />
+    <Resource Include="Images\The end\Фон_Хаос.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

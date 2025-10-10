@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Batlle_Сабитов.Elements.StripOfLifeToBoss"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
+             mc:Ignorable="d" 
+             d:DesignHeight="10" d:DesignWidth="760">
+    <Grid>
+        <Border Background="#40000000">
+            <Border Background="#7F8B0000" 
+                CornerRadius="1"
+                Width="756"
+                Margin="2">
+                <Border x:Name="HealtBarBoss" Background="Red" HorizontalAlignment="Left" Width="756" CornerRadius="1">
+                </Border>
+            </Border>
+            </Border>
+    </Grid>
+</UserControl>

@@ -1,5 +1,4 @@
-﻿using Batlle_Сабитов.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Batlle_Сабитов
+namespace Batlle_Сабитов.Elements
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для StripOfLifeToBoss.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StripOfLifeToBoss : UserControl
     {
-        public static MainWindow init;
-        public MainWindow()
+        public StripOfLifeToBoss()
         {
             InitializeComponent();
-            init = this;
-            AddMonster.AddСhoiceCharacter();
         }
     }
 }

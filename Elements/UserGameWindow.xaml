@@ -11,32 +11,38 @@
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        <Image x:Name="LbSoldat" VerticalAlignment="Top" Margin="50,10,50,0" Source="/Batlle_Сабитов;component/Images/Солдат_лб.png"/>
-        <Image x:Name="SbSoldat" VerticalAlignment="Top" Margin="50,10,50,0" Grid.Column="1" Source="/Batlle_Сабитов;component/Images/Солдат_сб.png"/>
-        <Image x:Name="TbSoldat" VerticalAlignment="Top" Margin="50,10,50,0" Grid.Column="2" Source="/Batlle_Сабитов;component/Images/Солдат_тб.png"/>
-
-        <Label Content="Солдат в легкой броне" VerticalAlignment="Center" FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Aquamarine" Margin="0,110,0,0"/>
-        <Label x:Name="Lbhealt" Content="Здоровье: 100" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,165,0,0"/>
-        <Label x:Name="LbArmor" Content="Броня: 10" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,220,0,0"/>
-        <Label x:Name="LbDexterity" Content="Ловкость: 50" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,275,0,0"/>
-        <Label x:Name="LbdDamage" Content="Урон: 25" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,330,0,0"/>
-        <Label x:Name="LbdTypeArmor" Content="Тип брони: кожа" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,385,0,0"/>
-        <Button Click="Lb_Click" Background="Transparent" BorderBrush="Transparent"/>
-
-        <Label Content="Солдат в средней броне"  Grid.Column="1" VerticalAlignment="Center"  FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Yellow" Margin="0,110,0,0"/>
-        <Label x:Name="Mbhealt" Content="Здоровье: 100" Grid.Column="1" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,165,0,0"/>
-        <Label x:Name="MbArmor" Content="Броня: 50"  Grid.Column="1" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,220,0,0"/>
-        <Label x:Name="MbDexterity" Content="Ловкость: 20"  Grid.Column="1" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,275,0,0"/>
-        <Label x:Name="MbdDamage" Content="Урон: 40"  Grid.Column="1" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,330,0,0"/>
-        <Label x:Name="MbdTypeArmor" Content="Тип брони: хитин"  Grid.Column="1" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,385,0,0"/>
-        <Button Click="Mb_Click" Grid.Column="1" Background="Transparent" BorderBrush="Transparent"/>
-
-        <Label Content="Солдат в тяжелой броне"  Grid.Column="2" VerticalAlignment="Center"  FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Red" Margin="0,110,0,0"/>
-        <Label x:Name="Hbhealt" Content="Здоровье: 100" Grid.Column="2" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,165,0,0"/>
-        <Label x:Name="HbArmor" Content="Броня: 90"  Grid.Column="2" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,220,0,0"/>
-        <Label x:Name="HbDexterity" Content="Ловкость: 1"  Grid.Column="2" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,275,0,0"/>
-        <Label x:Name="HbdDamage" Content="Урон: 55"  Grid.Column="2" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,330,0,0"/>
-        <Label x:Name="HbdTypeArmor" Content="Тип брони: адамантий"  Grid.Column="2" VerticalAlignment="Center" Foreground="white" HorizontalAlignment="Left" Margin="20,385,0,0"/>
-        <Button Click="Hb_Click" Grid.Column="2" Background="Transparent" BorderBrush="Transparent"/>
+        <Grid MouseLeftButtonDown="Lb_Click" Cursor="Hand">
+            <Image x:Name="LbImages" VerticalAlignment="Top" Margin="50,10,50,0" Source="/Batlle_Сабитов;component/Images/Солдат_лб.png"/>
+            <Label x:Name="LbName" Content="Солдат в легкой броне" VerticalAlignment="Center" FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Aquamarine" Margin="0,110,0,0"/>
+            <Grid Margin="20,290,140,0"  Background="#99B8860B">
+                <Label x:Name="LbHealt" Content="Здоровье: 100" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0"/>
+                <Label x:Name="LbArmor" Content="Броня: 10" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,25,0,0"/>
+                <Label x:Name="LbDexterity" Content="Ловкость: 50" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,50,0,0"/>
+                <Label x:Name="LbDamage" Content="Урон: 25" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,75,0,0"/>
+                <Label x:Name="LbTypeArmor" Content="Тип брони: кожа" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,100,0,0"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" MouseLeftButtonDown="Mb_Click" Cursor="Hand">
+            <Image x:Name="MbImages" VerticalAlignment="Top" Margin="50,10,50,0" Source="/Batlle_Сабитов;component/Images/Солдат_сб.png"/>
+            <Label x:Name="MbName" Content="Солдат в средней броне" VerticalAlignment="Center"  FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Yellow" Margin="0,110,0,0"/>
+            <Grid Margin="20,290,140,0" Background="#99B8860B">
+                <Label x:Name="MbHealt" Content="Здоровье: 100" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0"/>
+                <Label x:Name="MbArmor" Content="Броня: 50"  VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,25,0,0"/>
+                <Label x:Name="MbDexterity" Content="Ловкость: 20" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left"  Margin="0,50,0,0"/>
+                <Label x:Name="MbDamage" Content="Урон: 40" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left"  Margin="0,75,0,0"/>
+                <Label x:Name="MbTypeArmor" Content="Тип брони: хитин" VerticalAlignment="Top" Foreground="white" HorizontalAlignment="Left" Margin="0,100,0,0"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="2" MouseLeftButtonDown="Hb_Click" Cursor="Hand">
+            <Image x:Name="HbImages" VerticalAlignment="Top" Margin="50,10,50,0" Source="/Batlle_Сабитов;component/Images/Солдат_тб.png"/>
+            <Label x:Name="HbName" Content="Солдат в тяжелой броне" VerticalAlignment="Center"  FontWeight="Bold"  HorizontalAlignment="Center" FontSize="18" Foreground="Red" Margin="0,110,0,0"/>
+            <Grid Margin="20,290,140,0" Background="#99B8860B">
+                <Label x:Name="HbHealt" Content="Здоровье: 100" Foreground="white"  Margin="0"/>
+                <Label x:Name="HbArmor" Content="Броня: 90" Foreground="white" Margin="0,25,0,0"/>
+                <Label x:Name="HbDexterity" Content="Ловкость: 5" Foreground="white" Margin="0,50,0,0"/>
+                <Label x:Name="HbDamage" Content="Урон: 55" Foreground="white" Margin="0,75,0,0"/>
+                <Label x:Name="HbTypeArmor" Content="Тип брони: адамантий" Foreground="white" Margin="0,100,0,0"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
