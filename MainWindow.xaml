@@ -9,7 +9,9 @@
         Height="450" 
         Width="900"
         MinHeight="450" 
-        MinWidth="900">
+        MinWidth="900"
+        MaxHeight="500" 
+        MaxWidth="800">
     <Grid x:Name="MainGameWindow">
         
     </Grid>

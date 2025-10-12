@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Batlle_Сабитов.Elements.GameOver"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="900">
+    <Grid>
+        <Image Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/The end/Фон_Хаос.png"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="800" Height="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Конец" Foreground="DarkRed" FontWeight="Bold"  HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontSize="60"/>
+                <Label Grid.Row="1" Content="Рождение бога на руинах" Foreground="DarkRed" FontWeight="DemiBold"  HorizontalAlignment="Center" VerticalAlignment="Top"
+                       FontSize="30"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Click="End_Click" Grid.Column="1" Margin="10" Padding="0" Background="#80FF0000" Foreground="White" FontSize="20" Content="Выход" FontWeight="Bold" BorderBrush="Red"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

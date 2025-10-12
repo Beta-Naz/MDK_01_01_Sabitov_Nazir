@@ -71,6 +71,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Elements\GameOver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Elements\Object.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Elements\OneMonster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\PeacefulWorld.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -99,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Elements\VyButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Elements\WorldMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,10 +127,14 @@
     <Compile Include="Classes\Locations\CreateEndLocations.cs" />
     <Compile Include="Classes\Locations\CreateLocations.cs" />
     <Compile Include="Classes\AlwaysMonsters.cs" />
-    <Compile Include="Classes\NeedMetod.cs" />
+    <Compile Include="Classes\Metod\SpawnMonsters.cs" />
+    <Compile Include="Classes\Metod\SwitchingLocations.cs" />
+    <Compile Include="Classes\Metod\Variables.cs" />
+    <Compile Include="Classes\Metod\Animation.cs" />
+    <Compile Include="Classes\Metod\AttackAndProtection.cs" />
     <Compile Include="Classes\Object\Items.cs" />
     <Compile Include="Classes\Object\MedicinalPotions.cs" />
-    <Compile Include="Classes\Object\RepoMedicinalPorions.cs" />
+    <Compile Include="Classes\Object\RepoMedicinalPotions.cs" />
     <Compile Include="Classes\Object\RepoWeapon.cs" />
     <Compile Include="Classes\Object\Weapon.cs" />
     <Compile Include="Classes\Player.cs" />
@@ -137,6 +153,9 @@
     <Compile Include="Elements\FourMonster.xaml.cs">
       <DependentUpon>FourMonster.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Elements\GameOver.xaml.cs">
+      <DependentUpon>GameOver.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Elements\Object.xaml.cs">
       <DependentUpon>Object.xaml</DependentUpon>
     </Compile>
@@ -145,6 +164,9 @@
     </Compile>
     <Compile Include="Elements\OneMonster.xaml.cs">
       <DependentUpon>OneMonster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\PeacefulWorld.xaml.cs">
+      <DependentUpon>PeacefulWorld.xaml</DependentUpon>
     </Compile>
     <Compile Include="Elements\SpecificationsAndStore.xaml.cs">
       <DependentUpon>SpecificationsAndStore.xaml</DependentUpon>
@@ -157,6 +179,9 @@
     </Compile>
     <Compile Include="Elements\UserGameWindow.xaml.cs">
       <DependentUpon>UserGameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\VyButton.xaml.cs">
+      <DependentUpon>VyButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Elements\WorldMap.xaml.cs">
       <DependentUpon>WorldMap.xaml</DependentUpon>
@@ -236,10 +261,10 @@
     <Resource Include="Images\The end\Фон_локация_3_%28мирное_время%29.png" />
     <Resource Include="Images\The end\Фон_локация_4_%28мирное_время%29.jpg" />
     <Resource Include="Images\The end\Фон_локация_5_%28мирное_время%29.png" />
-    <Resource Include="Images\The end\Фон_обрущение_пещеры.png" />
-    <Resource Include="Images\The end\Фон_Победа.png" />
     <Resource Include="Images\The end\Фон_побежденный_бог.png" />
-    <Resource Include="Images\The end\Фон_праздник_X.png" />
+    <Resource Include="Images\The end\Фон_Победа.png" />
+    <Resource Include="Images\The end\Фон_обрущение_пещеры.png" />
+    <Resource Include="Images\The end\Фон_праздник.png" />
     <Resource Include="Images\The end\Фон_тронный_зал.png" />
     <Resource Include="Images\The end\Фон_Хаос.png" />
   </ItemGroup>
@@ -262,6 +287,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Object\Эльфийский_лук.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Object\Без_оружия.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

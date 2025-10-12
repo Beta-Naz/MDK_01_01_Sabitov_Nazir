@@ -27,27 +27,32 @@ namespace Batlle_Сабитов.Elements
         {
             InitializeComponent();
 
-            NeedMetod.death = 1;
-
+            Classes.Metod.Variables.death = 1;
             firstMonsters = Monsters[0];
-            FirstMonsterBorder.BorderBrush = NeedMetod.PowerAndVulnerabilityMonster
-    [NeedMetod.SelectVulnerability(firstMonsters.Vulnerability)];
+            FirstMonsterBorder.BorderBrush = Classes.Metod.Variables.PowerAndVulnerabilityMonster
+                [Classes.Metod.AttackAndProtection.SelectVulnerability(firstMonsters.Vulnerability)];
             ImageMonster.Source = new BitmapImage(new Uri(firstMonsters.Images));
             OneMonstrPower.Content = firstMonsters.Name;
+            OneMonstrPower.Foreground = Classes.Metod.Variables.PowerAndVulnerabilityMonster[firstMonsters.Power];
+            TextHealtFirst.Content = firstMonsters.Healt;
         }
         private void FirstMonster_Click(object sender, MouseButtonEventArgs e)
         {
             if (Player.ValidAttack)
             {
-                double damage = NeedMetod.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.Healt, firstMonsters.Armor);
-                if (FirstHealtBarMonster.Width - damage < 0)
+                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.MaxHealt, firstMonsters.Armor, firstMonsters.Vulnerability);
+                if (FirstHealtBarMonster.Width - damageForBar < 0)
                 {
+                    Classes.Metod.Variables.death--;
+                    TextHealtFirst.Content = 0;
                     FirstHealtBarMonster.Width = 0;
-                    AddMonster.AddWorldMap();
+                    Classes.Metod.SwitchingLocations.DeadMonsters(firstMonsters.EXP, firstMonsters.Money);
                 }
                 else
                 {
-                    FirstHealtBarMonster.Width -= damage;
+                    firstMonsters.Healt -= damageForHealt;
+                    FirstHealtBarMonster.Width -= damageForBar;
+                    TextHealtFirst.Content = Math.Round(firstMonsters.Healt,0);
                 }
                 Batlle.СhangeTurn();
             }

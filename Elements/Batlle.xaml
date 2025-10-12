@@ -46,7 +46,12 @@
             <Border x:Name="TurnFive" Grid.Column="4" Background="Red" Width="15" Height="15" CornerRadius="15"/>
         </Grid>
         <Grid x:Name="BossHealt" VerticalAlignment="Bottom" Height="10" Margin="20,0,20,5">
-            
+
+        </Grid>
+        <Grid Margin="118,-44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="166" Height="249">
+            <Grid x:Name="Avoidance" Height="250" VerticalAlignment="Top">
+                <Label x:Name="TextAvoidance" Content="" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

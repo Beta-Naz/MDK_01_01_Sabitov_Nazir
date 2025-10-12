@@ -8,18 +8,18 @@ namespace Batlle_Сабитов.Classes.Object
 {
     public class Weapon : Items
     {
-        public static double MultiplierDamage { get; set; }
-        public static double CriticalСhance { get; set; }
-        public static double DebuffDexterity {  get; set; }
-        public static double CriticalDamage { get; set; }
-        public static List<string> TypeDamage { get; set; }
+        public double MultiplierDamage { get; set; }
+        public double CriticalСhance { get; set; }
+        public double DebuffDexterity {  get; set; }
+        public double CriticalDamage { get; set; }
+        public List<string> TypeDamage { get; set; }
 
         public Weapon(int price, string images, string name, bool canUse, double multiplierDamage,
             double criticalСhance, double criticalDamage, double debuffDexterity, 
             List<string> typeDamage) : base(price, images, name, canUse)
         {
             MultiplierDamage = multiplierDamage;
-            CriticalСhance = criticalDamage;
+            CriticalСhance = criticalСhance;
             DebuffDexterity = debuffDexterity;
             CriticalDamage = criticalDamage;
             TypeDamage = typeDamage;

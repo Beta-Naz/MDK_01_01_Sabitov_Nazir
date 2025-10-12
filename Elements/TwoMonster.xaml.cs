@@ -30,40 +30,46 @@ namespace Batlle_Сабитов.Elements
         {
             InitializeComponent();
 
-            NeedMetod.death = 2;
+            Classes.Metod.Variables.death = 2;
 
             firstMonsters = Monsters[0];
             FirstImageMonster.Source = new BitmapImage(new Uri(firstMonsters.Images));
-            FirstMonsterBorder.BorderBrush = NeedMetod.PowerAndVulnerabilityMonster
-                [NeedMetod.SelectVulnerability(firstMonsters.Vulnerability)];
+            FirstMonsterBorder.BorderBrush = Classes.Metod.Variables.PowerAndVulnerabilityMonster
+                [Classes.Metod.AttackAndProtection.SelectVulnerability(firstMonsters.Vulnerability)];
             FirstMonsterPower.Content = firstMonsters.Name;
-            FirstMonsterPower.Foreground = NeedMetod.PowerAndVulnerabilityMonster[firstMonsters.Power];
+            FirstMonsterPower.Foreground = Classes.Metod.Variables.PowerAndVulnerabilityMonster[firstMonsters.Power];
+            TextHealtFirst.Content = firstMonsters.Healt;
 
             secondMonsters = Monsters[1];
             SecondImageMonster.Source = new BitmapImage(new Uri(secondMonsters.Images));
-            SecondMonsterBorder.BorderBrush = NeedMetod.PowerAndVulnerabilityMonster
-                [NeedMetod.SelectVulnerability(secondMonsters.Vulnerability)];
+            SecondMonsterBorder.BorderBrush = Classes.Metod.Variables.PowerAndVulnerabilityMonster
+                [Classes.Metod.AttackAndProtection.SelectVulnerability(secondMonsters.Vulnerability)];
             SecondMonsterPower.Content = secondMonsters.Name;
-            SecondMonsterPower.Foreground = NeedMetod.PowerAndVulnerabilityMonster[secondMonsters.Power];
+            SecondMonsterPower.Foreground = Classes.Metod.Variables.PowerAndVulnerabilityMonster[secondMonsters.Power];
+            TextHealtSecond.Content = secondMonsters.Healt;
         }
 
         private void FirstMonster_Click(object sender, MouseButtonEventArgs e)
         {
             if (Player.ValidAttack)
             {
-                double damage = NeedMetod.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.Healt, firstMonsters.Armor);
-                if (FirstHealtBarMonster.Width - damage < 0)
+                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.Healt, firstMonsters.Armor, firstMonsters.Vulnerability);
+                if (FirstHealtBarMonster.Width - damageForBar < 0)
                 {
+                    Classes.Metod.Variables.death--;
                     FirstHealtBarMonster.Width = 0;
-                    NeedMetod.DeadMonsters(firstMonsters.EXP);
+                    TextHealtFirst.Content = 0;
+                    Classes.Metod.SwitchingLocations.DeadMonsters(firstMonsters.EXP, firstMonsters.Money);
                     Turn.RemoveTurn("First");
                     FirstMonster.Children.Clear();
                 }
                 else
                 {
-                    FirstHealtBarMonster.Width -= damage;
+                    firstMonsters.Healt -= damageForHealt;
+                    TextHealtFirst.Content = Math.Round(firstMonsters.Healt, 0);
+                    FirstHealtBarMonster.Width -= damageForBar;
+                    Batlle.СhangeTurn();
                 }
-                Batlle.СhangeTurn();
             }
         }
 
@@ -71,19 +77,24 @@ namespace Batlle_Сабитов.Elements
         {
             if (Player.ValidAttack)
             {
-                double damage = NeedMetod.MinusHealt(SecondHealtMaxBarMonster.Width, secondMonsters.Healt, secondMonsters.Armor);
-                if (SecondHealtBarMonster.Width - damage < 0)
+                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(SecondHealtMaxBarMonster.Width, secondMonsters.Healt, secondMonsters.Armor, secondMonsters.Vulnerability);
+                if (SecondHealtBarMonster.Width - damageForBar < 0)
                 {
+                    Classes.Metod.Variables.death--;
                     SecondHealtBarMonster.Width = 0;
-                    NeedMetod.DeadMonsters(secondMonsters.EXP);
+                    TextHealtSecond.Content = 0;
+                    Classes.Metod.SwitchingLocations.DeadMonsters(secondMonsters.EXP, secondMonsters.Money);
                     Turn.RemoveTurn("Second");
                     SecondMonster.Children.Clear();
+
                 }
                 else
                 {
-                    SecondHealtBarMonster.Width -= damage;
+                    secondMonsters.Healt -= damageForHealt;
+                    TextHealtSecond.Content = Math.Round(secondMonsters.Healt, 0);
+                    SecondHealtBarMonster.Width -= damageForBar;
+                    Batlle.СhangeTurn();
                 }
-                Batlle.СhangeTurn();
             }
         }
     }

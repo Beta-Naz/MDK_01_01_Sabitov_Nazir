@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="235">
-    <Grid Background="#801A1007" MouseLeftButtonDown="Use">
+    <Grid Background="#801A1007" MouseLeftButtonDown="Use" Cursor="Hand">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
@@ -15,10 +15,8 @@
             <Image x:Name="ImagesProduct" Source="/Batlle_Сабитов;component/Images/Object/Малое_зелье_здоровья.png"/>
         </Border>
         <Grid Grid.Column="1">
-            <Border VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="15" Height="15" CornerRadius="100" Margin="5" Background="Gold">
-                <Label Content="Р" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGoldenrod"/>
-            </Border>
             <Label x:Name="NameProduct" FontWeight="Bold" Content="Малое зелье здоровье" VerticalAlignment="Center" FontSize="11" Padding="0" HorizontalAlignment="Left" Foreground="White"/>
+            <Label x:Name="DescriptionProduct" FontWeight="DemiBold" Content="Востановление: +50" VerticalAlignment="Top" FontSize="7" Padding="0" HorizontalAlignment="Left" Foreground="LightGreen" Margin="0,57,0,0"/>
         </Grid>
     </Grid>
 </UserControl>

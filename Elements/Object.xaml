@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="235">
-    <Grid Background="#801A1007" MouseLeftButtonDown="Buy">
+    <Grid Background="#801A1007" MouseLeftButtonDown="Buy" Cursor="Hand">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
@@ -20,6 +20,7 @@
             </Border>
             <Label x:Name="NameProduct" FontWeight="Bold" Content="Малое зелье здоровье" VerticalAlignment="Center" FontSize="11" Padding="0" HorizontalAlignment="Left" Foreground="White"/>
             <Label x:Name="Price" Content="10" VerticalAlignment="Bottom" FontSize="10" Padding="0" Margin="0,0,25,6" HorizontalAlignment="Right" Foreground="Gold"/>
+            <Label x:Name="DescriptionProduct" FontWeight="DemiBold" Content="Востановление: +50" VerticalAlignment="Top" FontSize="7" Padding="0" HorizontalAlignment="Left" Foreground="LightGreen" Margin="0,57,0,0"/>
         </Grid>
     </Grid>
 </UserControl>

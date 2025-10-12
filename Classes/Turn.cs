@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Batlle_Сабитов.Elements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Batlle_Сабитов.Classes
@@ -15,7 +17,7 @@ namespace Batlle_Сабитов.Classes
         {
             WhoseMove = move;
         }
-        public static List<Turn> Turns;
+        public static List<Turn> Turns = new List<Turn>();
 
         public static Dictionary<string, Brush> ColorsToTurn;
         public static void ResetColorTurns()
@@ -32,9 +34,8 @@ namespace Batlle_Сабитов.Classes
 
         public static void ResetTurns(int countMonsters)
         {
-            Turns = new List<Turn>();
-            List<string> nomberMonster = new List<string>();
-            nomberMonster.Add("First");
+            Turns.Clear();
+            List<string> nomberMonster = new List<string>() { "First" };
             if (countMonsters >= 2)
             {
                 nomberMonster.Add("Second");
@@ -62,9 +63,36 @@ namespace Batlle_Сабитов.Classes
         public static void RemoveTurn(string nameTurn)
         {
             Turn poisk = Turns.Find(t => t.WhoseMove == nameTurn);
-            if(poisk != null)
+            if (poisk != null)
             {
                 Turns.Remove(poisk);
+                var turnBack = new[]
+                {
+                     Batlle.init.TurnOne,
+                     Batlle.init.TurnTwo,
+                     Batlle.init.TurnThree,
+                     Batlle.init.TurnFour,
+                     Batlle.init.TurnFive,
+                };
+                for (int i = 0; i < turnBack.Length; i++)
+                {
+                    if (turnBack[i].Background == ColorsToTurn[nameTurn])
+                    {
+                        for (int j = i; j < turnBack.Length - 1; j++)
+                        {
+                            turnBack[j].Background = turnBack[j + 1].Background;
+                        }
+                        if (Turns.Count > 0)
+                        {
+                            if (Batlle.turn >= Turns.Count)
+                            {
+                                Batlle.turn = 0;
+                            }
+                            turnBack[4].Background = ColorsToTurn[Turns[Batlle.turn].WhoseMove];
+                        }
+                        break;
+                    }
+                }
             }
         }
     }

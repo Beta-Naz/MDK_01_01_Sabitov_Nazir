@@ -8,13 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="450">
     <Grid MinHeight="450" Height="450" MinWidth="450" Width="450" >
         <Image Source="/Batlle_Сабитов;component/Images/Background/Карта мира.jpg"/>
-        <Polygon MouseLeftButtonDown="Zamok_Click" Cursor="Hand" Points="0,450 0,215 205,300 255,450" Fill="Transparent"/>
-        <Polygon MouseLeftButtonDown="Forest_Click" Cursor="Hand" Points="0,0 0,214 205,298 107,0" Fill="Transparent"/>
-        <Polygon MouseLeftButtonDown="DarkForest_Click" Cursor="Hand" Points="110,0 194.2,256 205,240 323,0" Fill="#80666666"/>
-        <Polygon MouseLeftButtonDown="Swamp_Click" Cursor="Hand" Points="450,0 325,0 200,253 450,183 440,10 373.6,10 364.7,18.5 364.7,73 373.3,81.3 432,81.3 440,73 440,10 450,183" Fill="#80666666"/>
-        <Polygon MouseLeftButtonDown="SpecificationsAndStore_Click" Cursor="Hand" Points="440,10 373.6,10 364.7,18.5 364.7,73 373.3,81.3 432,81.3 440,73" Fill="Transparent"/>
-        <Polygon MouseLeftButtonDown="DeadForest_Click" Cursor="Hand" Points="450,185 195,258 206.5,294.9 450,320" Fill="#80666666"/>
-        <Polygon MouseLeftButtonDown="Dune_Click" Cursor="Hand" Points="450,320 207.5,297.5 257,450 450,450" Fill="#80666666"/>
+        <Polygon x:Name="Zamok" MouseLeftButtonDown="Zamok_Click" Cursor="Hand" Points="0,450 0,215 205,300 255,450" Fill="Transparent"/>
+        <Polygon x:Name="Forest" MouseLeftButtonDown="Forest_Click" Cursor="Hand" Points="0,0 0,214 205,298 107,0" Fill="Transparent"/>
+        <Polygon x:Name="DarkForest" MouseLeftButtonDown="DarkForest_Click" Cursor="Hand" Points="110,0 194.2,256 205,240 323,0" Fill="#80666666"/>
+        <Polygon x:Name="Swamp" MouseLeftButtonDown="Swamp_Click" Cursor="Hand" Points="450,0 325,0 200,253 450,183 440,10 373.6,10 364.7,18.5 364.7,73 373.3,81.3 432,81.3 440,73 440,10 450,183" Fill="#80666666"/>
+        <Polygon x:Name="SpecificationsAndStore" MouseLeftButtonDown="SpecificationsAndStore_Click" Cursor="Hand" Points="440,10 373.6,10 364.7,18.5 364.7,73 373.3,81.3 432,81.3 440,73" Fill="Transparent"/>
+        <Polygon x:Name="DeadForest" MouseLeftButtonDown="DeadForest_Click" Cursor="Hand" Points="450,185 195,258 206.5,294.9 450,320" Fill="#80666666"/>
+        <Polygon x:Name="Dune" MouseLeftButtonDown="Dune_Click" Cursor="Hand" Points="450,320 207.5,297.5 257,450 450,450" Fill="#80666666"/>
 
         <Grid x:Name="Confirmation" Width="300" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center">
         </Grid>

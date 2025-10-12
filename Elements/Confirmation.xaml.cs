@@ -36,8 +36,8 @@ namespace Batlle_Сабитов.Elements
 
         private void Yes_Click(object sender, RoutedEventArgs e)
         {
-            Classes.CreateLocations.LastLocation = name;
-            Classes.CreateLocations.LastLocationSourse = sourse;
+            Classes.Locations.CreateLocations.LastLocation = name;
+            Classes.Locations.CreateLocations.LastLocationSourse = sourse;
             WorldMap.init.Confirmation.Children.Clear();
             Classes.AddMonster.AddBatlle();
         }

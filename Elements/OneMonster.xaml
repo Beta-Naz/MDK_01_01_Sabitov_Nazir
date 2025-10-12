@@ -13,8 +13,8 @@
                 CornerRadius="5">
             <Image x:Name="ImageMonster" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Скелет.png"/>
         </Border>
-        <Label x:Name="OneMonstrPower" Content="???" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30" Foreground="Green" Margin="0,0,0,110"/>
-        <Border Background="#40000000" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,90" Height="20">
+        <Label x:Name="OneMonstrPower" Content="???" VerticalAlignment="Bottom" FontWeight="Bold" HorizontalAlignment="Center" FontSize="30" Foreground="Green" Margin="0,0,0,130"/>
+        <Border Background="#40000000" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,100" Height="20">
             <Border x:Name="FirstHealtMaxBarMonster" Background="#7F8B0000" 
                 CornerRadius="1"
                 Margin="2"
@@ -23,5 +23,6 @@
                 </Border>
             </Border>
         </Border>
+        <Label x:Name="TextHealtFirst" VerticalAlignment="Bottom" Margin="0,0,0,102" Foreground="DarkRed" HorizontalAlignment="Center" FontWeight="Bold" FontSize="12" Content="999" Padding="0"/>
     </Grid>
 </UserControl>

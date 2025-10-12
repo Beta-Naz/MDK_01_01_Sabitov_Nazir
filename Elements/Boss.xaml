@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400">
     <Grid x:Name="boss" MouseLeftButtonDown="Boss_Click" Cursor="Hand">
-        <Border VerticalAlignment="Top" Width="390" Height="390" Margin="0,5,0,0"
+        <Border x:Name="FirstMonsterBorder" VerticalAlignment="Top" Width="390" Height="390" Margin="0,5,0,0"
                     BorderBrush="DarkRed"
                     BorderThickness="4"
                     CornerRadius="5">
             <Image x:Name="ImageMonster" Stretch="UniformToFill" Source="/Batlle_Сабитов;component/Images/Скелет.png"/>
         </Border>
-        <Label Content="???" VerticalAlignment="Bottom" FontWeight="Black" HorizontalAlignment="Center" FontSize="30" Foreground="DarkRed" Margin="0,0,0,10"/>
+        <Label x:Name="OneMonstrPower" Content="???" VerticalAlignment="Bottom" FontWeight="Black" HorizontalAlignment="Center" FontSize="30" Foreground="DarkRed" Margin="0,0,0,10"/>
     </Grid>
 </UserControl>

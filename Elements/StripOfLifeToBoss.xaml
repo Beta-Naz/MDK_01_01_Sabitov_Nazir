@@ -9,12 +9,14 @@
     <Grid>
         <Border Background="#40000000">
             <Border Background="#7F8B0000" 
+                x:Name="HealtMaxBarBoss"
                 CornerRadius="1"
                 Width="756"
                 Margin="2">
                 <Border x:Name="HealtBarBoss" Background="Red" HorizontalAlignment="Left" Width="756" CornerRadius="1">
                 </Border>
             </Border>
-            </Border>
+        </Border>
+        <Label x:Name="TextHealtBoss" VerticalAlignment="Center" Foreground="DarkRed" HorizontalAlignment="Center" FontWeight="Bold" FontSize="6" Content="999" Padding="0"/>
     </Grid>
 </UserControl>

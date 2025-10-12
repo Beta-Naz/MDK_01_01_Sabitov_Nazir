@@ -1,0 +1,92 @@
+﻿using Batlle_Сабитов.Elements;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace Batlle_Сабитов.Classes.Metod
+{
+    public class AttackAndProtection
+    {
+        public static Random random = new Random();
+        public static (double x, double y) MinusHealt(double width, double healt, double armorMonstr, string[] typeDamage)
+        {
+            double Vulnerability = 0.75;//монстр имеет имунитет к этому виду урона
+            if (Player.TypeWeapon != null)
+            {
+                for (int i = 0; i < Player.TypeWeapon.TypeDamage.Count; i++)
+                {
+                    if (typeDamage.Contains(Player.TypeWeapon.TypeDamage[i]))
+                    {
+                        Vulnerability = 2; //бонус к атаке
+                        break;
+                    }
+                }
+            }
+            double Bonus = Player.Damage * BonusForAttack() * Vulnerability * CalculateArmor(armorMonstr);
+            return (width / healt * Bonus, Bonus);
+        }
+        public static double MinusHealtForPlayer(double damage)
+        {
+            return damage * CalculateArmor(Player.Armor);
+        }
+        public static double CalculateChanceCrit()
+        {
+            int chanceCrit = random.Next(1, 101);
+            if (Player.TypeWeapon != null)
+            {
+                if (Player.TypeWeapon.CriticalСhance * 100 > chanceCrit)
+                {
+                    return Player.TypeWeapon.CriticalDamage;
+                }
+            }
+            return 0;
+        }
+        public static double BonusForAttack()
+        {
+            if (Player.TypeWeapon != null)
+            {
+                return CalculateChanceCrit() + Player.TypeWeapon.MultiplierDamage;
+            }
+            return 1;
+        }
+        public static double CalculateArmor(double Armor)
+        {
+            if (Avoidance())
+            {
+                return 0;
+            }
+            else
+            {
+                return 1 - Armor * 0.01;
+            }
+        }
+        public static bool Avoidance()
+        {
+            if (Batlle.init.TurnOne.Background != Classes.Turn.ColorsToTurn["Player"])
+            {
+                int countMonsters = random.Next(1, 101);
+                if (Player.Dexterity >= countMonsters)
+                {
+                    Animation.StartTimers();
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static string SelectVulnerability(string[] Vulne)
+        {
+            if (Vulne.Length == 1)
+            {
+                return Vulne[0];
+            }
+            if (Vulne.Contains("Cutting") && Vulne.Contains("Stabbing") && !Vulne.Contains("Crushing"))
+            {
+                return "CuttingAndStabbing";
+            }
+            return "";
+        }
+    }
+}

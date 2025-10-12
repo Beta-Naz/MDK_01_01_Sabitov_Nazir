@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Batlle_Сабитов.Classes
+namespace Batlle_Сабитов.Classes.Locations
 {
     public class RepoAllLocations
     {

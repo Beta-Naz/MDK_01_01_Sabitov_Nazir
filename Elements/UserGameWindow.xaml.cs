@@ -35,9 +35,10 @@ namespace Batlle_Сабитов.Elements
             string color = LbName.Foreground.ToString();
             string[] typeArmor = LbTypeArmor.Content.ToString().Trim().Split(' ');
             string images = LbImages.Source.ToString();
+            Classes.Player.Money = 200;
             Vibor(double.Parse(healt[1]), double.Parse(damage[1]), 
                 double.Parse(armor[1]), double.Parse(dexterity[1]), 
-                name, typeArmor[1], images, color);
+                name, typeArmor[1], images, color, 0);
         }
 
         private void Mb_Click(object sender, MouseButtonEventArgs e)
@@ -50,9 +51,10 @@ namespace Batlle_Сабитов.Elements
             string color = MbName.Foreground.ToString();
             string[] typeArmor = MbTypeArmor.ToString().Trim().Split(' ');
             string images = MbImages.Source.ToString();
+            Classes.Player.Money = 100;
             Vibor(double.Parse(healt[1]), double.Parse(damage[1]),
                 double.Parse(armor[1]), double.Parse(dexterity[1]),
-                name, typeArmor[1], images, color);
+                name, typeArmor[1], images, color, 1);
         }
 
         private void Hb_Click(object sender, MouseButtonEventArgs e)
@@ -67,10 +69,10 @@ namespace Batlle_Сабитов.Elements
             string images = HbImages.Source.ToString();
             Vibor(double.Parse(healt[1]), double.Parse(damage[1]),
                 double.Parse(armor[1]), double.Parse(dexterity[1]),
-                name, typeArmor[1], images, color);
+                name, typeArmor[2], images, color, 2);
         }
         public static void Vibor(double Healt, double Damage, double Armor, 
-            double Dexterity, string Name, string TypeArmor, string Images, string ColorName)
+            double Dexterity, string Name, string TypeArmor, string Images, string ColorName, int NumberWeapon)
         {
             Classes.Player.MaxHealt = Healt;
             Classes.Player.Healt = Healt;
@@ -81,6 +83,9 @@ namespace Batlle_Сабитов.Elements
             Classes.Player.TypeArmor = TypeArmor;
             Classes.Player.Images = Images;
             Classes.Player.ColorName = ColorName;
+            Classes.Player.Money = 9999;
+            Classes.Player.FreeLevels = 9999;
+            Classes.Player.TypeWeapon = null;
             AddMonster.AddWorldMap();
         }
     }

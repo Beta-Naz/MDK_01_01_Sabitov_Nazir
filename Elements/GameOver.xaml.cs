@@ -1,5 +1,4 @@
-﻿using Batlle_Сабитов.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,17 +16,18 @@ using System.Windows.Shapes;
 namespace Batlle_Сабитов.Elements
 {
     /// <summary>
-    /// Логика взаимодействия для StripOfLifeToBoss.xaml
+    /// Логика взаимодействия для GameOver.xaml
     /// </summary>
-    public partial class StripOfLifeToBoss : UserControl
+    public partial class GameOver : UserControl
     {
-        public static StripOfLifeToBoss init;
-        public StripOfLifeToBoss(AlwaysMonsters Boss)
+        public GameOver()
         {
             InitializeComponent();
-            init = this;
-            TextHealtBoss.Content = Boss.Healt;
         }
 
+        private void End_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.init.Close();
+        }
     }
 }

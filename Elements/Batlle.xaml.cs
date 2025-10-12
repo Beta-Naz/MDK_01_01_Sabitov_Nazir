@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -20,53 +21,49 @@ namespace Batlle_Сабитов.Elements
     /// </summary>
     public partial class Batlle : UserControl
     {
-        public static bool startTimer = false;
-        private System.Timers.Timer turnTimer;
+        private static System.Timers.Timer turnTimer;
         public static Batlle init;
-        int turn;
-        int monsterTurn;
+        public static int turn;
         public Batlle()
         {
             InitializeComponent();
-            StopTimer();
             turn = 0;
-            monsterTurn = 0;
 
             init = this;
-            NeedMetod.RandomCountMosters();
-            PlayerHealt.Content = $"Здоровье: {Player.Healt}/{Player.MaxHealt}";
-            PlayerDamage.Content = $"Урон: " + Player.Damage;
-            PlayerDexterity.Content = $"Ловкость: " + Player.Dexterity;
+            Classes.Metod.SpawnMonsters.RandomCountMosters();
+            PlayerHealt.Content = $"Здоровье: {Math.Round(Player.Healt,0)}/{Math.Round(Player.MaxHealt, 0)}";
+            PlayerDamage.Content = $"Урон: " + Math.Round(Player.Damage, 0);
+            PlayerDexterity.Content = $"Ловкость: " + Math.Round(Player.Dexterity, 0);
             PlayerEXP.Content = $"Опыт:  " + Player.EXP;
             PlayerImages.Source = new BitmapImage(new Uri(Player.Images));
             PlayerName.Content = Player.Name;
-            PlayerName.Foreground = NeedMetod.Color[Player.ColorName];
-            BackGround.Source = new BitmapImage(new Uri(CreateLocations.LastLocationSourse));
+            PlayerName.Foreground = Classes.Metod.Variables.Color[Player.ColorName];
+            BackGround.Source = new BitmapImage(new Uri(Classes.Locations.CreateLocations.LastLocationSourse));
 
             Classes.Turn.ResetColorTurns();
             Player.ValidAttack = true;
 
-            TurnOne.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
-            TurnTwo.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[1].WhoseMove];
-            TurnThree.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[2].WhoseMove];
+            init.TurnOne.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
+            init.TurnTwo.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[1].WhoseMove];
+            init.TurnThree.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[2].WhoseMove];
             if (Classes.Turn.Turns.Count >= 4)
             {
-                TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[3].WhoseMove];
+                init.TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[3].WhoseMove];
                 if (Classes.Turn.Turns.Count >= 5)
                 {
-                    TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[4].WhoseMove];
+                    init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[4].WhoseMove];
                     turn = 4;
                 }
                 else
                 {
-                    TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
+                    init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
                     turn = 0;
                 }
             }
             else
             {
-                TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
-                TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[1].WhoseMove];
+                init.TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
+                init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[1].WhoseMove];
                 turn = 1;
             }
         }
@@ -80,50 +77,55 @@ namespace Batlle_Сабитов.Elements
             init.TurnTwo.Background = init.TurnThree.Background;
             init.TurnThree.Background = init.TurnFour.Background;
             init.TurnFour.Background = init.TurnFive.Background;
-            init.turn++;
-            if (init.turn >= Classes.Turn.Turns.Count)
+            turn++;
+            if (turn >= Classes.Turn.Turns.Count)
             {
-                init.turn = 0;
+                turn = 0;
             }
-            init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[init.turn].WhoseMove];
+            init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[turn].WhoseMove];
             if (init.TurnOne.Background != Classes.Turn.ColorsToTurn["Player"])
             {
-                init.monsterTurn ++;
-                if (!startTimer)
-                {
-                    init.StartTimer();
-                    startTimer = true;
-                    Player.ValidAttack = false;
-                }
+                init.StartTimer();
+                Player.ValidAttack = false;
             }
             else
             {
-                init.monsterTurn = 0;
-                startTimer = false;
                 Player.ValidAttack = true;
-                init.StopTimer();
             }
         }
         public static void AttackMonster(double damageMonster)
         {
-            double damage = NeedMetod.MinusHealtForPlayer(damageMonster);
+            double damage = Classes.Metod.AttackAndProtection.MinusHealtForPlayer(damageMonster);
             if (Player.Healt - damage <= 0)
             {
                 Player.Healt = 0;
-                init.PlayerHealt.Content = $"Здоровье: {Player.Healt}/{Player.MaxHealt}";
+                init.PlayerHealt.Content = $"Здоровье: {Math.Round(Player.Healt, 0)}/{Math.Round(Player.MaxHealt, 0)}";
+                MainWindow.init.MainGameWindow.Children.Clear();
+                MainWindow.init.MainGameWindow.Children.Add(new Elements.GameOver());
             }
             else
             {
                 Player.Healt -= damage;
-                init.PlayerHealt.Content = $"Здоровье: {Player.Healt}/{Player.MaxHealt}";
+                init.PlayerHealt.Content = $"Здоровье: {Math.Round(Player.Healt, 0)}/{Math.Round(Player.MaxHealt, 0)}";
             }
             СhangeTurn();
         }
+        private static void DisposeTimer()
+        {
+            if (turnTimer != null)
+            {
+                turnTimer.Elapsed -= init.TimerForAttackMonsters;
+                turnTimer.Stop();
+                turnTimer.Dispose();
+                turnTimer = null;
+            }
+        }
         private void StartTimer()
         {
-            turnTimer = new Timer(3000);
+            DisposeTimer();
+            turnTimer = new System.Timers.Timer(2000);
             turnTimer.Elapsed += TimerForAttackMonsters;
-            turnTimer.AutoReset = true;
+            turnTimer.AutoReset = false;
             turnTimer.Start();
         }
         private void TimerForAttackMonsters(object sender, ElapsedEventArgs e)
@@ -147,11 +149,6 @@ namespace Batlle_Сабитов.Elements
                     AttackMonster(AlwaysMonsters.WhatSpawnMonsters[3].Damage);
                 }
             });
-        }
-        public void StopTimer()
-        {
-            turnTimer?.Stop();
-            turnTimer?.Dispose();
         }
     }
 }
