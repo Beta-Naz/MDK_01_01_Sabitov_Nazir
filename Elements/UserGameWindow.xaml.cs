@@ -49,7 +49,7 @@ namespace Batlle_Сабитов.Elements
             string[] dexterity = MbDexterity.Content.ToString().Trim().Split(' ');
             string name = MbName.Content.ToString();
             string color = MbName.Foreground.ToString();
-            string[] typeArmor = MbTypeArmor.ToString().Trim().Split(' ');
+            string[] typeArmor = MbTypeArmor.Content.ToString().Trim().Split(' ');
             string images = MbImages.Source.ToString();
             Classes.Player.Money = 100;
             Vibor(double.Parse(healt[1]), double.Parse(damage[1]),
@@ -83,8 +83,8 @@ namespace Batlle_Сабитов.Elements
             Classes.Player.TypeArmor = TypeArmor;
             Classes.Player.Images = Images;
             Classes.Player.ColorName = ColorName;
-            Classes.Player.Money = 9999;
-            Classes.Player.FreeLevels = 9999;
+            //Classes.Player.Money = 9999; //Для меня
+            //Classes.Player.FreeLevels = 9999;  //Для меня
             Classes.Player.TypeWeapon = null;
             AddMonster.AddWorldMap();
         }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Batlle_Сабитов.Elements"
              mc:Ignorable="d" 
                       d:DesignHeight="450" d:DesignWidth="400">
-    <Grid x:Name="FirstMonstr" MouseLeftButtonDown="FirstMonster_Click" Cursor="Hand">
+    <Grid x:Name="FirstMonster" MouseLeftButtonDown="FirstMonster_Click" Cursor="Hand">
         <Border x:Name="FirstMonsterBorder" VerticalAlignment="Top" Width="250" Height="250" Margin="0,10,0,0"
                 BorderBrush="DarkCyan"
                 BorderThickness="4"

@@ -66,32 +66,39 @@ namespace Batlle_Сабитов.Classes
             if (poisk != null)
             {
                 Turns.Remove(poisk);
+
+                int removedIndex = Turns.IndexOf(poisk);
+                if (removedIndex != -1 && Batlle.turn > removedIndex)
+                {
+                    Batlle.turn--;
+                }
+
+                if (Batlle.turn >= Turns.Count)
+                {
+                    Batlle.turn = 0;
+                }
+
                 var turnBack = new[]
                 {
-                     Batlle.init.TurnOne,
-                     Batlle.init.TurnTwo,
-                     Batlle.init.TurnThree,
-                     Batlle.init.TurnFour,
-                     Batlle.init.TurnFive,
+                    Batlle.init.TurnOne,
+                    Batlle.init.TurnTwo,
+                    Batlle.init.TurnThree,
+                    Batlle.init.TurnFour,
+                    Batlle.init.TurnFive,
                 };
+
                 for (int i = 0; i < turnBack.Length; i++)
                 {
-                    if (turnBack[i].Background == ColorsToTurn[nameTurn])
+                    if (i < Turns.Count)
                     {
-                        for (int j = i; j < turnBack.Length - 1; j++)
-                        {
-                            turnBack[j].Background = turnBack[j + 1].Background;
-                        }
-                        if (Turns.Count > 0)
-                        {
-                            if (Batlle.turn >= Turns.Count)
-                            {
-                                Batlle.turn = 0;
-                            }
-                            turnBack[4].Background = ColorsToTurn[Turns[Batlle.turn].WhoseMove];
-                        }
-                        break;
+                        int turnIndex = (Batlle.turn + i) % Turns.Count;
+                        turnBack[i].Background = ColorsToTurn[Turns[turnIndex].WhoseMove];
                     }
+                }
+                if (turnBack[0].Background == ColorsToTurn["Player"])
+                {
+                    Player.ValidAttack = true;
+                    Batlle.DisposeTimer();
                 }
             }
         }

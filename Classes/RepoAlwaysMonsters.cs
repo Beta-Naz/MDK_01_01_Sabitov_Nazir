@@ -40,8 +40,8 @@ namespace Batlle_Сабитов.Classes
             }
             List<AlwaysMonsters> allMonster = new List<AlwaysMonsters>
             {
-                new AlwaysMonsters(100,40,5,15,1,"Easy", new string [] { "Crushing" },"Скелет","pack://application:,,,/Batlle_Сабитов;component/Images/Скелет.png", 12),
-                new AlwaysMonsters(200,25,30,20,1,"Easy", new string [] { "Cutting" },"Зараженный","pack://application:,,,/Batlle_Сабитов;component/Images/Зараженный.png", 15),
+                new AlwaysMonsters(100,40,0,15,1,"Easy", new string [] { "Crushing" },"Скелет","pack://application:,,,/Batlle_Сабитов;component/Images/Скелет.png", 12),
+                new AlwaysMonsters(200,25,15,20,1,"Easy", new string [] { "Cutting" },"Зараженный","pack://application:,,,/Batlle_Сабитов;component/Images/Зараженный.png", 15),
                 new AlwaysMonsters(random.Next(50,200),random.Next(50,200),random.Next(0,90),random.Next(15,200),1,"Medium", UnnamedVulnerability,"Неизвестный","pack://application:,,,/Batlle_Сабитов;component/Images/Неизвестный.png", random.Next(0,30)),
                 new AlwaysMonsters(350,55,20,300,1,"Hard", new string [] { "Cutting", "Stabbing" },"Извергут","pack://application:,,,/Batlle_Сабитов;component/Images/Олень.png", 100),
                 new AlwaysMonsters(1000,15,0,400,1,"Hard", new string [] { "Stabbing" },"Болотный","pack://application:,,,/Batlle_Сабитов;component/Images/Болотный.png", 120),

@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Elements\Anim\AnimTextDamageMonsterxaml.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Elements\Batlle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +145,9 @@
     <Compile Include="Classes\Locations\RepoAllLocations.cs" />
     <Compile Include="Classes\RepoAlwaysMonsters.cs" />
     <Compile Include="Classes\Turn.cs" />
+    <Compile Include="Elements\Anim\AnimTextDamageMonsterxaml.xaml.cs">
+      <DependentUpon>AnimTextDamageMonsterxaml.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Elements\Batlle.xaml.cs">
       <DependentUpon>Batlle.xaml</DependentUpon>
     </Compile>

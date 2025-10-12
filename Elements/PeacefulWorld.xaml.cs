@@ -46,7 +46,7 @@ namespace Batlle_Сабитов.Elements
         }
         public static void StartAnimation()
         {
-            timer = new Timer(3);
+            timer = new Timer(32);
             timer.Elapsed += TimerAnim;
             timer.AutoReset = false;
             timer.Start();
@@ -101,7 +101,7 @@ namespace Batlle_Сабитов.Elements
         {
             Random rnd = new Random();
             int dir = rnd.Next(1, 5);
-            int x = rnd.Next(1, 21);
+            int x = rnd.Next(1, 10);
             switch (dir)
             {
                 case 1:
@@ -119,6 +119,7 @@ namespace Batlle_Сабитов.Elements
             }
             if(init.tr == 2)
             {
+                DisposeTimer();
                 init.Anim.Margin = new Thickness(0, 0, 0, 0);
                 init.ImagesVictory.Source = new BitmapImage(new Uri(
                     Classes.Locations.RepoAllLocations.AllEndLocations()[3].BackgroundLocations));

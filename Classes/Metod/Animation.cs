@@ -1,20 +1,37 @@
 ﻿using Batlle_Сабитов.Elements;
+using Batlle_Сабитов.Elements.Anim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 
 namespace Batlle_Сабитов.Classes.Metod
 {
     public class Animation
     {
         private static System.Timers.Timer timer;
-        public static void StartTimers()
+        private static void DisposeTimer()
         {
-            timer = new Timer(2);
-            timer.Elapsed += TimerForAvoidance;
+            if (timer != null)
+            {
+                timer.Elapsed -= TimerForAvoidance;
+                timer.Stop();
+                timer.Dispose();
+                timer = null;
+            }
+        }
+        public static void StartTimers(string count)
+        {
+            DisposeTimer();
+            timer = new Timer(16);
+            if(count == "Avoidance")
+            {
+                timer.Elapsed += TimerForAvoidance;
+            }
             timer.AutoReset = false;
             timer.Start();
         }
@@ -31,7 +48,7 @@ namespace Batlle_Сабитов.Classes.Metod
             {
                 Batlle.init.TextAvoidance.Content = "УКЛОНЕНИЕ";
             }
-            Batlle.init.Avoidance.Height -= 1;
+            Batlle.init.Avoidance.Height -= 10;
             if (Batlle.init.Avoidance.Height == 0)
             {
                 Batlle.init.TextAvoidance.Content = "";
@@ -39,7 +56,7 @@ namespace Batlle_Сабитов.Classes.Metod
             }
             else
             {
-                StartTimers();
+                StartTimers("Avoidance");
             }
         }
     }

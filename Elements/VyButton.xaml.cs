@@ -60,7 +60,7 @@ namespace Batlle_Сабитов.Elements
         }
         private void Victory_Click(object sender, RoutedEventArgs e)
         {
-            if (PeacefulWorld.init.EndVictory.Foreground == new SolidColorBrush(Colors.Green))
+            if (init.VictorButton.Content.ToString().Trim() == "Спасибо за игру")
             {
                 Batlle_Сабитов.MainWindow.init.Close();
                 return;
@@ -85,7 +85,7 @@ namespace Batlle_Сабитов.Elements
         public static void StartTimersForTitri()
         {
             DisposeTimer();
-            timer = new Timer(5);
+            timer = new Timer(32);
             timer.Elapsed += TimerForTitri;
             timer.AutoReset = false;
             timer.Start();
@@ -99,19 +99,17 @@ namespace Batlle_Сабитов.Elements
         }
         public static void Titri()
         {
-            if (PeacefulWorld.init.Titri.Height == 200)
+            if (PeacefulWorld.init.Titri.Height <= 800)
             {
-                PeacefulWorld.init.EndVictory.Foreground = new SolidColorBrush(Colors.Green);
-                PeacefulWorld.init.EndVictoryText.Foreground = new SolidColorBrush(Colors.Green);
+                PeacefulWorld.init.EndVictory.Foreground = new SolidColorBrush(Colors.Black);
+                PeacefulWorld.init.EndVictoryText.Foreground = new SolidColorBrush(Colors.Black);
                 PeacefulWorld.init.VictoryButton.Children.Add(new Elements.VyButton());
-                if(init.VictorButton.Content != null)
-                {
-                    init.VictorButton.Content = "Спасибо за игру";
-                }
+                init.VictorButton.Content = "Спасибо за игру";
+                DisposeTimer();
             }
             else
             {
-                PeacefulWorld.init.Titri.Height--;
+                PeacefulWorld.init.Titri.Height -= 3;
                 StartTimersForTitri();
             }
         }

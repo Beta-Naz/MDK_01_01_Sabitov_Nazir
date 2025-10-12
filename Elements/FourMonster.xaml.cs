@@ -69,20 +69,21 @@ namespace Batlle_Сабитов.Elements
         {
             if (Player.ValidAttack)
             {
-                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.MaxHealt, firstMonsters.Armor, firstMonsters.Vulnerability);
-                if (FirstHealtBarMonster.Width - damageForBar < 0)
+                double damage = Classes.Metod.AttackAndProtection.MinusHealt(firstMonsters.Armor, firstMonsters.Vulnerability);
+                if (firstMonsters.Healt - damage <= 0)
                 {
                     Classes.Metod.Variables.death--;
                     Turn.RemoveTurn("First");
                     FirstHealtBarMonster.Width = 0;
+                    firstMonsters.Healt = 0;
                     TextHealtFirst.Content = 0;
                     FirstMonster.Children.Clear();
                     Classes.Metod.SwitchingLocations.DeadMonsters(firstMonsters.EXP, firstMonsters.Money);
                 }
                 else
                 {
-                    firstMonsters.Healt -= damageForHealt;
-                    FirstHealtBarMonster.Width -= damageForBar;
+                    firstMonsters.Healt -= damage;
+                    FirstHealtBarMonster.Width = (firstMonsters.Healt / firstMonsters.MaxHealt) * FirstHealtMaxBarMonster.Width;
                     TextHealtFirst.Content = Math.Round(firstMonsters.Healt,0);
                     Batlle.СhangeTurn();
                 }
@@ -93,20 +94,21 @@ namespace Batlle_Сабитов.Elements
         {
             if (Player.ValidAttack)
             {
-                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(SecondHealtMaxBarMonster.Width, secondMonsters.MaxHealt, secondMonsters.Armor, secondMonsters.Vulnerability);
-                if (SecondHealtBarMonster.Width - damageForBar < 0)
+                double damage = Classes.Metod.AttackAndProtection.MinusHealt(secondMonsters.Armor, secondMonsters.Vulnerability);
+                if (secondMonsters.Healt - damage <= 0)
                 {
                     Classes.Metod.Variables.death--;
                     Turn.RemoveTurn("Second");
                     SecondHealtBarMonster.Width = 0;
+                    secondMonsters.Healt = 0;
                     TextHealtSecond.Content = 0;
                     SecondMonster.Children.Clear();
                     Classes.Metod.SwitchingLocations.DeadMonsters(secondMonsters.EXP, secondMonsters.Money);
                 }
                 else
                 {
-                    secondMonsters.Healt -= damageForHealt;
-                    SecondHealtBarMonster.Width -= damageForBar;
+                    secondMonsters.Healt -= damage;
+                    SecondHealtBarMonster.Width = (secondMonsters.Healt / secondMonsters.MaxHealt) * SecondHealtMaxBarMonster.Width;
                     TextHealtSecond.Content = Math.Round(secondMonsters.Healt,0);
                     Batlle.СhangeTurn();
                 }
@@ -117,20 +119,21 @@ namespace Batlle_Сабитов.Elements
         {
             if (Player.ValidAttack)
             {
-                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(ThirdHealtMaxBarMonster.Width, thirdMonsters.MaxHealt, thirdMonsters.Armor, thirdMonsters.Vulnerability);
-                if (ThirdHealtBarMonster.Width - damageForBar < 0)
+                double damage = Classes.Metod.AttackAndProtection.MinusHealt(thirdMonsters.Armor, thirdMonsters.Vulnerability);
+                if (thirdMonsters.Healt - damage <= 0)
                 {
                     Classes.Metod.Variables.death--;
                     Turn.RemoveTurn("Third");
                     ThirdHealtBarMonster.Width = 0;
+                    thirdMonsters.Healt = 0;
                     TextHealtThird.Content = 0;
                     ThirdMonster.Children.Clear();
                     Classes.Metod.SwitchingLocations.DeadMonsters(thirdMonsters.EXP, thirdMonsters.Money);
                 }
                 else
                 {
-                    thirdMonsters.Healt -= damageForHealt;
-                    ThirdHealtBarMonster.Width -= damageForBar;
+                    thirdMonsters.Healt -= damage;
+                    ThirdHealtBarMonster.Width = (thirdMonsters.Healt / thirdMonsters.MaxHealt) * ThirdHealtMaxBarMonster.Width;
                     TextHealtThird.Content = Math.Round(thirdMonsters.Healt, 0);
                     Batlle.СhangeTurn();
                 }
@@ -141,20 +144,21 @@ namespace Batlle_Сабитов.Elements
         {
             if (Player.ValidAttack)
             {
-                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(FourthHealtMaxBarMonster.Width, fourthMonsters.MaxHealt, fourthMonsters.Armor, fourthMonsters.Vulnerability);
-                if (FourthHealtBarMonster.Width - damageForBar < 0)
+                double damage = Classes.Metod.AttackAndProtection.MinusHealt(fourthMonsters.Armor, fourthMonsters.Vulnerability);
+                if (fourthMonsters.Healt - damage <= 0)
                 {
                     Classes.Metod.Variables.death--;
                     Turn.RemoveTurn("Fourth");
                     FourthHealtBarMonster.Width = 0;
+                    fourthMonsters.Healt = 0;
                     TextHealtFourth.Content = 0;
                     FourthMonster.Children.Clear();
                     Classes.Metod.SwitchingLocations.DeadMonsters(fourthMonsters.EXP, fourthMonsters.Money);
                 }
                 else
                 {
-                    fourthMonsters.Healt -= damageForHealt;
-                    FourthHealtBarMonster.Width -= damageForBar;
+                    fourthMonsters.Healt -= damage;
+                    FourthHealtBarMonster.Width = (fourthMonsters.Healt / fourthMonsters.MaxHealt) * FourthHealtMaxBarMonster.Width;
                     TextHealtFourth.Content = Math.Round(fourthMonsters.Healt, 0);
                     Batlle.СhangeTurn();
                 }

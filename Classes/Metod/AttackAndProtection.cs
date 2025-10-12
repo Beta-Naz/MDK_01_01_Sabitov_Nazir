@@ -11,9 +11,9 @@ namespace Batlle_Сабитов.Classes.Metod
     public class AttackAndProtection
     {
         public static Random random = new Random();
-        public static (double x, double y) MinusHealt(double width, double healt, double armorMonstr, string[] typeDamage)
+        public static double MinusHealt(double armorMonstr, string[] typeDamage)
         {
-            double Vulnerability = 0.75;//монстр имеет имунитет к этому виду урона
+            double Vulnerability = 0.75; //монстр имеет имунитет к этому виду урона
             if (Player.TypeWeapon != null)
             {
                 for (int i = 0; i < Player.TypeWeapon.TypeDamage.Count; i++)
@@ -25,12 +25,29 @@ namespace Batlle_Сабитов.Classes.Metod
                     }
                 }
             }
+            else if (typeDamage.Contains("Crushing")) //Кулаки ТОЖЕ МОГУТ КРУШИТЬ!
+            {
+                Vulnerability = 1;
+            }
             double Bonus = Player.Damage * BonusForAttack() * Vulnerability * CalculateArmor(armorMonstr);
-            return (width / healt * Bonus, Bonus);
+            return (Bonus);
         }
-        public static double MinusHealtForPlayer(double damage)
+        public static double MinusHealtForPlayer(double damage, string WhoMonsters)
         {
-            return damage * CalculateArmor(Player.Armor);
+            double armor = CalculateArmor(Player.Armor);
+            Random rd = new Random();
+            if(armor != 0)
+            {
+                var spawn = new[]
+                {
+                Batlle.init.DamageFromMonstr_1,
+                Batlle.init.DamageFromMonstr_2,
+                Batlle.init.DamageFromMonstr_3,
+                };
+                int x = rd.Next(1, 3);
+                spawn[x].Children.Add(new Elements.Anim.AnimTextDamageMonsterxaml(damage * armor, WhoMonsters, x));
+            }
+            return damage * armor;
         }
         public static double CalculateChanceCrit()
         {
@@ -70,7 +87,7 @@ namespace Batlle_Сабитов.Classes.Metod
                 int countMonsters = random.Next(1, 101);
                 if (Player.Dexterity >= countMonsters)
                 {
-                    Animation.StartTimers();
+                    Animation.StartTimers("Avoidance");
                     return true;
                 }
             }

@@ -40,21 +40,24 @@ namespace Batlle_Сабитов.Elements
         {
             if (Player.ValidAttack)
             {
-                (double damageForBar, double damageForHealt) = Classes.Metod.AttackAndProtection.MinusHealt(FirstHealtMaxBarMonster.Width, firstMonsters.MaxHealt, firstMonsters.Armor, firstMonsters.Vulnerability);
-                if (FirstHealtBarMonster.Width - damageForBar < 0)
+                double damage = Classes.Metod.AttackAndProtection.MinusHealt(firstMonsters.Armor, firstMonsters.Vulnerability);
+                if (firstMonsters.Healt - damage <= 0)
                 {
                     Classes.Metod.Variables.death--;
-                    TextHealtFirst.Content = 0;
                     FirstHealtBarMonster.Width = 0;
+                    firstMonsters.Healt = 0;
+                    TextHealtFirst.Content = 0;
                     Classes.Metod.SwitchingLocations.DeadMonsters(firstMonsters.EXP, firstMonsters.Money);
+                    Turn.RemoveTurn("First");
+                    FirstMonster.Children.Clear();
                 }
                 else
                 {
-                    firstMonsters.Healt -= damageForHealt;
-                    FirstHealtBarMonster.Width -= damageForBar;
-                    TextHealtFirst.Content = Math.Round(firstMonsters.Healt,0);
+                    firstMonsters.Healt -= damage;
+                    TextHealtFirst.Content = Math.Round(firstMonsters.Healt, 0);
+                    FirstHealtBarMonster.Width = (firstMonsters.Healt / firstMonsters.MaxHealt) * FirstHealtMaxBarMonster.Width;
+                    Batlle.СhangeTurn();
                 }
-                Batlle.СhangeTurn();
             }
         }
     }

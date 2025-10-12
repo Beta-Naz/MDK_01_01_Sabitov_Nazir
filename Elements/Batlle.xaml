@@ -48,9 +48,24 @@
         <Grid x:Name="BossHealt" VerticalAlignment="Bottom" Height="10" Margin="20,0,20,5">
 
         </Grid>
-        <Grid Margin="118,-44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="166" Height="249">
+        <Grid Margin="118,-44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="166" Height="250">
             <Grid x:Name="Avoidance" Height="250" VerticalAlignment="Top">
                 <Label x:Name="TextAvoidance" Content="" FontWeight="Bold" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            </Grid>
+        </Grid>
+        <Grid Margin="118,-44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="166" Height="250">
+            <Grid x:Name="DamageFromMonstr_1" Height="250" VerticalAlignment="Top">
+                
+            </Grid>
+        </Grid>
+        <Grid Margin="56,32,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="166" Height="250">
+            <Grid x:Name="DamageFromMonstr_2" Height="250" VerticalAlignment="Top">
+
+            </Grid>
+        </Grid>
+        <Grid Margin="166,56,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="166" Height="250">
+            <Grid x:Name="DamageFromMonstr_3" Height="250" VerticalAlignment="Top">
+
             </Grid>
         </Grid>
     </Grid>

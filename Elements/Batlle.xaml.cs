@@ -1,4 +1,5 @@
 ﻿using Batlle_Сабитов.Classes;
+using Batlle_Сабитов.Elements.Anim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,28 +44,17 @@ namespace Batlle_Сабитов.Elements
             Classes.Turn.ResetColorTurns();
             Player.ValidAttack = true;
 
-            init.TurnOne.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
-            init.TurnTwo.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[1].WhoseMove];
-            init.TurnThree.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[2].WhoseMove];
-            if (Classes.Turn.Turns.Count >= 4)
+            init.TurnOne.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[turn].WhoseMove];
+            init.TurnTwo.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 1) % Classes.Turn.Turns.Count].WhoseMove];
+            init.TurnThree.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 2) % Classes.Turn.Turns.Count].WhoseMove];
+
+            if (Classes.Turn.Turns.Count > 3)
             {
-                init.TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[3].WhoseMove];
-                if (Classes.Turn.Turns.Count >= 5)
+                init.TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 3) % Classes.Turn.Turns.Count].WhoseMove];
+                if (Classes.Turn.Turns.Count > 4)
                 {
-                    init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[4].WhoseMove];
-                    turn = 4;
+                    init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 4) % Classes.Turn.Turns.Count].WhoseMove];
                 }
-                else
-                {
-                    init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
-                    turn = 0;
-                }
-            }
-            else
-            {
-                init.TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[0].WhoseMove];
-                init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[1].WhoseMove];
-                turn = 1;
             }
         }
         private void Player_Click(object sender, MouseButtonEventArgs e)
@@ -73,16 +63,23 @@ namespace Batlle_Сабитов.Elements
         }
         public static void СhangeTurn()
         {
-            init.TurnOne.Background = init.TurnTwo.Background;
-            init.TurnTwo.Background = init.TurnThree.Background;
-            init.TurnThree.Background = init.TurnFour.Background;
-            init.TurnFour.Background = init.TurnFive.Background;
             turn++;
             if (turn >= Classes.Turn.Turns.Count)
             {
                 turn = 0;
             }
-            init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[turn].WhoseMove];
+            init.TurnOne.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[turn].WhoseMove];
+            init.TurnTwo.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 1) % Classes.Turn.Turns.Count].WhoseMove];
+            init.TurnThree.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 2) % Classes.Turn.Turns.Count].WhoseMove];
+
+            if (Classes.Turn.Turns.Count > 3)
+            {
+                init.TurnFour.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 3) % Classes.Turn.Turns.Count].WhoseMove];
+                if (Classes.Turn.Turns.Count > 4)
+                {
+                    init.TurnFive.Background = Classes.Turn.ColorsToTurn[Classes.Turn.Turns[(turn + 4) % Classes.Turn.Turns.Count].WhoseMove];
+                }
+            }
             if (init.TurnOne.Background != Classes.Turn.ColorsToTurn["Player"])
             {
                 init.StartTimer();
@@ -93,9 +90,9 @@ namespace Batlle_Сабитов.Elements
                 Player.ValidAttack = true;
             }
         }
-        public static void AttackMonster(double damageMonster)
+        public static void AttackMonster(double damageMonster, string WhoMonsters)
         {
-            double damage = Classes.Metod.AttackAndProtection.MinusHealtForPlayer(damageMonster);
+            double damage = Classes.Metod.AttackAndProtection.MinusHealtForPlayer(damageMonster, WhoMonsters);
             if (Player.Healt - damage <= 0)
             {
                 Player.Healt = 0;
@@ -110,7 +107,7 @@ namespace Batlle_Сабитов.Elements
             }
             СhangeTurn();
         }
-        private static void DisposeTimer()
+        public static void DisposeTimer()
         {
             if (turnTimer != null)
             {
@@ -134,19 +131,19 @@ namespace Batlle_Сабитов.Elements
             {
                 if (init.TurnOne.Background == Classes.Turn.ColorsToTurn["First"])
                 {
-                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[0].Damage);
+                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[0].Damage, "First");
                 }
                 else if (init.TurnOne.Background == Classes.Turn.ColorsToTurn["Second"])
                 {
-                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[1].Damage);
+                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[1].Damage, "Second");
                 }
                 else if (init.TurnOne.Background == Classes.Turn.ColorsToTurn["Third"])
                 {
-                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[2].Damage);
+                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[2].Damage, "Third");
                 }
                 else if (init.TurnOne.Background == Classes.Turn.ColorsToTurn["Fourth"])
                 {
-                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[3].Damage);
+                    AttackMonster(AlwaysMonsters.WhatSpawnMonsters[3].Damage, "Fourth");
                 }
             });
         }
