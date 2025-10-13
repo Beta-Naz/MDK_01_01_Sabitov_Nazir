@@ -6,13 +6,18 @@
         xmlns:local="clr-namespace:Human_Сабитов"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="450" 
+        Height="500" 
         Width="800"
-        MinHeight="450" 
+        MinHeight="500" 
         MinWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" x:Name="parent">
             
         </StackPanel>
+        <Button Grid.Row="1" Width="200" Margin="5" Content="Dialog" Click="Dialog_Click"/>
     </Grid>
 </Window>

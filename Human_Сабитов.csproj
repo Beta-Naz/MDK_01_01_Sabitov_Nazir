@@ -67,6 +67,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Deutsch.cs" />
+    <Compile Include="Classes\English.cs" />
     <Compile Include="Classes\Human.cs" />
     <Compile Include="Classes\Phrase.cs" />
     <Compile Include="Classes\Russian.cs" />
@@ -110,6 +112,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\ic_deutsch.png" />
+    <Content Include="Voices\Hallo.mp3" />
+    <Content Include="Voices\Hello.mp3" />
+    <Content Include="Voices\How are you.mp3" />
+    <Content Include="Voices\Mein Name ist Sasha.mp3" />
+    <Content Include="Voices\My name is Alena.mp3" />
+    <Content Include="Voices\Wie geht es.mp3" />
     <Content Include="Voices\Как_дела.mp3" />
     <Content Include="Voices\Меня_зовут_Александр.mp3" />
     <Content Include="Voices\Привет.mp3" />

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Human_Сабитов.Classes;
 
 namespace Human_Сабитов.Elements
 {
@@ -30,7 +31,7 @@ namespace Human_Сабитов.Elements
             lrace.Content = Data.GetType().Name; 
         }
 
-        private void Speak(object sender, MouseButtonEventArgs e)
+        public void Speak(object sender, MouseButtonEventArgs e)
         {
             Human.Speak(text);
         }
