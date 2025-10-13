@@ -17,5 +17,6 @@ namespace Human_Сабитов.Classes
             Img = img;
         }
         public abstract void Speak(Label Phrase);
+
     }
 }
