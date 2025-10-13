@@ -20,9 +20,19 @@ namespace Human_Сабитов.Elements
     /// </summary>
     public partial class Item : UserControl
     {
-        public Item()
+        Classes.Human Human;
+        public Item(object Data)
         {
             InitializeComponent();
+            Human = Data as Classes.Human;
+            img.Source = new BitmapImage(new Uri(this.Human.Img));
+            name.Content = Human.Name;
+            lrace.Content = Data.GetType().Name;
+        }
+
+        private void Speak(object sender, MouseButtonEventArgs e)
+        {
+            Human.Speak(text);
         }
     }
 }

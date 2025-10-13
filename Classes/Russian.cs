@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Human_Сабитов.Classes
 {
@@ -14,8 +11,13 @@ namespace Human_Сабитов.Classes
 
         private int StepAudio
         {
-            get { return stepAudio; }
-            set {stepAudio = value;
+            get 
+            { 
+                return stepAudio; 
+            }
+            set 
+            {
+                stepAudio = value;
                 if (stepAudio > Phrases.Count - 1)
                 {
                     stepAudio = 0;
@@ -29,8 +31,8 @@ namespace Human_Сабитов.Classes
         public override void Speak(Label Phrase)
         {
             Phrase.Content = Phrases[StepAudio]._Phrase;
-            MainWindow.MediaPLayer.Open(new Uri(Phrases[StepAudio].Src));
-            MainWindow.MediaPLayer.Play();
+            MainWindow.MediaPlayer.Open(new Uri(Phrases[StepAudio].Src));
+            MainWindow.MediaPlayer.Play();
             StepAudio++;
         }
         public static List<Phrase> AllPhrases()

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Human_Сабитов.Classes
 {
@@ -17,6 +14,5 @@ namespace Human_Сабитов.Classes
             Img = img;
         }
         public abstract void Speak(Label Phrase);
-
     }
 }
