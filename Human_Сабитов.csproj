@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Elements\Item.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,6 +69,10 @@
     </Compile>
     <Compile Include="Classes\Human.cs" />
     <Compile Include="Classes\Phrase.cs" />
+    <Compile Include="Classes\Russian.cs" />
+    <Compile Include="Elements\Item.xaml.cs">
+      <DependentUpon>Item.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -100,9 +108,7 @@
     <Resource Include="Images\ic_english.png" />
     <Resource Include="Images\ic_russian.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Elements\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Voices\Как_дела.mp3" />
     <Content Include="Voices\Меня_зовут_Александр.mp3" />
