@@ -102,7 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Elements\" />
-    <Folder Include="Voices\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Voices\Как_дела.mp3" />
+    <Content Include="Voices\Меня_зовут_Александр.mp3" />
+    <Content Include="Voices\Привет.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
