@@ -27,7 +27,7 @@ namespace Human_Сабитов.Elements
             Human = Data as Classes.Human;
             img.Source = new BitmapImage(new Uri(this.Human.Img));
             name.Content = Human.Name;
-            lrace.Content = Data.GetType().Name;
+            lrace.Content = Data.GetType().Name; 
         }
 
         private void Speak(object sender, MouseButtonEventArgs e)
