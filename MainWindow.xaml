@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Overload_Сабитов"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        Height="450" 
+        Width="800"
+        MinHeight="450" 
+        MinWidth="800"
+        Background="AliceBlue">
     <Grid>
-         
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <ListBox x:Name="Tab" Margin="10"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Label VerticalAlignment="Center" Margin="10" Padding="0" Content="Введите любой символ для разделителя"/>
+                <TextBox x:Name="Separator" Grid.Row="1" Margin="10"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Click="Button_Click" Content="По машинам" Margin="20"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
