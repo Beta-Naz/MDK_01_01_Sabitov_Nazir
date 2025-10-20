@@ -24,5 +24,10 @@
             <ComboBox x:Name="cdGenres" Margin="10,90,9.8,0" VerticalAlignment="Top" Grid.Column="1" SelectionChanged="SelectGenres"/>
             <ComboBox x:Name="cdYear" Margin="10,90,9.8,0" VerticalAlignment="Top" Grid.Column="2" SelectionChanged="SelectYear"/>
         </Grid>
+        <ScrollViewer Margin="0,120,-0.4,0">
+            <StackPanel x:Name="parent">
+                
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
