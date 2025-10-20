@@ -28,6 +28,7 @@ namespace Overload_Сабитов
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Tab.Items.Clear();
             var student = students.Select(c => c.GetFIO(Separator.Text));
             if (Separator.Text == "" || Separator.Text == null || Separator.Text.Length == 2)
             {
