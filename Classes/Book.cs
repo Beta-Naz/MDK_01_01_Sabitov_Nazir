@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Annotations;
 
 namespace Book_Сабитов.Classes
 {
@@ -46,10 +48,11 @@ namespace Book_Сабитов.Classes
         public string ToGenres()
         {
             string toGenres = "";
-            for(int iGenre = 0; iGenre < this.Genres.Count; iGenre++)
+            aaa(Id);
+            for (int iGenre = 0; iGenre < Genres.Count; iGenre++)
             {
-                toGenres += this.Genres[iGenre].Name;
-                if(iGenre < this.Genres.Count - 1)
+                toGenres += Genres[iGenre].Name;
+                if(iGenre < Genres.Count - 1)
                 {
                     toGenres += ", ";
                 }
@@ -68,6 +71,10 @@ namespace Book_Сабитов.Classes
                 }
             }
             return toAuthors;
+        }
+        public static void aaa(int a)
+        {
+            //MessageBox.Show($"{a}");
         }
     }
 }

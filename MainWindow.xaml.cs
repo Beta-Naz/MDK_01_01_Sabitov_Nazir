@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Book_Сабитов.Classes;
-
+using Microsoft.Win32;
 namespace Book_Сабитов
 {
     /// <summary>
@@ -27,14 +19,18 @@ namespace Book_Сабитов
         public MainWindow()
         {
             InitializeComponent();
+            Cr();
+        }
+        public void Cr()
+        {
             AddAuthors();
             AddGenres();
             AddYears();
-
             CreateUI(AllBooks);
         }
         public void AddAuthors()
         {
+            cdAuthors.Items.Clear();
             cdAuthors.Items.Add("Выберите ...");
             foreach (Classes.Author author in AllAuthors)
             {
@@ -43,6 +39,7 @@ namespace Book_Сабитов
         }
         public void AddGenres()
         {
+            cdGenres.Items.Clear();
             cdGenres.Items.Add("Выберите ...");
             foreach (Classes.Genre genres in AllGenres)
             {
@@ -51,11 +48,12 @@ namespace Book_Сабитов
         }
         public void AddYears()
         {
-            cdGenres.Items.Add("Выберите ...");
+            cdYear.Items.Clear();
+            cdYear.Items.Add("Выберите ...");
             List<int> AllYears = new List<int>();
             foreach (Classes.Book book in AllBooks)
             {
-                if(AllYears.Find(x => x == book.Year) == 0)
+                if (AllYears.Find(x => x == book.Year) == 0)
                 {
                     AllYears.Add(book.Year);
                     cdYear.Items.Add(book.Year);
@@ -80,8 +78,8 @@ namespace Book_Сабитов
         private void Search_Book(object sender, KeyEventArgs e) => Search();
         public void Search()
         {
-            List<Classes.Book> FindBook = AllBooks.FindAll(x =>  x.Name.ToLower().Contains(tbSearch.Text.ToLower()));
-            if(cdAuthors.SelectedIndex > 0)
+            List<Classes.Book> FindBook = AllBooks.FindAll(x => x.Name.ToLower().Contains(tbSearch.Text.ToLower()));
+            if (cdAuthors.SelectedIndex > 0)
             {
                 Classes.Author SelectAuthor = AllAuthors.Find(x => x.FIO == cdAuthors.SelectedItem.ToString());
                 FindBook = FindBook.FindAll(x => x.Authors.Find(y => y.Id == SelectAuthor.Id) != null);
@@ -96,6 +94,108 @@ namespace Book_Сабитов
                 FindBook = FindBook.FindAll(x => x.Year == Convert.ToInt32(cdYear.SelectedItem.ToString()));
             }
             CreateUI(FindBook);
+        }
+
+        private void Import(object sender, RoutedEventArgs e)
+        {
+            string nameDan = "";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.Title = "Отжать данные из текстового файла";
+            if (openFileDialog.ShowDialog() != null)
+            {
+                string filePath = openFileDialog.FileName;
+                string[] lines = File.ReadAllLines(filePath);
+                AllAuthors = new List<Author>();
+                AllGenres = new List<Genre>();
+                AllBooks = new List<Book>();
+                foreach (string line in lines)
+                {
+                    if (line == "")
+                    {
+                        continue;
+                    }
+                    if (line == "Авторы:")
+                    {
+                        nameDan = line;
+                        continue;
+                    }
+                    if (line == "Жанры:")
+                    {
+                        nameDan = line;
+                        continue;
+                    }
+                    else if (line == "Книги:")
+                    {
+                        nameDan = line;
+                        continue;
+                    }
+                    string[] info = line.Trim().Split(',', ';');
+                    switch (nameDan)
+                    {
+                        case "Авторы:":
+                            AllAuthors.Add(new Author(int.Parse(info[0]), info[1]));
+                            break;
+                        case "Жанры:":
+                            AllGenres.Add(new Genre(int.Parse(info[0]), info[1]));
+                            break;
+                        case "Книги:":
+                            string[] Genres = line.Split('(', ')');
+                            string[] Genre = Genres[1].Split(',');
+                            List<Genre> genres = new List<Genre>();
+                            foreach (string genre in Genre)
+                            {
+                                genres.Add(AllGenres.Find(x => x.Name == genre.Trim()));
+                            }
+                            AllBooks.Add(new Book(int.Parse(info[0]), info[1], genres,
+                                AllAuthors.FindAll(x => x.FIO == info[2]), 2));
+                            break;
+                    }
+                }
+                Cr();
+                MessageBox.Show("Успешно");
+            }
+            else
+            {
+                MessageBox.Show("Ошибка");
+            }
+        }
+    
+
+        private void Export(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.Title = "Сохранить текстовый файл";
+            if (saveFileDialog.ShowDialog() != null)
+            {
+                string filePath = saveFileDialog.FileName;
+                string info = "Авторы:\n";
+                foreach (Classes.Author author in AllAuthors)
+                {
+                    info +=  $"{author.Id},{author.FIO};\n";
+                }
+                info += "Жанры:\n";
+                foreach (Classes.Genre genres in AllGenres)
+                {
+                    info += $"{genres.Id},{genres.Name};\n";
+                }
+                info += "Книги:\n";
+                foreach (Classes.Book book in AllBooks)
+                {
+                    info += $"{book.Id},{book.Name},{book.ToAuthors()},({book.ToGenres()}),{book.Year};\n";
+                }
+                StreamWriter writer = new StreamWriter(filePath);
+                writer.WriteLine(info);
+                writer.Close();
+                MessageBox.Show($"Файл сохранен: {filePath}");
+            }
+            else
+            {
+                MessageBox.Show("Ошибка");
+            }
         }
     }
 }
