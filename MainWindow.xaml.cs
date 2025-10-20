@@ -24,5 +24,24 @@ namespace Book_Сабитов
         {
             InitializeComponent();
         }
+        private void SelectAuthor(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SelectGenres(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SelectYear(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Search_Book(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
