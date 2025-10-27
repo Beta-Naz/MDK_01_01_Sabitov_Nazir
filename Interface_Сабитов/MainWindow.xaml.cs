@@ -26,7 +26,7 @@ namespace Interface_Сабитов
         public int IdSelectUser = -1;
         public static MainWindow mainWindow;
         public MainWindow()
-        {
+        { 
             InitializeComponent();
             mainWindow = this;
             LoadUsers();
