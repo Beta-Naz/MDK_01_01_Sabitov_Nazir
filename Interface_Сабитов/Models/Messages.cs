@@ -15,7 +15,6 @@ namespace Interface_Сабитов.Models
         public int IdUsers { get; set; }
         public Messages()
         {
-
         }
         public Messages(string message, DateTime create, int idUsers)
         {

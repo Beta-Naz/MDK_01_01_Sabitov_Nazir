@@ -9,7 +9,6 @@ namespace Interface_Сабитов.Classes
     {
         public static List<Messages> AllMessages;
         public MessagesContext() => All(out AllMessages);
-
         public MessagesContext(string message, DateTime create, int idUsers) : base(message, create, idUsers) 
         {
         }

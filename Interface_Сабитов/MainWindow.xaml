@@ -10,7 +10,28 @@
         Width="800"
         MinHeight="450" 
         MinWidth="800">
-    <Grid>
-        
+    <Grid Background="#FF3F3F3F">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="10">
+            <StackPanel x:Name="ParentUser" Height="756" Orientation="Vertical">
+                
+            </StackPanel>
+        </ScrollViewer>
+        <Grid x:Name="BlockMessage" Grid.Column="1" Margin="0" IsEnabled="False">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="10,10,10,65">
+                <StackPanel x:Name="parentMessage">
+
+                </StackPanel>
+            </ScrollViewer>
+            <TextBox x:Name="Message" Padding="5" Margin="10,0,10,10" Height="50" VerticalAlignment="Bottom" 
+                     Background="Black" Foreground="White" KeyUp="SendMessages">
+                <TextBox.Effect>
+                    <DropShadowEffect/>
+                </TextBox.Effect>
+            </TextBox>
+        </Grid>
     </Grid>
 </Window>
