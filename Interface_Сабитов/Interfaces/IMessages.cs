@@ -9,5 +9,6 @@ namespace Interface_Сабитов.Interfaces
         void All(out List<Messages> Messages);
         void Save (bool Update = false);
         void Delete();
+        void Edit(string text);
     }
 }

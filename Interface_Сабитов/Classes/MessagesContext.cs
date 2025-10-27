@@ -22,5 +22,10 @@ namespace Interface_Сабитов.Classes
                 AllMessages.Add(this);
             }
         }
+        public void Edit(string text)
+        {
+            int a = AllMessages.FindIndex(x => x == this);
+            AllMessages[a].Message = text;
+        }
     }
 }

@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Elements\MessagesImages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Elements\Users.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +79,9 @@
     <Compile Include="Classes\UsersContext.cs" />
     <Compile Include="Elements\Messages.xaml.cs">
       <DependentUpon>Messages.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\MessagesImages.xaml.cs">
+      <DependentUpon>MessagesImages.xaml</DependentUpon>
     </Compile>
     <Compile Include="Elements\Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
@@ -114,10 +121,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Rep.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\aooshchepkov.jpg" />
     <Resource Include="Images\image-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\NoRep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\___.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,7 +27,8 @@
                 </StackPanel>
             </ScrollViewer>
             <TextBox x:Name="Message" Padding="5" Margin="10,0,10,10" Height="50" VerticalAlignment="Bottom" 
-                     Background="Black" Foreground="White" KeyUp="SendMessages">
+                     Background="Black" Foreground="White" KeyUp="SendMessages"
+                     AllowDrop="True" PreviewDragOver="PreviewDragOver_img" DragEnter="DragEnter_img" Drop="Drop_img">
                 <TextBox.Effect>
                     <DropShadowEffect/>
                 </TextBox.Effect>
