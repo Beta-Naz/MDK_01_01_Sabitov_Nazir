@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Interface_Сабитов.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Interface_Сабитов.Interfaces
 {
     public interface IMessages
     {
-        void All(out List<IMessages> Messages);
+        void All(out List<Messages> Messages);
         void Save (bool Update = false);
         void Delete();
     }
