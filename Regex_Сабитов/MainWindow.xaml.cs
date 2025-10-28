@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Regex_Сабитов.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,18 @@ namespace Regex_Сабитов
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Passport> Passports = new List<Passport>();
+        public static MainWindow init;
         public MainWindow()
         {
             InitializeComponent();
+            init = this;
+        }
+        public void LoadPassport()
+        {
+            lv_passport.Items.Clear();
+            foreach (Passport Passport in Passports)
+                lv_passport.Items.Add(Passport);
         }
 
         private void Add(object sender, RoutedEventArgs e)

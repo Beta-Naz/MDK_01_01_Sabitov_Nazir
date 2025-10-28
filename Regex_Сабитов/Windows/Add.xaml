@@ -32,6 +32,6 @@
         <TextBox x:Name="DateOfBirth" Height="23" Margin="10,414,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
         <Label Content="#Место рождения:" HorizontalAlignment="Left" Margin="10,442,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="PlaceOfBirth" Height="23" Margin="10,468,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <Button x:Name="Bthadd" Click="AddPassport" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,10,10" Width="75" VerticalAlignment="Bottom" Height="25"/>
+        <Button x:Name="BthAdd" Click="AddPassport" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,10,10" Width="75" VerticalAlignment="Bottom" Height="25"/>
     </Grid>
 </Window>
