@@ -5,12 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Regex_Сабитов"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="Papers, Please" 
+        Icon="C:\Users\Сабитов Назир\Desktop\Regex_Сабитов\Regex_Сабитов\Icons\Иконка.png"
         Height="450" 
         Width="800"
         MinHeight="450" 
-        MinWidth="800">
+        MinWidth="800"
+        Background="#5a5a5a">
     <Grid>
-        
+        <ListView Background="#b8b19a" x:Name="lv_passport" Margin="10,10,10,40">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Background" Value="#6d5d4f"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="4"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Имя" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Фамилия" Width="100" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="Отечество" Width="100" DisplayMemberBinding="{Binding Forename}"/>
+                    <GridViewColumn Header="Паспорт" Width="100" DisplayMemberBinding="{Binding Issued}"/>
+                    <GridViewColumn Header="Дата выдачи" Width="100" DisplayMemberBinding="{Binding DataOfIssued}"/>
+                    <GridViewColumn Header="Код подразделения" Width="100" DisplayMemberBinding="{Binding DepartmentCode}"/>
+                    <GridViewColumn Header="Серия и номер" Width="100" DisplayMemberBinding="{Binding SeriesAndNumber}"/>
+                    <GridViewColumn Header="Дата рождения" Width="100" DisplayMemberBinding="{Binding DataOfBirth}"/>
+                    <GridViewColumn Header="Место рождения" Width="100" DisplayMemberBinding="{Binding PlaceOfBirth}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Click="Add" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,10,10" 
+                VerticalAlignment="Bottom" Width="75" Height="25"/>
+        <Button Click="Update" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,90,10" 
+                VerticalAlignment="Bottom" Width="75" Height="25"/>
+        <Button Click="Delete" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,170,10" 
+                VerticalAlignment="Bottom" Width="75" Height="25"/>
     </Grid>
 </Window>
