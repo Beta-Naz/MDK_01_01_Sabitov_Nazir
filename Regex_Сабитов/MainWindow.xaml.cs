@@ -35,19 +35,34 @@ namespace Regex_Сабитов
                 lv_passport.Items.Add(Passport);
         }
 
-        private void Add(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void Add(object sender, RoutedEventArgs e) =>
+            new Windows.Add(null).ShowDialog();
 
         private void Update(object sender, RoutedEventArgs e)
         {
-
+            if(lv_passport.SelectedIndex >-1)
+            {
+                new Windows.Add(lv_passport.SelectedItems as Passport).ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Выберите элемент для изменения", "Ошибка", 
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Delete(object sender, RoutedEventArgs e)
         {
-
+            if (lv_passport.SelectedIndex > -1)
+            {
+                Passports.Remove(lv_passport.SelectedItems as Passport);
+                LoadPassport();
+            }
+            else
+            {
+                MessageBox.Show("Выберите элемент для удаления", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
