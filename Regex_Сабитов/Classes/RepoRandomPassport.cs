@@ -29,7 +29,7 @@ namespace Regex_Сабитов.Classes
                 DateOfIssued = $"{DayOfBirht + 4}.0{MothOfBirht}.20{YearOfBirht + 14}",
                 DepartmentCode = $"{rd.Next(0, 10)}{rd.Next(0, 10)}{rd.Next(0, 10)}-{rd.Next(0, 10)}{rd.Next(0, 10)}{rd.Next(0, 10)}",
                 SeriesAndNumber = $"56{YearOfBirht + 14}{rd.Next(0, 10)}{rd.Next(0, 10)}{rd.Next(0, 10)}{rd.Next(0, 10)}{rd.Next(0, 10)}{rd.Next(0, 10)}",
-                DateOfBirth = $"{DayOfBirht}.{MothOfBirht}.200{YearOfBirht}",
+                DateOfBirth = $"{DayOfBirht}.0{MothOfBirht}.200{YearOfBirht}",
                 PlaceOfBirth = $"Пермь"
             };
             return passport;
