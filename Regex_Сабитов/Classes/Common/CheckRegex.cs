@@ -6,7 +6,7 @@ namespace Regex_Сабитов.Classes.Common
     {
         public static bool Match(string pattern, string input)
         {
-            Match m = Regex.Match(pattern, input);
+            Match m = Regex.Match(input, pattern);
             return m.Success;
         }
     }

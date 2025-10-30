@@ -12,7 +12,7 @@
         MinWidth="310" 
         Background="#b8b19a" 
         ResizeMode="NoResize"
-        Icon="C:\Users\Сабитов Назир\Desktop\Regex_Сабитов\Regex_Сабитов\Icons\Иконка.png">
+        Icon="pack://application:,,,/Regex_Сабитов;component/Images/Icon.png">
     <Grid>
         <Label Content="#Имя:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Name" Height="23" Margin="10,36,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Regex_Сабитов"
         mc:Ignorable="d"
         Title="Papers, Please" 
-        Icon="C:\Users\Сабитов Назир\Desktop\Regex_Сабитов\Regex_Сабитов\Icons\Иконка.png"
+        Icon="pack://application:,,,/Regex_Сабитов;component/Images/Icon.png"
         Height="450" 
         Width="800"
         MinHeight="450" 
@@ -24,23 +24,34 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Фото" Width="100"> <!--Я считаю, то что без гугла была нельзя это сделать-->
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding PhotoPassport}" Stretch="UniformToFill"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Имя" Width="100" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Фамилия" Width="100" DisplayMemberBinding="{Binding FirstName}"/>
                     <GridViewColumn Header="Отечество" Width="100" DisplayMemberBinding="{Binding Forename}"/>
                     <GridViewColumn Header="Паспорт" Width="100" DisplayMemberBinding="{Binding Issued}"/>
-                    <GridViewColumn Header="Дата выдачи" Width="100" DisplayMemberBinding="{Binding DataOfIssued}"/>
+                    <GridViewColumn Header="Дата выдачи" Width="100" DisplayMemberBinding="{Binding DateOfIssued}"/>
                     <GridViewColumn Header="Код подразделения" Width="100" DisplayMemberBinding="{Binding DepartmentCode}"/>
                     <GridViewColumn Header="Серия и номер" Width="100" DisplayMemberBinding="{Binding SeriesAndNumber}"/>
-                    <GridViewColumn Header="Дата рождения" Width="100" DisplayMemberBinding="{Binding DataOfBirth}"/>
+                    <GridViewColumn Header="Дата рождения" Width="100" DisplayMemberBinding="{Binding DateOfBirth}"/>
                     <GridViewColumn Header="Место рождения" Width="100" DisplayMemberBinding="{Binding PlaceOfBirth}"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <Button Click="Add" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,10,10" 
                 VerticalAlignment="Bottom" Width="75" Height="25"/>
-        <Button Click="Update" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,90,10" 
+        <Button Click="Update" Content="Обновить" HorizontalAlignment="Right" Margin="0,0,90,10" 
                 VerticalAlignment="Bottom" Width="75" Height="25"/>
-        <Button Click="Delete" Content="Добавить" HorizontalAlignment="Right" Margin="0,0,170,10" 
+        <Button Click="Delete" Content="Удалить" HorizontalAlignment="Right" Margin="0,0,170,10" 
                 VerticalAlignment="Bottom" Width="75" Height="25"/>
+        <Label Content="Поиск:" FontSize="18" Padding="0" Foreground="White" HorizontalAlignment="Left" Margin="10,0,0,10" 
+                VerticalAlignment="Bottom" Width="60" Height="25"/>
+        <TextBox x:Name="PoiskText" TextChanged="Poisk" HorizontalAlignment="Left" Margin="70,0,0,10" 
+                VerticalAlignment="Bottom" Width="300" Height="25"/>
     </Grid>
 </Window>

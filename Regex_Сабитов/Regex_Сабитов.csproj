@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Common\CheckRegex.cs" />
     <Compile Include="Classes\Passport.cs" />
+    <Compile Include="Classes\RepoRandomPassport.cs" />
     <Compile Include="Windows\Add.xaml.cs">
       <DependentUpon>Add.xaml</DependentUpon>
     </Compile>
@@ -109,7 +110,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\Иконка.png" />
+    <Resource Include="Images\Icon.png" />
+    <Resource Include="Images\Passport.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 {
     public class Passport
     {
+        public string PhotoPassport { get; set; } = "pack://application:,,,/Regex_Сабитов;component/Images/Passport.png";
         public string Name { get; set; }
         public string FirstName { get; set; }
         public string Forename { get; set; }
