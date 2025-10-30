@@ -22,6 +22,7 @@ namespace TimeLord_Сабитов.Pages
     /// </summary>
     public partial class Stopwatch : Page
     {
+        string saveTime = "00.00.00";
         public DispatcherTimer dispatcherTimer = new DispatcherTimer();
         public float full_second = 0;
         public bool start_stopwatch = false;
@@ -54,7 +55,8 @@ namespace TimeLord_Сабитов.Pages
             {
                 s_hours = "0" + hours;
             }
-            time.Content = s_hours + ":" + s_minuts + ":" + s_seconds;
+            saveTime = s_hours + ":" + s_minuts + ":" + s_seconds;
+            time.Content = saveTime;
         }
         private void StartStopwatch(object sender, RoutedEventArgs e)
         {
@@ -71,6 +73,11 @@ namespace TimeLord_Сабитов.Pages
                 start_stopwatch = false;
                 start.Content = "Начать";
             }
+        }
+
+        private void SavesTimers(object sender, RoutedEventArgs e)
+        {
+            SavesTime.Items.Add(saveTime);
         }
     }
 }

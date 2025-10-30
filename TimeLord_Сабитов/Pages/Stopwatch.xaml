@@ -15,7 +15,22 @@
         <Button x:Name="start" Click="StartStopwatch" Content="Начать" HorizontalAlignment="Center" 
                 VerticalAlignment="Center" Margin="280,312,402.4,72.6" Width="100" 
                 Height="25" Background="White"/>
-        <Button Content="Интервал" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <Button Content="Интервал" Click="SavesTimers" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Margin="410,312,272,72.6" Width="100" Height="25" Background="white"/>
+        <ListView x:Name="SavesTime" VerticalAlignment="Top" Width="200" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Right">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="white"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Сохраненый интервал" Width="200"  DisplayMemberBinding="{Binding}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
