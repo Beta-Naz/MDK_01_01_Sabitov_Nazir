@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Description>Данное приложение позволяет измерять интервалы времени с точностью до долей секунды.», авторские права сохранить за собой</Description>
   </PropertyGroup>
 
 </Project>
