@@ -9,4 +9,14 @@
     <Description>Данное приложение позволяет измерять интервалы времени с точностью до долей секунды.», авторские права сохранить за собой</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Sound\wow.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sound\wow.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

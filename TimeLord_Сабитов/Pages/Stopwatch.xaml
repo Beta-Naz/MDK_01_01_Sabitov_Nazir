@@ -17,6 +17,8 @@
                 Height="25" Background="White"/>
         <Button Content="Интервал" Click="SavesTimers" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Margin="410,312,272,72.6" Width="100" Height="25" Background="white"/>
+        <Button Content="Таймер" Click="Timers" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="10,10,0,0" Width="100" Height="25" Background="white"/>
         <ListView x:Name="SavesTime" VerticalAlignment="Top" Width="200" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Right">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
@@ -28,7 +30,7 @@
             </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Сохраненый интервал" Width="200"  DisplayMemberBinding="{Binding}"/>
+                    <GridViewColumn Header="Сохраненый интервал" Width="190"  DisplayMemberBinding="{Binding}"/>
                 </GridView>
             </ListView.View>
         </ListView>
