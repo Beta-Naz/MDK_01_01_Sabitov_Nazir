@@ -23,31 +23,31 @@
                 <Label Content="Выберите специальность, на которой желате учиться" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" />
                 <Label Content="Можете выбрать несколько специальностей" HorizontalAlignment="Left" Margin="20,67,0,0" 
    VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-                <CheckBox Content="12.02.01 Авиационные приборы и комплексы" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="15.02.09 Аддитивные технологии" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="09.02.07 Информационные системы и программирование (Программист)" HorizontalAlignment="Left" Margin="22,121,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="09.02.07 Информационные системы и программирование (Разработчик веб и мультимедийных приложений)" HorizontalAlignment="Left" Margin="22,136,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="09.02.01 Компьютерные системы и комплексы" HorizontalAlignment="Left" Margin="22,151,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="22.02.03 Литейное производство черных и цветных металлов" HorizontalAlignment="Left" Margin="22,166,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="15.02.10 Мехатроника и мобильная робототехника" HorizontalAlignment="Left" Margin="22,181,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="09.02.05 Прикладная информатика (по отраслям)" HorizontalAlignment="Left" Margin="22,196,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="24.02.02 Производство авиационных двигателей" HorizontalAlignment="Left" Margin="22,211,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="12.02.03 Радиоэлектронные приборные устройства" HorizontalAlignment="Left" Margin="22,226,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="15.02.08 Технология машиностроения" HorizontalAlignment="Left" Margin="22,241,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="15.02.15 Технология металлообрабатывающего производства" HorizontalAlignment="Left" Margin="22,256,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="27.02.07 Управление качеством продукции, процессов и  услуг" HorizontalAlignment="Left" Margin="22,271,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x1" Content="12.02.01 Авиационные приборы и комплексы" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x2" Content="15.02.09 Аддитивные технологии" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x3" Content="09.02.07 Информационные системы и программирование (Программист)" HorizontalAlignment="Left" Margin="22,121,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x4" Content="09.02.07 Информационные системы и программирование (Разработчик веб и мультимедийных приложений)" HorizontalAlignment="Left" Margin="22,136,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x5" Content="09.02.01 Компьютерные системы и комплексы" HorizontalAlignment="Left" Margin="22,151,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x6" Content="22.02.03 Литейное производство черных и цветных металлов" HorizontalAlignment="Left" Margin="22,166,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x7" Content="15.02.10 Мехатроника и мобильная робототехника" HorizontalAlignment="Left" Margin="22,181,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x8" Content="09.02.05 Прикладная информатика (по отраслям)" HorizontalAlignment="Left" Margin="22,196,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x9" Content="24.02.02 Производство авиационных двигателей" HorizontalAlignment="Left" Margin="22,211,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x10" Content="12.02.03 Радиоэлектронные приборные устройства" HorizontalAlignment="Left" Margin="22,226,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x11" Content="15.02.08 Технология машиностроения" HorizontalAlignment="Left" Margin="22,241,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x12" Content="15.02.15 Технология металлообрабатывающего производства" HorizontalAlignment="Left" Margin="22,256,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="x13" Content="27.02.07 Управление качеством продукции, процессов и  услуг" HorizontalAlignment="Left" Margin="22,271,0,0" VerticalAlignment="Top"/>
                 <Label Content="Средне профессиональное образование получаю:" HorizontalAlignment="Left" Margin="10,300,0,0" VerticalAlignment="Top" />
                 <Label Content="Выберите один из вариантов" HorizontalAlignment="Left" Margin="20,326,0,0" 
    VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-                <RadioButton Content="впервые" HorizontalAlignment="Left" Margin="22,350,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="не впервые" HorizontalAlignment="Left" Margin="22,365,0,0" VerticalAlignment="Top"/>
-                <CheckBox Content="С лицензией на право осуществления образовательной деятельности, свидетельствует о государственной аккредитации," HorizontalAlignment="Left" Margin="22,425,0,0"  VerticalAlignment="Top"/>
+                <RadioButton x:Name="first" GroupName="sE" Content="впервые" HorizontalAlignment="Left" Margin="22,350,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="noFirst" GroupName="sE" Content="не впервые" HorizontalAlignment="Left" Margin="22,365,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="lich" Content="С лицензией на право осуществления образовательной деятельности, свидетельствует о государственной аккредитации," HorizontalAlignment="Left" Margin="22,425,0,0"  VerticalAlignment="Top"/>
                 <Label Margin="22,445,0,0" Height="15" Padding="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                        Content="правилами приема и правилами внутреннего распорядка обучающихся в данном образовательном учреждении, с Уставом"/>
                 <Label Margin="22,465,0,0" Height="15" Padding="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                        Content="Техникума ознакомлен(а)"/>
-                <CheckBox Content="С датой представления оригиналов документов ознакомлен(а)" HorizontalAlignment="Left" Margin="22,490,0,0"  VerticalAlignment="Top"/>
-                <Button Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
+                <CheckBox x:Name="dateOriginal" Content="С датой представления оригиналов документов ознакомлен(а)" HorizontalAlignment="Left" Margin="22,490,0,0"  VerticalAlignment="Top"/>
+                <Button Click="contuniePages" Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
                 VerticalAlignment="Bottom" Width="150" Height="25"/>
             </Grid>
         </Grid>

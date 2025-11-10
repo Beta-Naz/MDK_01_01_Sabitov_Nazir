@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Submission_of_Applications_Сабитов.MainWindow;
 
 namespace Submission_of_Applications_Сабитов.Pages
 {
@@ -23,6 +24,11 @@ namespace Submission_of_Applications_Сабитов.Pages
         public Contacts()
         {
             InitializeComponent();
+        }
+
+        private void contuniePages(object sender, RoutedEventArgs e)
+        {
+            init.OpenPages(pages.parents);
         }
     }
 }

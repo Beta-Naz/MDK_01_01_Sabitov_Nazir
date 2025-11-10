@@ -23,14 +23,14 @@
                 <Label Content="Имею статус" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" />
                 <Label Content="Отметить при наличии" HorizontalAlignment="Left" Margin="20,67,0,0" 
    VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-                <CheckBox Content="ребенок-сирота/ребенокб оставшийся без попечения родителей" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
+                <CheckBox Content="ребенок-сирота/ребенок оставшийся без попечения родителей" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
                 <CheckBox Content="инвалид" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
                 <CheckBox Content="малообеспеченный" HorizontalAlignment="Left" Margin="22,121,0,0" VerticalAlignment="Top"/>
                 <Label Content="Приписное удостоверние (военный билет)" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" />
                 <Label Content="Выберите один из вариантов" HorizontalAlignment="Left" Margin="20,166,0,0" 
    VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-                <RadioButton Content="имею (при нажатии данной кнопки необходимо прикрепить сканы страниц документа)" HorizontalAlignment="Left" Margin="22,190,0,0" VerticalAlignment="Top"/>
-                <RadioButton Content="не имею" HorizontalAlignment="Left" Margin="22,205,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="imeu" GroupName="army" Content="имею (при нажатии данной кнопки необходимо прикрепить сканы страниц документа)" HorizontalAlignment="Left" Margin="22,190,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="noImeu" GroupName="army" Content="не имею" HorizontalAlignment="Left" Margin="22,205,0,0" VerticalAlignment="Top"/>
                 <Label Content="Прикрепите сканы 1-ой и 2-ой страниц приписного удостоверения или военного билета (стр. 1-5б 8-13б 20-21)" HorizontalAlignment="Left" 
             Margin="10,225,0,0" VerticalAlignment="Top"/>
                 <Label Content="(Формат документов должен быть PNG, JPEG или PDF, а максимальный размер каждого файла 5 МБ)" HorizontalAlignment="Left" Margin="25,250,0,0" 
@@ -41,13 +41,13 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid>
-                        <TextBox Height="20" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="sourseImage" Height="20" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="5,0,10,0" Grid.Column="1">
-                        <Button Height="20" VerticalAlignment="Top" Content="Выбрать..."/>
+                        <Button Click="OpenImg" Height="20" VerticalAlignment="Top" Content="Выбрать..."/>
                     </Grid>
                 </Grid>
-                <Button Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
+                <Button Click="contuniePages" Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
                 VerticalAlignment="Bottom" Width="150" Height="25"/>
             </Grid>
         </Grid>

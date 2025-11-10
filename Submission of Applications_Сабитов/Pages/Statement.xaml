@@ -8,33 +8,32 @@
       d:DesignHeight="410" d:DesignWidth="792"
       Title="Statement">
     <Grid Background="#F8F9FA">
-        
-        <Grid Margin="0,0,0,349.6" Background="White">
+        <Grid Background="White" Height="60" VerticalAlignment="Top">
             <Image HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="40" Source="pack://application:,,,/Submission of Applications_Сабитов;component/Images/aviat.png"/>
             <Label Content="Электронная приемная компания" HorizontalAlignment="Left" Margin="55,1,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="19"/>
             <Label Content="Пермского авиационного техникума им. А. Д. Швецова" HorizontalAlignment="Left" Margin="55,24,0,0" VerticalAlignment="Top"/>
         </Grid>
 
-        <Grid Margin="0,60,0,-0.4">
+        <Grid Margin="0,60,0,0">
             <Label Content="Заявление" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             <Label Content="Прошу принять меня в КГАПОУ Пермского Авиационный техникум им. А.Д. Швецова" 
                    HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" />
             <Label Content="Выберите один из вариантов" HorizontalAlignment="Left" Margin="20,67,0,0" 
                    VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-            <CheckBox Content="по очной форме обучения" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
-            <CheckBox Content="по заочной форме обучения" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="och" GroupName="typeEduc" Content="по очной форме обучения" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="notOch" GroupName="typeEduc" Content="по заочной форме обучения" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
             <Label Content="Выберите один из вариантов" HorizontalAlignment="Left" Margin="20,126,0,0" 
                    VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-            <CheckBox Content="за счет бюджета" HorizontalAlignment="Left" Margin="22,150,0,0" VerticalAlignment="Top"/>
-            <CheckBox Content="по договору (платно)" HorizontalAlignment="Left" Margin="22,165,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="noMany" GroupName="typeBut" Content="за счет бюджета" HorizontalAlignment="Left" Margin="22,150,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="many" GroupName="typeBut" Content="по договору (платно)" HorizontalAlignment="Left" Margin="22,165,0,0" VerticalAlignment="Top"/>
             <Label Content="О себе сообщаю следуюшее" HorizontalAlignment="Left" Margin="22,185,0,0" VerticalAlignment="Top"/>
             <Label Content="Окончил (Наименование образовательной организации, город)" 
                    HorizontalAlignment="Left" Margin="22,211,0,0" VerticalAlignment="Top"/>
-            <TextBox Height="24" Margin="12,237,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+            <TextBox TextChanged="theEnds_TextChanged" x:Name="theEnds" Height="24" Margin="12,237,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
             <Label Content="Год окончания образовательной организации" HorizontalAlignment="Left" 
                    Margin="22,266,0,0" VerticalAlignment="Top"/>
-            <TextBox Height="24" Margin="12,291,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-            <Button Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
+            <TextBox TextChanged="dateTheEnds_TextChanged" x:Name="dateTheEnds" Height="24" Margin="12,291,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+            <Button Click="contuniePages" Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
                     VerticalAlignment="Bottom" Width="150" Height="25"/>
         </Grid>
     </Grid>

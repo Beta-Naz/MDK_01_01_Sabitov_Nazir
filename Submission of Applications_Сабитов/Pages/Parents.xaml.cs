@@ -24,5 +24,11 @@ namespace Submission_of_Applications_Сабитов.Pages
         {
             InitializeComponent();
         }
+
+        private void contuniePages(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Заявление на вступление было отправлено, ожидайте ответа по электронной почте", "Успешно",
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }

@@ -24,14 +24,14 @@
             <Label Content="Выберите один из вариантов" HorizontalAlignment="Left" Margin="20,67,0,0" 
        VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
 
-            <RadioButton Content="9 классов" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
-            <RadioButton Content="11 классов" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
-            <RadioButton Content="СВО" HorizontalAlignment="Left" Margin="22,121,0,0" VerticalAlignment="Top"/>
-            <RadioButton Content="ВПО" HorizontalAlignment="Left" Margin="22,136,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="class9" GroupName="baseEduc" Content="9 классов" HorizontalAlignment="Left" Margin="22,91,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="class11" GroupName="baseEduc" Content="11 классов" HorizontalAlignment="Left" Margin="22,106,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="sPO" GroupName="baseEduc" Content="СВО" HorizontalAlignment="Left" Margin="22,121,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="vPO" GroupName="baseEduc" Content="ВПО" HorizontalAlignment="Left" Margin="22,136,0,0" VerticalAlignment="Top"/>
             <Label Content="Выберите один из вариантов" HorizontalAlignment="Left" Margin="20,156,0,0" 
        VerticalAlignment="Top" Background="{x:Null}" FontSize="10" Foreground="Red"/>
-            <RadioButton Content="Аттестат" HorizontalAlignment="Left" Margin="22,180,0,0" VerticalAlignment="Top"/>
-            <RadioButton Content="Диплом" HorizontalAlignment="Left" Margin="22,195,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="atet" GroupName="baseDocEduc" Content="Аттестат" HorizontalAlignment="Left" Margin="22,180,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="dip" GroupName="baseDocEduc" Content="Диплом" HorizontalAlignment="Left" Margin="22,195,0,0" VerticalAlignment="Top"/>
             <Grid Margin="10,220,0,0" Height="50" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -40,12 +40,12 @@
                 <Grid>
                     <Label Content="Серию и номер документа об образовании" 
                     HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                    <TextBox TextChanged="seriaAndNomer_TextChanged" x:Name="seriaAndNomer" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="10,0,0,0" Grid.Column="1">
                     <Label Content="Средний балл (до сотых)" 
                     HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                    <TextBox TextChanged="sBall_TextChanged" x:Name="sBall"  Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                 </Grid>
             </Grid>
             <Label Content="Прикрепите сканы страниц документа об образовании с Ф.И.О., наименованием образовательной организации и оценками" HorizontalAlignment="Left" 
@@ -62,13 +62,13 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="10*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Height="20" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="sourseImg" Height="20" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
                 </Grid>
                 <Grid Margin="5,0,10,0" Grid.Column="1">
-                    <Button Height="20" VerticalAlignment="Top" Content="Выбрать..."/>
+                    <Button Click="OpenImg" Height="20" VerticalAlignment="Top" Content="Выбрать..."/>
                 </Grid>
             </Grid>
-            <Button Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
+            <Button Click="contuniePages" Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
                     VerticalAlignment="Bottom" Width="150" Height="25"/>
         </Grid>
     </Grid>

@@ -29,33 +29,33 @@
                     <Grid>
                         <Label Content="Фамилия:" 
                 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="firstName" TextChanged="firstName_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,0,0,0" Grid.Column="1">
                         <Label Content="Имя:" 
                 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="name" TextChanged="name_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,0,0,0" Grid.Column="2">
                         <Label Content="Отчество:" 
                 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="forename" Height="24" TextChanged="forename_TextChanged" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
                 <Grid Margin="10,100,0,0" Height="50" VerticalAlignment="Top">
-                    <Label Content="Дата рождения:" 
+                    <Label  Content="Дата рождения:" 
                HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                    <TextBox x:Name="dateOfBirth" TextChanged="dateOfBirth_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="10,160,0,0" Height="50" VerticalAlignment="Top">
                     <Label Content="Гражданство:" 
                HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                    <TextBox x:Name="gras" TextChanged="gras_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="10,220,0,0" Height="50" VerticalAlignment="Top">
                     <Label Content="Место рождения:" 
                HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                    <TextBox x:Name="placeOfBirth" TextChanged="placeOfBirth_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="10,280,0,0" Height="50" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
@@ -66,23 +66,23 @@
                     <Grid>
                         <Label Content="Серия и номер паспорта:" 
                 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="seriaAndNomer" TextChanged="seriaAndNomer_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,0,0,0" Grid.Column="1">
                         <Label Content="Дата выдачи:" 
                 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="dateOfAdd" TextChanged="dateOfAdd_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,0,0,0" Grid.Column="2">
                         <Label Content="Код подразделения:" 
                 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="code" TextChanged="code_TextChanged"  Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
                 <Grid Margin="10,340,0,0" Height="50" VerticalAlignment="Top">
                     <Label Content="Кем выдан:" 
                HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                    <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                    <TextBox TextChanged="kem_TextChanged" x:Name="kem" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="10,400,0,0" Height="50" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
@@ -92,12 +92,12 @@
                     <Grid>
                         <Label Content="Адрес по прописке:" 
         HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox x:Name="addresForpropiske" TextChanged="addresForpropiske_TextChanged" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,0,0,0" Grid.Column="1">
                         <Label Content="Район:" 
         HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox TextChanged="raion1_TextChanged" x:Name="raion1" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
                 <Grid Margin="10,460,0,0" Height="50" VerticalAlignment="Top">
@@ -108,12 +108,12 @@
                     <Grid>
                         <Label Content="Адрес проживания фактический:" 
 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox TextChanged="addres_TextChanged" x:Name="addres" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,0,0,0" Grid.Column="1">
                         <Label Content="Район:" 
 HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
-                        <TextBox Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+                        <TextBox TextChanged="raion2_TextChanged" x:Name="raion2" Height="24" Margin="0,25,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
                 <Label Content="Прикрепите сканы страниц документа об образовании с Ф.И.О., наименованием образовательной организации и оценками" HorizontalAlignment="Left" 
@@ -130,13 +130,13 @@ HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="10*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Height="20" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="sourseImg" Height="20" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
                     </Grid>
                     <Grid Margin="5,0,10,0" Grid.Column="1">
-                        <Button Height="20" VerticalAlignment="Top" Content="Выбрать..."/>
+                        <Button Click="OpenImg" Height="20" VerticalAlignment="Top" Content="Выбрать..."/>
                     </Grid>
                 </Grid>
-                <Button Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
+                <Button Click="contuniePages" Content="Продолжить" HorizontalAlignment="Right" Margin="0,0,10,5" 
                 VerticalAlignment="Bottom" Width="150" Height="25"/>
             </Grid>
         </Grid>
