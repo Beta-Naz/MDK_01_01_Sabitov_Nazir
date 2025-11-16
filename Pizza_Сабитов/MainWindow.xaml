@@ -11,6 +11,6 @@
         MinHeight="450" 
         MinWidth="800">
     <Grid>
-         
+        <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
