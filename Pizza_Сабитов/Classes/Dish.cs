@@ -22,6 +22,8 @@ namespace Pizza_Сабитов.Classes
 
             public int countOrder;
             public bool orders;
+
+            public int totalCount = 0;
         }
         public class Ingredient
         {

@@ -1,8 +1,10 @@
 ﻿using Pizza_Сабитов.Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,11 +25,19 @@ namespace Pizza_Сабитов.Layouts
     /// </summary>
     public partial class Main : Page
     {
+        List<SummaryPrice> summaryPrices = new List<SummaryPrice>();
+        public int AllPrice = 0;
+        public int totalBuyPizzaCount = 0;
+        int countPizza = 10;
         public MainWindow mainWindow;
         public List<Dish> dishes = new List<Dish>();
         public Main(MainWindow _mainWindow)
         {
+            
+            
             InitializeComponent();
+            RandomPizza randomPizza = new RandomPizza();
+            parrent.Children.Clear();
             mainWindow = _mainWindow;
 
             Dish newDish = new Dish()
@@ -47,7 +57,7 @@ namespace Pizza_Сабитов.Layouts
                     },
                     new Dish.Ingredient
                     {
-                        name = "соус <<Моцарелла>> мягкий"
+                        name = "сыр <<Моцарелла>> мягкий"
                     },
                     new Dish.Ingredient
                     {
@@ -77,6 +87,10 @@ namespace Pizza_Сабитов.Layouts
                 }
             };
             dishes.Add(newDish);
+            for ( int i = 0; i < countPizza; i++)
+            {
+                dishes.Add(randomPizza.RandomDish());
+            }
             CreatePizza();
         }
 
@@ -215,10 +229,12 @@ namespace Pizza_Сабитов.Layouts
                     Margin = new Thickness(0, 10, 128, 13),
                     Tag = i,
                 };
-                order.Click += delegate
+                order.Click += delegate /*WARNING*/ /*WARNING*/ /*WARNING*/ /*WARNING*/ /*WARNING*/ /*WARNING*/
                 {
                     int id = int.Parse(order.Tag.ToString());
-                    dishes[id].sizes[dishes[id].activeSize].orders = (bool)order.IsChecked;
+                    var init = dishes[id].sizes[dishes[id].activeSize];
+                    init.orders = (bool)order.IsChecked;
+                    UpdateSummarypPrice(id, dishes[id].activeSize, false);
                 };
                 global.Children.Add(order);
                 button1.Click += delegate
@@ -283,7 +299,9 @@ namespace Pizza_Сабитов.Layouts
                         {
                             count.Text = (int.Parse(count.Text) - 1).ToString();
                             int id = int.Parse(minus.Tag.ToString());
+                            dishes[id].sizes[dishes[id].activeSize].totalCount --;
                             dishes[id].sizes[dishes[id].activeSize].countOrder = int.Parse(count.Text);
+                            UpdateSummarypPrice(id, dishes[id].activeSize, false);
                         }
                     }
                 };
@@ -305,12 +323,73 @@ namespace Pizza_Сабитов.Layouts
                         {
                             count.Text = (int.Parse(count.Text) + 1).ToString();
                             int id = int.Parse(plus.Tag.ToString());
+                            dishes[id].sizes[dishes[id].activeSize].totalCount++;
                             dishes[id].sizes[dishes[id].activeSize].countOrder = int.Parse(count.Text);
+                            UpdateSummarypPrice(id, dishes[id].activeSize, true);
                         }
                     }
                 };
                 global.Children.Add(plus);
                 parrent.Children.Add(global);
+            }
+        }
+        void UpdateSummarypPrice(int id, int typeSizes, bool znak)
+        {
+            var init = dishes[id].sizes[typeSizes];
+            if (summaryPrices.Any(x => x.TypeSize == dishes[id].activeSize & x.Id == id))
+            {
+                if (init.orders)
+                {
+                    var sumPri = summaryPrices.Find(x => x.TypeSize == dishes[id].activeSize && x.Id == id);
+                    if (znak)
+                    {
+                        sumPri.Count++;
+                    }
+                    else
+                    {
+                        sumPri.Count--;
+                    }
+                }
+                else
+                {
+                    summaryPrices.RemoveAt(summaryPrices.FindIndex(x => x.TypeSize == dishes[id].activeSize & x.Id == id));
+                }
+                UpdatePriceAndCount();
+            }
+            else if (init.orders)
+            {
+                summaryPrices.Add(new SummaryPrice(init.price, init.totalCount, dishes[id].activeSize, id));
+                UpdatePriceAndCount();
+            }
+        }
+        void UpdatePriceAndCount()
+        {
+            totalBuyPizzaCount = 0;
+            AllPrice = 0;
+            foreach (SummaryPrice init in summaryPrices)
+            {
+                totalBuyPizzaCount += init.Count;
+                AllPrice += init.Price * init.Count;
+            }
+            Zakaz.Content = $"Заказать ({totalBuyPizzaCount})";
+            Price.Content = $"Потратите рублей: {AllPrice}";
+        }
+        private void Zakaz_Click(object sender, RoutedEventArgs e)
+        {
+            if(totalBuyPizzaCount != 0)
+            {
+                MessageBoxResult result = MessageBox.Show($"Вы точно хотите купить {totalBuyPizzaCount} пицц за {AllPrice} рублей?", "Покупка",
+                MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.Yes)
+                {
+                    MessageBox.Show("Поставьте оценку 6 за практическую работу №17, чтобы я выпустил платное ДЛС для этой практики",
+                        "Ошибка 404", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Вы не можете купить \"Ничего\"",
+                    "Чувствую запах бедности...", MessageBoxButton.OK, MessageBoxImage.Question);
             }
         }
     }
