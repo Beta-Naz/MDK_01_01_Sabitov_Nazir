@@ -20,7 +20,7 @@ namespace Pizza_Сабитов.Layouts
     /// </summary>
     public partial class Main : Page
     {
-        public Main()
+        public Main(MainWindow main)
         {
             InitializeComponent();
         }
