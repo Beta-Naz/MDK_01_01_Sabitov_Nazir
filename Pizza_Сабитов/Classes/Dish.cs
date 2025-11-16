@@ -8,7 +8,7 @@ namespace Pizza_Сабитов.Classes
         public string name { get; set; }
         public List<Sizes> sizes = new List<Sizes>();
         public string img;
-        public List<Ingredient> Ingredients = new List<Ingredient>();
+        public List<Ingredient> ingredients = new List<Ingredient>();
         public string description;
         public int activeSize = 0;
 

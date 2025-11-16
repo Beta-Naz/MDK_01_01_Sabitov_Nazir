@@ -29,6 +29,55 @@ namespace Pizza_Сабитов.Layouts
         {
             InitializeComponent();
             mainWindow = _mainWindow;
+
+            Dish newDish = new Dish()
+            {
+                img = "img-1",
+                name = "Сливочная",
+                description = "Пи́цца - итальянское национальное блюдо в виде круглой открытой дрожжевой лепёшки",
+                ingredients = new List<Dish.Ingredient>()
+                {
+                    new Dish.Ingredient
+                    {
+                        name = "соус <<Кунжутный>>"
+                    },
+                    new Dish.Ingredient
+                    {
+                        name = "сыр <<Моцарелла>>"
+                    },
+                    new Dish.Ingredient
+                    {
+                        name = "соус <<Моцарелла>> мягкий"
+                    },
+                    new Dish.Ingredient
+                    {
+                        name = "помидоры"
+                    }
+                },
+                sizes = new List<Dish.Sizes>()
+                {
+                    new Dish.Sizes
+                    {
+                        size = 23,
+                        price = 380,
+                        wes = 530
+                    },
+                    new Dish.Sizes
+                    {
+                        size = 30,
+                        price = 690,
+                        wes = 730
+                    },
+                    new Dish.Sizes
+                    {
+                        size = 40,
+                        price = 1080,
+                        wes = 1030
+                    }
+                }
+            };
+            dishes.Add(newDish);
+            CreatePizza();
         }
 
         public void CreatePizza()
@@ -80,13 +129,13 @@ namespace Pizza_Сабитов.Layouts
                     Margin = new Thickness(65, 20, 0, 0),
                 };
                 global.Children.Add(description);
-                if (dishes[i].Ingredients.Count != 0)
+                if (dishes[i].ingredients.Count != 0)
                 {
                     string str_ingredients = "";
-                    for (int j = 0; j < dishes[i].Ingredients.Count; j++)
+                    for (int j = 0; j < dishes[i].ingredients.Count; j++)
                     {
-                        str_ingredients += dishes[i].Ingredients[j].name;
-                        if(j != dishes[i].Ingredients.Count - 1)
+                        str_ingredients += dishes[i].ingredients[j].name;
+                        if(j != dishes[i].ingredients.Count - 1)
                         {
                             str_ingredients += ", ";
                         }
@@ -187,7 +236,7 @@ namespace Pizza_Сабитов.Layouts
                     order.IsChecked = dishes[int.Parse(button1.Tag.ToString())].sizes[0].orders;
                 };
                 global.Children.Add(button1);
-                button1.Click += delegate
+                button2.Click += delegate
                 {
                     price.Content = "Цена: " + dishes[int.Parse(button2.Tag.ToString())].sizes[1].price + " р.";
                     wes.Content = "Вес: " + dishes[int.Parse(button2.Tag.ToString())].sizes[1].wes + " гр.";
@@ -202,7 +251,7 @@ namespace Pizza_Сабитов.Layouts
                     order.IsChecked = dishes[int.Parse(button1.Tag.ToString())].sizes[1].orders;
                 };
                 global.Children.Add(button2);
-                button1.Click += delegate
+                button3.Click += delegate
                 {
                     price.Content = "Цена: " + dishes[int.Parse(button3.Tag.ToString())].sizes[2].price + " р.";
                     wes.Content = "Вес: " + dishes[int.Parse(button3.Tag.ToString())].sizes[2].wes + " гр.";
