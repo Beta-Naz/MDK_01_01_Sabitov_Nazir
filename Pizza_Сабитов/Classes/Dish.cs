@@ -4,8 +4,8 @@ namespace Pizza_Сабитов.Classes
 {
     public class Dish
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
         public List<Sizes> sizes = new List<Sizes>();
         public string img;
         public List<Ingredient> Ingredients = new List<Ingredient>();
