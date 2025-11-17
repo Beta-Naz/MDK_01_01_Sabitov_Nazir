@@ -5,7 +5,7 @@
         public string typeOperationText {  get; set; }
         public string formatText { get; set; }
         public string colorText { get; set; }
-        public int TypeOperation {  get; set; }
+        public int typeOperation {  get; set; }
         public int format {  get; set; }
         public int side { get; set; }
         public bool color { get; set; }
