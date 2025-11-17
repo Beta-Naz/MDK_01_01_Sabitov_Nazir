@@ -2,6 +2,7 @@
 {
     public class TypeOperationsWindow
     {
+        public string fIO { get; set; }
         public string typeOperationText {  get; set; }
         public string formatText { get; set; }
         public string colorText { get; set; }
@@ -12,5 +13,6 @@
         public bool occupancy { get; set; }
         public int count { get; set; }
         public float price { get; set; }
+        public string img { get; set; } = "pack://application:,,,/PrintManagementSystem_Сабитов;component/Image/error.png";
     }
 }

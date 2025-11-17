@@ -1,0 +1,71 @@
+﻿<Page x:Class="PrintManagementSystem_Сабитов.Layots.Journal"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PrintManagementSystem_Сабитов.Layots"
+      mc:Ignorable="d" 
+        d:DesignHeight="600" d:DesignWidth="800"
+        MinHeight="600" 
+        MinWidth="800"
+        Title="Journal">
+    <Grid Background="White">
+        <Grid Background="LightGray" Height="25" VerticalAlignment="Top">
+            <Label Content="Главная" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Content="Функции" Margin="60,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Content="Операции" Margin="120,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Grid>
+        <Grid Background="#FFFFC500" Height="75" Margin="0,25,0,0" VerticalAlignment="Top">
+            <Label Content="Журнал" HorizontalAlignment="Left" VerticalAlignment="Top" 
+       FontSize="36" FontWeight="Bold" Foreground="White" Margin="70,10,0,0"/>
+        </Grid>
+        <Grid Margin="0,100,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Visible"/>
+                <Button Content="Сегодня" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Height="25" Width="75"/>
+                <Button Content="Вчера" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="95,10,10,10" Height="25" Width="75"/>
+                <Button Content="Неделя" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="180,10,10,10" Height="25" Width="75"/>
+                <Button Content="Месяц" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="265,10,10,10" Height="25" Width="75"/>
+                <Button Content="Квартал" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,10,10,10" Height="25" Width="75"/>
+                <Button Content="Год" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="435,10,10,10" Height="25" Width="75"/>
+                <ListView x:Name="Operations" Margin="10,50,20,0" BorderBrush="Transparent" VerticalAlignment="Top">
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Background" Value="#FFFFC500"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Фамилия и Иниц." Width="100" DisplayMemberBinding="{Binding fIO}"/>
+                            <GridViewColumn Header="Вид работы" Width="75" DisplayMemberBinding="{Binding typeOperationText}"/>
+                            <GridViewColumn Header="Формат" Width="75" DisplayMemberBinding="{Binding formatText}"/>
+                            <GridViewColumn Header="Строна" Width="50" DisplayMemberBinding="{Binding side}"/>
+                            <GridViewColumn Header="Цвет" Width="50" DisplayMemberBinding="{Binding colorText}"/>
+                            <GridViewColumn Header="Кол-во" Width="75" DisplayMemberBinding="{Binding count}"/>
+                            <GridViewColumn Header="Сумма" Width="75" DisplayMemberBinding="{Binding price}"/>
+                            <GridViewColumn Header="Подпись" Width="75">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Width="25" Height="25" Source="{Binding img}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Button Click="AddOperation" Content="Добавить операцию" VerticalAlignment="Top" Margin="10" Height="25"/>
+                <Button Click="UpdateOperation" Content="Изменить" Cursor="Hand" VerticalAlignment="Top" Margin="10,45,10,10" Height="25"/>
+                <Button Click="RemoveOperation" Content="Удалить"  Cursor="Hand" VerticalAlignment="Top" Margin="10,80,10,10" Height="25"/>
+                <Grid x:Name="backGroundForButtonUpdate" Background="#CCF0F0F0" VerticalAlignment="Top" Margin="10,45,10,10" Height="25"/>
+                <Grid x:Name="backGroundForButtonDelete" Background="#CCF0F0F0" VerticalAlignment="Top" Margin="10,80,10,10" Height="25"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
