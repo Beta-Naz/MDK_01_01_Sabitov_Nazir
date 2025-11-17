@@ -44,7 +44,7 @@ namespace PrintManagementSystem_Сабитов
         {
 
         }
-
+         
         private void textBoxCount_TextChanged(object sender, TextChangedEventArgs e)
         {
 
