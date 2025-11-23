@@ -13,11 +13,11 @@
                    VerticalContentAlignment="Center" FontWeight="Bold" Foreground="Black"/>
             <Label x:Name="name" Content="Наименование." Margin="10,208,10,66" HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center" FontWeight="Bold" Foreground="Black"/>
-            <Button Content="-" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="30" Height="25" Margin="10,0,0,38"/>
-            <TextBox Text="0" Height="25" Margin="45,0,45,38" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"
+            <Button Content="-" Click="ButtonMinus_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="30" Height="25" Margin="10,0,0,38"/>
+            <TextBox x:Name="countTovar"  Text="0" Height="25" Margin="45,0,45,38" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"
                      VerticalContentAlignment="Center"/>
-            <Button Content="-" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" Height="25" Margin="0,0,10,38"/>
-            <Button Content="В корзину" VerticalAlignment="Bottom" Height="25" Margin="10,0,10,10"/>
+            <Button Content="+" Click="ButtonPlus_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" Height="25" Margin="0,0,10,38"/>
+            <Button Content="В корзину" Click="Button_Click" VerticalAlignment="Bottom" Height="25" Margin="10,0,10,10"/>
         </Grid>
     </Grid>
 </UserControl>

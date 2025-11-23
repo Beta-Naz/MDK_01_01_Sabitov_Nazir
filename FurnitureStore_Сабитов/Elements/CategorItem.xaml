@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="FurnitureStore_Сабитов.Elements.CategorItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FurnitureStore_Сабитов.Elements"
+             mc:Ignorable="d" MouseDown="UserControl_MouseDown" Cursor="Hand">
+    <Grid Width="260">
+        <Grid Margin="15,15,15,0" Background="#7FFFFFFF" Height="250">
+            <Border Margin="20,-00,20,50" BorderBrush="Black" BorderThickness="3">
+                <Image x:Name="image" Stretch="UniformToFill" 
+               Source="FurnitureStore_Сабитов;component/Images/background.jpg"/>
+            </Border>
+            <Label x:Name="name" Content="Наименование." Padding="0" Margin="10,200,10,0" HorizontalContentAlignment="Center" 
+               VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16" Foreground="Black"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -19,22 +19,28 @@ namespace FurnitureStore_Сабитов
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {  
+    {
+        public static MainWindow init;
         public MainWindow()
         {
             InitializeComponent();
-            OpenPages(pages.item);
+            init = this;
+            OpenPages(pages.main, "All");
         }
         public enum pages
         {
-            item
+            main,
+            categor
         }
-        public void OpenPages(pages page)
+        public void OpenPages(pages page, string type)
         {
             switch (page)
             {
-                case pages.item:  
-                    frame.Navigate(new Pages.Main());
+                case pages.main:  
+                    frame.Navigate(new Pages.Main(type));
+                    break;
+                case pages.categor:
+                    frame.Navigate(new Pages.Categor()); 
                     break;
             }
         }

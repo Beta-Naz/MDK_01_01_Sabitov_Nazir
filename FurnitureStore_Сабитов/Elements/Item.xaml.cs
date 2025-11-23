@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FurnitureStore_Сабитов.Pages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,10 +36,32 @@ namespace FurnitureStore_Сабитов.Elements
             }
             else
             {
-                image.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "/Images/Items/placeholder.png"));
+                image.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "/Images/Items/Image1.png"));
             }
             price.Content = item.price;
             name.Content = item.name;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            CalculateAll.totalPrice += int.Parse(price.Content.ToString()) * int.Parse(countTovar.Text);
+            CalculateAll.totalCount += int.Parse(countTovar.Text);
+            Pages.Main.init.cor.Content = $"Корзина ({CalculateAll.totalCount})";
+            countTovar.Text = "0";
+        }
+
+        private void ButtonPlus_Click(object sender, RoutedEventArgs e)
+        {
+            countTovar.Text = $"{int.Parse(countTovar.Text) + 1}";
+        }
+
+        private void ButtonMinus_Click(object sender, RoutedEventArgs e)
+        {
+            if(int.Parse(countTovar.Text) == 0)
+            {
+                return;
+            }
+            countTovar.Text = $"{int.Parse(countTovar.Text) - 1}";
         }
     }
 }
