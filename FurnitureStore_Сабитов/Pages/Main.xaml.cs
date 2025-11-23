@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FurnitureStore_Сабитов
+namespace FurnitureStore_Сабитов.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Main.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {  
-        public MainWindow()
+    public partial class Main : Page
+    {
+        public Main()
         {
             InitializeComponent();
-        }
-
-        private void Frame_FragmentNavigation(object sender, FragmentNavigationEventArgs e)
-        {
-
         }
     }
 }
