@@ -115,6 +115,8 @@
     <Resource Include="Images\telegramm.png" />
     <Resource Include="Images\vk.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Images\Items\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,21 @@ namespace FurnitureStore_Сабитов.Elements
         public Item(Classes.Item item)
         {
             InitializeComponent();
+
+            if(item == null)
+            {
+                return;
+            }
+            if (File.Exists(Directory.GetCurrentDirectory() + "/Images/Items/" + item.src))
+            {
+                image.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "/Images/Items/" + item.src));
+            }
+            else
+            {
+                image.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "/Images/Items/placeholder.png"));
+            }
+            price.Content = item.price;
+            name.Content = item.name;
         }
     }
 }
