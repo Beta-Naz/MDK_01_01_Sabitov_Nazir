@@ -23,11 +23,20 @@ namespace FurnitureStore_Сабитов
         public MainWindow()
         {
             InitializeComponent();
+            OpenPages(pages.item);
         }
-
-        private void Frame_FragmentNavigation(object sender, FragmentNavigationEventArgs e)
+        public enum pages
         {
-
+            item
+        }
+        public void OpenPages(pages page)
+        {
+            switch (page)
+            {
+                case pages.item:  
+                    frame.Navigate(new Pages.Main());
+                    break;
+            }
         }
     }
 }
