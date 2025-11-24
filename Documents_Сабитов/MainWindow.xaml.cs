@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Documents_Сабитов.Classes;
 using Documents_Сабитов.Model;
+using static Documents_Сабитов.MainWindow;
 
 namespace Documents_Сабитов
 {
@@ -29,6 +30,23 @@ namespace Documents_Сабитов
         {
             InitializeComponent();
             init = this;
+            OpenPages(pages.main);
+        }
+        public enum pages
+        {
+            main,
+            add
+        }
+        public void OpenPages(pages _pages)
+        {
+            if(_pages == pages.main)
+            {
+                frame.Navigate(new Pages.Main());
+            }
+            else if(_pages == pages.add)
+            {
+                frame.Navigate(new Pages.Add());
+            }
         }
     }
 }
