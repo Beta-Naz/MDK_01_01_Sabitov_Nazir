@@ -12,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Documents_Сабитов.Classes;
-using Documents_Сабитов.Model;
 
-namespace Documents_Сабитов
+namespace Documents_Сабитов.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Main.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Main : Page
     {
-        public static MainWindow init;
-        public List<Document> AllDocuments = new DocumentContext().AllDocument();
-
-        public MainWindow()
+        public Main()
         {
             InitializeComponent();
-            init = this;
         }
     }
 }
