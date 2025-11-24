@@ -7,8 +7,112 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Add">
-
     <Grid>
-        
+        <Grid
+    Height="50"
+    VerticalAlignment="Top"
+    Background="#FFA0A0A0">
+            <Image
+        Width="30"
+        Height="30"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Left"
+        Margin="10" 
+        Source="/Image/icon.png"/>
+            <Label
+        Foreground="White"
+        Content="Добавить документ"
+        HorizontalContentAlignment="Center"
+        VerticalAlignment="Center"
+        FontSize="20"
+        FontWeight="Bold"/>
+            <Button
+        Content="Вернуться"
+        Width="75"
+        Click="Back"
+        Height="25"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Right"
+        Margin="10"
+        Background="White"/>
+        </Grid>
+        <Image
+            x:Name="src"
+            Width="150"
+            Height="150"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Margin="10,60" Source="/Image/icon-black.png"/>
+        <Button
+        Content="Выбрать"
+        Click="SelectImage"
+        Width="100"
+        Height="25"
+        VerticalAlignment="Top"
+        HorizontalAlignment="Left"
+        Margin="30,220,0,0"
+        Background="White"/>
+        <Label
+            Content="Укажите наименование:"
+            VerticalAlignment="Top"
+            Margin="170,60,10,0"/>
+        <TextBox
+            Height="25"
+            x:Name="tbName"
+            VerticalAlignment="Top"
+            Margin="170,85,10,0"/>
+        <Label
+            Content="Укажите ответственного:"
+            VerticalAlignment="Top"
+            Margin="170,110,10,0"/>
+        <TextBox
+            Height="25"
+            x:Name="tbUser"
+            VerticalAlignment="Top"
+            Margin="170,135,10,0"/>
+        <Label
+            Content="Укажите код документа:"
+            VerticalAlignment="Top"
+            Margin="170,160,10,0"/>
+        <TextBox
+            Height="25"
+            x:Name="tbDocumentCode"
+            VerticalAlignment="Top"
+            Margin="170,185,10,0"/>
+        <Label
+            Content="Укажите дата поступления:"
+            VerticalAlignment="Top"
+            Margin="170,210,10,0"/>
+        <DatePicker
+            x:Name="tbDate"
+            VerticalAlignment="Top"
+            Margin="170,235,10,0"/>
+        <Label
+            Content="Укажите статус:"
+            VerticalAlignment="Top"
+            Margin="170,265,10,0"/>
+        <ComboBox x:Name="tbStatus" Height="25" VerticalAlignment="Top" Margin="170,290,10,0">
+            <TextBlock>Входящий</TextBlock>
+            <TextBlock>Исходящий</TextBlock>
+        </ComboBox>
+        <Label
+            Content="Укажите направление:"
+            VerticalAlignment="Top"
+            Margin="170,315,10,0"/>
+        <TextBox
+            Height="25"
+            x:Name="tbDirection"
+            VerticalAlignment="Top"
+            Margin="170,340,90,0"/>
+        <Button
+         x:Name="bthAdd"
+         Content="Сохранить"
+            Click="AddDocument"
+         Width="75"
+         Height="25"
+         VerticalAlignment="Top"
+         HorizontalAlignment="Right"
+         Margin="170,340,10,0"
+         Background="White"/>
     </Grid>
 </Page>
