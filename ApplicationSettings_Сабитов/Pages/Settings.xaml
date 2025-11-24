@@ -9,8 +9,10 @@
       Title="Settings">
     <Grid Background="White">
         <Grid x:Name="gr_header" Height="60" Margin="0,0,0.4,0" VerticalAlignment="Top" Background="Black">
-            <Label Content="Настройки" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
+            <Label x:Name="textColor1" Content="Настройки" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
                    Foreground="White" FontWeight="Bold" FontSize="20"/>
+            <Button Click="Safe" Content="Сохранить" HorizontalAlignment="Right" Margin="0,19,10,0"
+                            VerticalAlignment="Top" Width="120" Height="23"/>
         </Grid>
         <Grid Margin="0,60,0.4,-0.4">
             <Border BorderBrush="Black" BorderThickness="1" Height="54" Margin="10,21,10.4,0"
@@ -18,11 +20,11 @@
                 <Grid>
                     <TextBox x:Name="tb_database" Height="23" Margin="9,19,135,0" TextWrapping="Wrap" Text=""
                              VerticalAlignment="Top"/>
-                    <Button Click="OpenDataBase" Content="Выбрать" HorizontalAlignment="Right" Margin="0,19,10,0"
+                    <Button x:Name="textColor8" Click="OpenDataBase" Content="Выбрать" HorizontalAlignment="Right" Margin="0,19,10,0"
                             VerticalAlignment="Top" Width="120" Height="23"/>
                 </Grid>
             </Border>
-            <Label Content="База данных:" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"
+            <Label x:Name="textColor2" Content="База данных:" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"
                 Background="White"/>
             <Border BorderBrush="Black" BorderThickness="1" Height="45" Margin="10,96,10,0" VerticalAlignment="Top">
                 <Grid>
@@ -48,34 +50,34 @@
                     </ComboBox>
                 </Grid>
             </Border>
-            <Label Content="Разрешение:" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Background="White"/>
+            <Label x:Name="textColor3" Content="Разрешение:" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Background="White"/>
             <Border BorderBrush="Black" BorderThickness="1" Height="100" Margin="10,160,10,0" VerticalAlignment="Top">
                 <Grid>
                     <Grid Margin="0.2,0.2,-0.4,51.2">
-                        <Label Content="Цвет приложения" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="textColor5" Content="Цвет приложения" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         <Grid x:Name="gr_appliacation" Margin="127,10,584,0" Background="Black" Height="27" VerticalAlignment="Top"></Grid>
-                        <Button Click="SelectColorAplication" Content="Выбрать" HorizontalAlignment="Left" Margin="182,10,0,0" VerticalAlignment="Top"
+                        <Button x:Name="textColor9" Click="SelectColorAplication" Content="Выбрать" HorizontalAlignment="Left" Margin="182,10,0,0" VerticalAlignment="Top"
                                 Width="150" Height="26"/>
                     </Grid>
                     <Grid Margin="0,41,-0.2,10.4">
-                        <Label Content="Цвет текста:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="textColor6" Content="Цвет текста:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         <Grid x:Name="gr_Text" Margin="127,10,584,0" Background="Black" Height="27" VerticalAlignment="Top"></Grid>
-                        <Button Click="SelectColorText" Content="Выбрать" HorizontalAlignment="Left" Margin="182,10,0,0"
+                        <Button x:Name="textColor10" Click="SelectColorText" Content="Выбрать" HorizontalAlignment="Left" Margin="182,10,0,0"
                                 VerticalAlignment="Top" Width="150" Height="26"/>
                     </Grid>
                 </Grid>
             </Border>
-            <Label Content="Цвета:" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top" Background="White"/>
+            <Label x:Name="textColor4" Content="Цвета:" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top" Background="White"/>
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="63" Margin="10,277,0,0"
                     VerticalAlignment="Top" Width="762">
                 <Grid>
-                    <Label Content="Segoe UI" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
+                    <Label x:Name="textStyle" Content="Segoe UI" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
                            Width="614"/>
-                    <Button Click="SelectFonts" Content="Выбрать" HorizontalAlignment="Left" Margin="629,10,0,0"
+                    <Button x:Name="textColor11" Click="SelectFonts" Content="Выбрать" HorizontalAlignment="Left" Margin="629,10,0,0"
                                 VerticalAlignment="Top" Width="121" Height="25"/>
                 </Grid>
             </Border>
-            <Label Content="Шрифт:" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Background="White"/>
+            <Label x:Name="textColor7" Content="Шрифт:" HorizontalAlignment="Left" Margin="20,265,0,0" VerticalAlignment="Top" Background="White"/>
         </Grid>
     </Grid>
 </Page>
