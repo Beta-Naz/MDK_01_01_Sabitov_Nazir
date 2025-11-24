@@ -158,17 +158,91 @@ namespace ApplicationSettings_Сабитов.Pages
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string contentText = "";
-                contentText += "База данных:" + "\n";
+                contentText += "1. База данных:" + "\n";
                 contentText += openFileDialog.FileName + "\n";
-                contentText += "Разрешение:" + "\n";
+                contentText += "2. Разрешение:" + "\n";
                 contentText += name + "\n";
-                contentText += "Цвет шапки:" + "\n";
+                contentText += "3. Цвет шапки:" + "\n";
                 contentText += $"{gr_header.Background}" + "\n";
-                contentText += "Цвет текста:" + "\n";
+                contentText += "4. Цвет текста:" + "\n";
                 contentText += $"{textColor2.Foreground}" + "\n";
-                contentText += "Стиль текста:" + "\n";
+                contentText += "5. Стиль текста:" + "\n";
                 contentText += $"{textStyle.FontFamily}" + "\n";
                 File.WriteAllText(saveFileDialog.FileName, contentText);
+            }
+        }
+
+        private void Dowland(object sender, RoutedEventArgs e)
+        {
+            var text = new[]
+{
+                    textColor2,
+                    textColor3,
+                    textColor4,
+                    textColor5,
+                    textColor6,
+                    textColor7,
+                    textStyle,
+                };
+            var button = new[]
+            {
+                    textColor8,
+                    textColor9,
+                    textColor10,
+                    textColor11,
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string[] fileContent = File.ReadAllLines(openFileDialog.FileName);
+                int y = 1;
+                foreach (string line in fileContent)
+                {
+                    if (!int.TryParse(line.Split('.')[0], out int x))
+                    {
+                        switch (y) 
+                        {
+                            case 1:
+                                tb_database.Text = line;
+                                break;
+                            case 2:
+                                combo.Text = line;
+                                string[] separator = new string[1] { " x " };
+                                MainWindow.Width = int.Parse(line.Split(separator, StringSplitOptions.None)[0]);
+                                MainWindow.Height = int.Parse(line.Split(separator, StringSplitOptions.None)[1]);
+                                break;
+                            case 3:
+                                var color = new SolidColorBrush((Color)ColorConverter.ConvertFromString($"{line}"));
+                                gr_appliacation.Background = color;
+                                gr_header.Background = color;
+                                break;
+                            case 4:
+                                var colorText = new SolidColorBrush((Color)ColorConverter.ConvertFromString($"{line}"));
+                                gr_Text.Background = colorText;
+                                for (int i = 0; i < text.Length; i++)
+                                {
+                                    text[i].Foreground = colorText;
+                                }
+                                for (int i = 0; i < button.Length; i++)
+                                {
+                                    button[i].Foreground = colorText;
+                                }
+                                break;
+                            case 5:
+                                var fontFamily = new FontFamily(line);
+                                for (int i = 0; i < text.Length; i++)
+                                {
+                                    text[i].FontFamily = fontFamily;
+                                }
+                                for (int i = 0; i < button.Length; i++)
+                                {
+                                    button[i].FontFamily = fontFamily;
+                                }
+                                textStyle.Content = fontFamily;
+                                break;
+                        }
+                        y++;
+                    }
+                }
             }
         }
     }

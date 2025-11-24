@@ -11,8 +11,10 @@
         <Grid x:Name="gr_header" Height="60" Margin="0,0,0.4,0" VerticalAlignment="Top" Background="Black">
             <Label x:Name="textColor1" Content="Настройки" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
                    Foreground="White" FontWeight="Bold" FontSize="20"/>
-            <Button Click="Safe" Content="Сохранить" HorizontalAlignment="Right" Margin="0,19,10,0"
-                            VerticalAlignment="Top" Width="120" Height="23"/>
+            <Button Click="Safe" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,10,0"
+                            VerticalAlignment="Center" Width="120" Height="23"/>
+            <Button Click="Dowland" Content="Загрузить" HorizontalAlignment="Right" Margin="0,0,150,0"
+                VerticalAlignment="Center" Width="120" Height="23"/>
         </Grid>
         <Grid Margin="0,60,0.4,-0.4">
             <Border BorderBrush="Black" BorderThickness="1" Height="54" Margin="10,21,10.4,0"
@@ -28,7 +30,7 @@
                 Background="White"/>
             <Border BorderBrush="Black" BorderThickness="1" Height="45" Margin="10,96,10,0" VerticalAlignment="Top">
                 <Grid>
-                    <ComboBox SelectionChanged="SelectScreenResolution" Margin="10,10,9.8,0" VerticalAlignment="Top">
+                    <ComboBox x:Name="combo" SelectionChanged="SelectScreenResolution" Margin="10,10,9.8,0" VerticalAlignment="Top">
                         <TextBlock>800 x 450</TextBlock>
                         <TextBlock>800 x 600</TextBlock>
                         <TextBlock>1024 x 768</TextBlock>
