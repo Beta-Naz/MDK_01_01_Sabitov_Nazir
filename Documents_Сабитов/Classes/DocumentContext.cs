@@ -10,16 +10,16 @@ using Documents_Сабитов.Model;
 
 namespace Documents_Сабитов.Classes
 {
-    public class DocumentContext : Document, IDocument
+    public class DocumentContext : Model.DocumentContext, IDocument
     {
-        public List<Document> AllDocument()
+        public List<Model.DocumentContext> AllDocument()
         {
-            List<Document> allDocument = new List<Document>();
+            List<Model.DocumentContext> allDocument = new List<Model.DocumentContext>();
             OleDbConnection connection = DBConnection.Connection();
             OleDbDataReader dataDocuments = DBConnection.Query("SELECT * FROM [Документы]", connection);
             while (dataDocuments.Read())
             {
-                allDocument.Add(new Document()
+                allDocument.Add(new Model.DocumentContext()
                 {
                     Id = dataDocuments.GetInt32(0),
                     Src = dataDocuments.GetString(1),

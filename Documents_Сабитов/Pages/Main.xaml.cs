@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Documents_Сабитов.Classes;
 
 namespace Documents_Сабитов.Pages
 {
@@ -23,6 +24,20 @@ namespace Documents_Сабитов.Pages
         public Main()
         {
             InitializeComponent();
+            CreatedUI();
         }
+        public void CreatedUI()
+        {
+            parrent.Children.Clear();
+            foreach (DocumentContext document in MainWindow.init.AllDocuments)
+            {
+                parrent.Children.Add(new Elements.Item(document));
+            }
+        }
+        private void Add(object sender, RoutedEventArgs e) =>
+            MainWindow.init.frame.Navigate(new Pages.Add());
+
+        private void Exit(object sender, RoutedEventArgs e) =>
+            MainWindow.init.Close();
     }
 }

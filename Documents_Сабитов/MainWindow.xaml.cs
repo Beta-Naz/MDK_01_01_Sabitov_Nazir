@@ -23,7 +23,7 @@ namespace Documents_Сабитов
     public partial class MainWindow : Window
     {
         public static MainWindow init;
-        public List<Document> AllDocuments = new DocumentContext().AllDocument();
+        public List<Model.DocumentContext> AllDocuments = new Classes.DocumentContext().AllDocument();
 
         public MainWindow()
         {

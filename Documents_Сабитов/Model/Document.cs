@@ -2,7 +2,7 @@
 
 namespace Documents_Сабитов.Model
 {
-    public class Document
+    public class DocumentContext
     {
         public int Id { get; set; }
         public string Src { get; set; }
