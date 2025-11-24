@@ -23,6 +23,20 @@ namespace ApplicationSettings_Сабитов
         public MainWindow()
         {
             InitializeComponent();
+            OpenPage(pages.setting);
+        }
+        public enum pages
+        {
+            setting
+        }
+        public void OpenPage(pages _page)
+        {
+            switch (_page)
+            {
+                case pages.setting:
+                    frame.Navigate(new Pages.Settings(this));
+                    break;
+            }
         }
     }
 }
