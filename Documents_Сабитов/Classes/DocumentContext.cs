@@ -19,8 +19,8 @@ namespace Documents_Сабитов.Classes
             OleDbDataReader dataDocuments = DBConnection.Query("SELECT * FROM [Документы]", connection);
             while (dataDocuments.Read())
             {
-                allDocument.Add(new Model.DocumentContext()
-                {
+                allDocument.Add(new DocumentContext()
+                { 
                     Id = dataDocuments.GetInt32(0),
                     Src = dataDocuments.GetString(1),
                     Name = dataDocuments.GetString(2),
