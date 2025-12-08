@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Documents_Сабитов.Classes;
 
-namespace Documents_Сабитов.Elements
+namespace Documents_Сабитов.Elements.Document
 {
     /// <summary>
     /// Логика взаимодействия для Item.xaml
@@ -29,14 +29,14 @@ namespace Documents_Сабитов.Elements
 
         private void EditDocument(object sender, RoutedEventArgs e)
         {
-            MainWindow.init.frame.Navigate(new Pages.Add(Document));
+            MainWindow.init.frame.Navigate(new Pages.DocumentPages.Add(Document));
         }
 
         private void DeleteDocument(object sender, RoutedEventArgs e)
         {
             Document.Delete();
             MainWindow.init.AllDocuments = new DocumentContext().AllDocument();
-            MainWindow.init.frame.Navigate(new Pages.Main());
+            MainWindow.init.frame.Navigate(new Pages.DocumentPages.Main());
         }
     }
 }

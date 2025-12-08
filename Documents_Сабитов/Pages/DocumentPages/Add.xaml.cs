@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,22 +17,54 @@ using System.Windows.Shapes;
 using Documents_Сабитов.Classes;
 using Microsoft.Win32;
 
-namespace Documents_Сабитов.Pages
+namespace Documents_Сабитов.Pages.DocumentPages
 {
     /// <summary>
     /// Логика взаимодействия для Add.xaml
     /// </summary>
     public partial class Add : Page
     {
+        public DocumentContext Document;
+        public List<Model.User> Users;
         string s_src = "";
         public Add(DocumentContext document = null)
         {
             InitializeComponent();
+            UpdateUser();
+            Document = document;
+            if(document == null)
+            {
+                return;
+            }
+            if (File.Exists(Document.Src))
+            {
+                s_src = Document.Src;
+                src.Source = new BitmapImage(new Uri(s_src));
+            }
+            tbName.Text = Document.Name;
+            tbUser.Text = Document.User;
+            tbStatus.SelectedIndex = Document.Status;
+            tbDirection.Text = Document.Direction;
+            tbDate.Text = Document.Date.ToString("dd.MM.yyyy");
+            tbDocumentCode.Text = Document.IdDocument;
+            bthAdd.Content = "Изменить";
         }
-
+        public void UpdateUser()
+        {
+            Users = new Classes.UserContext().AllUser();
+            if(Users != null && Users.Count != 0)
+            {
+                tbUser.ItemsSource = Users;
+            }
+            else
+            {
+                MessageBox.Show("В таблице отвественных нет пользователей");
+            }
+        }
         private void Back(object sender, RoutedEventArgs e)
         {
-            MainWindow.init.OpenPages(MainWindow.pages.main);
+            MainWindow.init.OpenPages(MainWindow.pages.mainDocument);
+           
         }
 
         private void SelectImage(object sender, RoutedEventArgs e)
@@ -82,6 +116,29 @@ namespace Documents_Сабитов.Pages
             {
                 MessageBox.Show("Необходимо указать направление");
                 return;
+            }
+            if (DateTime.TryParse(tbDate.Text, out DateTime x))
+            {
+                DocumentContext newDocument = new DocumentContext()
+                {
+                    Src = s_src,
+                    Name = tbName.Text,
+                    User = tbUser.Text,
+                    IdDocument = tbDocumentCode.Text,
+                    Date = x,
+                    Status = tbStatus.SelectedIndex,
+                    Direction = tbDirection.Text,
+                };
+                if(Document == null)
+                {
+                    newDocument.Save();
+                    MessageBox.Show("Документ добавлен");
+                }
+                else
+                {
+                   newDocument.Save(true);
+                    MessageBox.Show("Документ изменен");
+                }
             }
         }
     }

@@ -1,9 +1,9 @@
-﻿<Page x:Class="Documents_Сабитов.Pages.Main"
+﻿<Page x:Class="Documents_Сабитов.Pages.UserPages.Main"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Documents_Сабитов.Pages"
+      xmlns:local="clr-namespace:Documents_Сабитов.Pages.UserPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Main">
@@ -21,7 +21,7 @@
                 Source="/Image/icon.png"/>
             <Label
                 Foreground="White"
-                Content="Учёт входящих и исходящих документов"
+                Content="Учёт ответственных"
                 HorizontalContentAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="20"
@@ -34,6 +34,15 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
                 Margin="10"
+                Background="White"/>
+            <Button
+                Content="Документы"
+                Width="98"
+                Click="scroll"
+                Height="25"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Margin="0,10,90,0"
                 Background="White"/>
         </Grid>
         <ScrollViewer Margin="10,60,10,55">

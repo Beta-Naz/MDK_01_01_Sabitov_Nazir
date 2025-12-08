@@ -13,8 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Documents_Сабитов.Classes;
+using Documents_Сабитов.Model;
 
-namespace Documents_Сабитов.Pages
+namespace Documents_Сабитов.Pages.UserPages
 {
     /// <summary>
     /// Логика взаимодействия для Main.xaml
@@ -29,15 +30,21 @@ namespace Documents_Сабитов.Pages
         public void CreatedUI()
         {
             parrent.Children.Clear();
-            foreach (DocumentContext document in MainWindow.init.AllDocuments)
+            MainWindow.init.AllUsers = new Classes.UserContext().AllUser();
+            foreach (Classes.UserContext user in MainWindow.init.AllUsers)
             {
-                parrent.Children.Add(new Elements.Item(document));
+                parrent.Children.Add(new Elements.User.Item(user));
             }
         }
         private void Add(object sender, RoutedEventArgs e) =>
-            MainWindow.init.frame.Navigate(new Pages.Add());
+            MainWindow.init.frame.Navigate(new Pages.UserPages.Add());
 
         private void Exit(object sender, RoutedEventArgs e) =>
             MainWindow.init.Close();
+
+        private void scroll(object sender, RoutedEventArgs e)
+        {
+            MainWindow.init.frame.Navigate(new Pages.DocumentPages.Main());
+        }
     }
 }

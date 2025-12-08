@@ -25,27 +25,38 @@ namespace Documents_Сабитов
     {
         public static MainWindow init;
         public List<Model.DocumentContext> AllDocuments = new Classes.DocumentContext().AllDocument();
+        public List<Model.User> AllUsers = new Classes.UserContext().AllUser();
 
         public MainWindow()
         {
             InitializeComponent();
             init = this;
-            OpenPages(pages.main);
+            OpenPages(pages.mainDocument);
         }
         public enum pages
         {
-            main,
-            add
+            mainDocument,
+            addDocument,
+            mainUser,
+            addUser
         }
         public void OpenPages(pages _pages)
         {
-            if(_pages == pages.main)
+            if(_pages == pages.mainDocument)
             {
-                frame.Navigate(new Pages.Main());
+                frame.Navigate(new Pages.DocumentPages.Main());
             }
-            else if(_pages == pages.add)
+            else if(_pages == pages.addDocument)
             {
-                frame.Navigate(new Pages.Add());
+                frame.Navigate(new Pages.DocumentPages.Add());
+            }
+            else if (_pages == pages.mainUser)
+            {
+                frame.Navigate(new Pages.UserPages.Main());
+            }
+            else if (_pages == pages.addUser)
+            {
+                frame.Navigate(new Pages.UserPages.Add());
             }
         }
     }
