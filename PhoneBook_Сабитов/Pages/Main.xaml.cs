@@ -21,6 +21,7 @@ namespace PhoneBook_Сабитов.Pages
         // действующая страница
         public static page_main page_select;
         private List<Call> allCalls;
+        int id_user = -1;
         public Main()
         {
             InitializeComponent();
@@ -118,7 +119,7 @@ namespace PhoneBook_Сабитов.Pages
                             MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
                             allCalls = new List<Call>(MainWindow.connect.calls);
 
-                            DisplayFilteredCalls(null, null, null);
+                            DisplayFilteredCalls(null, null, null, id_user);
                         });
                     };
 
@@ -129,8 +130,9 @@ namespace PhoneBook_Сабитов.Pages
         }
 
         // Функция анимированного перехода по страницам
-        public void Anim_move(Control control1, Control control2, Frame frame_main = null, Page pages = null, page_main page_restart = page_main.none)
+        public void Anim_move(Control control1, Control control2, Frame frame_main = null, Page pages = null, page_main page_restart = page_main.none, int id = -1)
         {
+            id_user = id;
             if (page_restart != page_main.none)
             {
                 if (page_restart == page_main.users)
@@ -177,7 +179,7 @@ namespace PhoneBook_Сабитов.Pages
                 control1.BeginAnimation(ScrollViewer.OpacityProperty, oppgridAnimation);
             }
         }
-        private void DisplayFilteredCalls(DateTime? startDate, DateTime? endDate, int? category)
+        private void DisplayFilteredCalls(DateTime? startDate, DateTime? endDate, int? category, int id)
         {
             parrent.Children.Clear();
 
@@ -189,7 +191,6 @@ namespace PhoneBook_Сабитов.Pages
                 {
                     if (!DateTime.TryParseExact(c.date, "dd.MM.yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime callDate))
                         return false;
-
                     if (startDate.HasValue && callDate.Date < startDate.Value.Date)
                         return false;
                     if (endDate.HasValue && callDate.Date > endDate.Value.Date)
@@ -200,7 +201,10 @@ namespace PhoneBook_Сабитов.Pages
 
             if (category.HasValue)
                 filtered = filtered.Where(c => c.category_call == category.Value);
-
+            if(id != -1)
+            {
+                filtered = filtered.Where((c) => c.user_id == id);
+            }
             Dispatcher.InvokeAsync(async () =>
             {
                 foreach (var call_itm in filtered)
@@ -232,7 +236,7 @@ namespace PhoneBook_Сабитов.Pages
                 category = Convert.ToInt32(selectedItem.Tag);
             }
 
-            DisplayFilteredCalls(start, end, category);
+            DisplayFilteredCalls(start, end, category, id_user);
         }
 
         private void btn_removeFilter_Click(object sender, RoutedEventArgs e)
@@ -242,8 +246,8 @@ namespace PhoneBook_Сабитов.Pages
             date_start_call.SelectedDate = null;
             date_end_call.SelectedDate = null;
             call_category_text.SelectedIndex = -1;
-
-            DisplayFilteredCalls(null, null, null);
+            id_user = -1;
+            DisplayFilteredCalls(null, null, null, id_user);
         }
     }
 }

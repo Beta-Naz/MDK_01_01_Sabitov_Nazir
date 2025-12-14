@@ -64,5 +64,10 @@ namespace PhoneBook_Сабитов.Elements
                 MessageBox.Show(ex.Message.ToString());
             }
         }
+
+        private void Click_show_calls(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MainWindow.main.Anim_move(MainWindow.main.scroll_main, MainWindow.main.frame_main, MainWindow.main.frame_main, null, Pages.Main.page_main.calls, user_loc.id);
+        }
     }
 }
