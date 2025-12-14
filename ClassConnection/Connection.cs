@@ -35,7 +35,7 @@ namespace ClassConnection
             catch
             {
                 return null;
-            }
+            } 
         }
         public int SetLastId(tabels tabel)
         {
