@@ -4,6 +4,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ClassModule;
 
@@ -123,7 +124,46 @@ namespace ClassConnection
                 Console.WriteLine("Null");
             }
         }
-
+        public bool RegularMath(string stroka, string regularStroka)
+        {
+            return Regex.Match(stroka, regularStroka).Success;
+        }
+        public bool ItsNumber(string str)
+        {
+            try
+            {
+                if (str.Length > 10 && str.Length < 13 && RegularMath(str, @"^(\+?7|8)?[\s\-]?\(?([3489][0-9]{2})\)?[\s\-]?([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})$"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool ItsOnlyFIO(string str)
+        {
+            try
+            {
+                if (str.Trim().Split(' ', ',').Length >= 2 && str.Trim().Split(' ', ',').Length < 4)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 
 }
