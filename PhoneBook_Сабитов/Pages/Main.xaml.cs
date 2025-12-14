@@ -1,5 +1,7 @@
 ﻿using ClassModule;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +20,16 @@ namespace PhoneBook_Сабитов.Pages
         };
         // действующая страница
         public static page_main page_select;
-
+        private List<Call> allCalls;
         public Main()
         {
             InitializeComponent();
             page_select = page_main.none;
+            if (call_category_text.Items.Count == 0)
+            {
+                call_category_text.Items.Add(new ComboBoxItem { Tag = 1, Content = "Исходящий" });
+                call_category_text.Items.Add(new ComboBoxItem { Tag = 2, Content = "Входящий" });
+            }
         }
 
         // действие при нажатии на кнопку с клиентами
@@ -109,21 +116,9 @@ namespace PhoneBook_Сабитов.Pages
                         Dispatcher.InvokeAsync(async () =>
                         {
                             MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
+                            allCalls = new List<Call>(MainWindow.connect.calls);
 
-                            foreach (Call call_itm in MainWindow.connect.calls)
-                            {
-                                if (page_select == page_main.calls)
-                                {
-                                    parrent.Children.Add(new Elements.Call_itm(call_itm));
-                                    await Task.Delay(90);
-                                }
-                            }
-
-                            if (page_select == page_main.calls)
-                            {
-                                var ff = new Pages.PagesUser.Call_win(new ClassModule.Call());
-                                parrent.Children.Add(new Elements.Add_itm(ff));
-                            }
+                            DisplayFilteredCalls(null, null, null);
                         });
                     };
 
@@ -181,6 +176,74 @@ namespace PhoneBook_Сабитов.Pages
                 };
                 control1.BeginAnimation(ScrollViewer.OpacityProperty, oppgridAnimation);
             }
+        }
+        private void DisplayFilteredCalls(DateTime? startDate, DateTime? endDate, int? category)
+        {
+            parrent.Children.Clear();
+
+            var filtered = allCalls.AsEnumerable();
+
+            if (startDate.HasValue || endDate.HasValue)
+            {
+                filtered = filtered.Where(c =>
+                {
+                    if (!DateTime.TryParseExact(c.date, "dd.MM.yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime callDate))
+                        return false;
+
+                    if (startDate.HasValue && callDate.Date < startDate.Value.Date)
+                        return false;
+                    if (endDate.HasValue && callDate.Date > endDate.Value.Date)
+                        return false;
+                    return true;
+                });
+            }
+
+            if (category.HasValue)
+                filtered = filtered.Where(c => c.category_call == category.Value);
+
+            Dispatcher.InvokeAsync(async () =>
+            {
+                foreach (var call_itm in filtered)
+                {
+                    if (page_select == page_main.calls)
+                    {
+                        parrent.Children.Add(new Elements.Call_itm(call_itm));
+                        await Task.Delay(30);
+                    }
+                }
+
+                if (page_select == page_main.calls)
+                {
+                    var ff = new Pages.PagesUser.Call_win(new ClassModule.Call());
+                    parrent.Children.Add(new Elements.Add_itm(ff));
+                }
+            });
+        }
+        private void btn_startFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (page_select != page_main.calls) return;
+
+            DateTime? start = date_start_call.SelectedDate;
+            DateTime? end = date_end_call.SelectedDate;
+            int? category = null;
+
+            if (call_category_text.SelectedItem is ComboBoxItem selectedItem)
+            {
+                category = Convert.ToInt32(selectedItem.Tag);
+            }
+
+            DisplayFilteredCalls(start, end, category);
+        }
+
+        private void btn_removeFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (page_select != page_main.calls) return;
+
+            date_start_call.SelectedDate = null;
+            date_end_call.SelectedDate = null;
+            call_category_text.SelectedIndex = -1;
+
+            DisplayFilteredCalls(null, null, null);
         }
     }
 }
