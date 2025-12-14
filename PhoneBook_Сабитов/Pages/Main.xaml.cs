@@ -1,21 +1,9 @@
-﻿using ClassConnection;
-using ClassModule;
+﻿using ClassModule;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace PhoneBook_Сабитов.Pages
 {
@@ -139,14 +127,14 @@ namespace PhoneBook_Сабитов.Pages
                         });
                     };
 
-                    parrent.BeginAnimation(StackPanel.OpacityProperty, oppgridAnimation);
+                    parrent.BeginAnimation(StackPanel.OpacityProperty, oppgridAnimation1);
                 };
                 parrent.BeginAnimation(StackPanel.OpacityProperty, oppgridAnimation);
             }
         }
 
         // Функция анимированного перехода по страницам
-        public void Anim_move(Control control, Control control2, Frame frame_main = null, Page pages = null, page_main page_restart = page_main.none)
+        public void Anim_move(Control control1, Control control2, Frame frame_main = null, Page pages = null, page_main page_restart = page_main.none)
         {
             if (page_restart != page_main.none)
             {
@@ -173,14 +161,16 @@ namespace PhoneBook_Сабитов.Pages
                     {
                         frame_main.Navigate(pages);
                         //if (control1 == frame_main && control2 == frame_main)
-                        // if (Mainindow.actualUser.role != "admin")
-                        // {
-                        //     parent.Children.Clear();
-                        // }
+                        //if (MainWindow.actualUser.role != "admin")
+                        //{
+                        //    parrent.Children.Clear();
+                        //}
                     }
 
-                    //control1.Visibility = Visibility.Hidden;
+                    control1.Visibility = Visibility.Hidden;
+                    control1.IsEnabled = false;
                     control2.Visibility = Visibility.Visible;
+                    control2.IsEnabled = true;
 
                     DoubleAnimation oppgridAnimation1 = new DoubleAnimation();
                     oppgridAnimation1.From = 0;
@@ -189,8 +179,7 @@ namespace PhoneBook_Сабитов.Pages
 
                     control2.BeginAnimation(ScrollViewer.OpacityProperty, oppgridAnimation1);
                 };
-
-                //control1.BeginAnimation(ScrollViewer.OpacityProperty, oppgridAnimation);
+                control1.BeginAnimation(ScrollViewer.OpacityProperty, oppgridAnimation);
             }
         }
     }

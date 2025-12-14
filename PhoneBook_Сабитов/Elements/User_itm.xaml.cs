@@ -55,13 +55,9 @@ namespace PhoneBook_Сабитов.Elements
                 var pc1 = MainWindow.connect.QueryAccess(vs1);
                 string vs = $"DELETE FROM [users] WHERE [Код] = " + user_loc.id.ToString() + "";
                 var pc = MainWindow.connect.QueryAccess(vs);
-                if (pc != null && pc1 != null)
-                {
                     MessageBox.Show("Успешное удаление клиента", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
                     MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
                     MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Pages.Main.page_main.users);
-                }
-                else MessageBox.Show("Запрос на удаление клиента не был обработан", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {

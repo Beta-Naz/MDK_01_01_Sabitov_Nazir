@@ -72,10 +72,19 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
 
             if (date_start_call.SelectedDate != null && date_end_call.SelectedDate != null)
             {
-                DateTime dateStart = (System.DateTime)date_start_call.SelectedDate;
-                System.DateTime dateFinish = (System.DateTime)date_end_call.SelectedDate;
-                TimeSpan dateEnd = dateFinish.Subtract(dateStart);
-                if (dateEnd.ToString().Contains("-"))
+                DateTime dateStart = date_start_call.SelectedDate.Value;
+                DateTime dateFinish = date_end_call.SelectedDate.Value;
+
+                // Добавляем время к датам
+                if (CheckTime(time_start.Text) && CheckTime(time_finish.Text))
+                {
+                    TimeSpan startTime = TimeSpan.Parse(time_start.Text);
+                    TimeSpan endTime = TimeSpan.Parse(time_finish.Text);
+
+                    dateStart = dateStart.Date + startTime;
+                    dateFinish = dateFinish.Date + endTime;
+                }
+                if (dateStart <= dateFinish)
                 {
                     User id_temp_user;
                     if (user_select.SelectedItem != null)
@@ -99,35 +108,27 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
                     {
                         int id = MainWindow.connect.SetLastId(ClassConnection.Connection.tabels.calls);
 
-                        string query = $"INSERT INTO [calls] ([Код], [user_id], [category_call], [date], [time_start], [time_end]) VALUES ({id.ToString()}, " +
-                            $"{id_temp_user.id.ToString()}, {id_calls_categ.ToString()}, '{dateStart.ToString().Split(' ')[0]}', " +
-                            $"'{date_start_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_start.Text}', " +
-                            $"'{date_end_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_finish.Text}')";
-
-                        var pc = MainWindow.connect.QueryAccess(query);
-                        if (pc != null)
-                        {
-                            MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
-                            MessageBox.Show("Успешное добавление звонка", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
-                            MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.calls);
-                        }
+                        string query = $"INSERT INTO [calls] ([Код], [user_id], [category_call], [date_call], [time_start], [time_end]) VALUES ({id.ToString()}, " +
+                        $"{id_temp_user.id.ToString()}, {id_calls_categ.ToString()}, '{dateStart.ToString().Split(' ')[0]}', " +
+                        $"'{date_start_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_start.Text}', " +
+                        $"'{date_end_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_finish.Text}')";
+                        MainWindow.connect.QueryAccess(query);
+                        MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
+                        MessageBox.Show("Успешное добавление звонка", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.calls);
                     }
                     else
                     {
                         string query = $"UPDATE [calls] SET [user_id] = '{id_temp_user.id.ToString()}', " +
-                            $"[category_call]='{id_calls_categ.ToString()}', " +
-                            $"[date]='{date_start_call.SelectedDate.Value.ToString().Split(' ')[0]}', " +
-                            $"[time_start]='{date_start_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_start.Text}', " +
-                            $"[time_end]='{date_end_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_finish.Text}' WHERE Код = {call_itm.id}";
-
-                        var pc = MainWindow.connect.QueryAccess(query);
-                        if (pc != null)
-                        {
-                            MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
-                            MessageBox.Show("Успешное изменение звонка", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
-                            MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.calls);
-                        }
-                        else MessageBox.Show("Запрос на изменение звонка не был обработан", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        $"[category_call]='{id_calls_categ.ToString()}', " +
+                        $"[date_call]='{date_start_call.SelectedDate.Value.ToString().Split(' ')[0]}', " +
+                        $"[time_start]='{date_start_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_start.Text}', " +
+                        $"[time_end]='{date_end_call.SelectedDate.Value.ToString().Split(' ')[0]} {time_finish.Text}' WHERE Код = {call_itm.id}";
+                        MainWindow.connect.QueryAccess(query);
+                        MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
+                        MessageBox.Show("Успешное изменение звонка", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.calls);
+                        
                     }
                 }
                 else MessageBox.Show("Дата старта больше чем дата конца");
@@ -147,14 +148,10 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
             {
                 MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
                 string vs = $"DELETE FROM [calls] WHERE [Код] = " + call_itm.id.ToString() + "";
-                var pc = MainWindow.connect.QueryAccess(vs);
-                if (pc != null)
-                {
-                    MessageBox.Show("Успешное удаление звонка", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
-                    MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.calls);
-                }
-                else MessageBox.Show("Запрос на удаление звонка не был обработан", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MainWindow.connect.QueryAccess(vs);
+                MessageBox.Show("Успешное удаление звонка", "Успешное", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.connect.LoadData(ClassConnection.Connection.tabels.calls);
+                MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.calls);
             }
             catch (Exception ex)
             {
@@ -164,24 +161,17 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
 
         public bool CheckTime(string str)
         {
+            if (string.IsNullOrWhiteSpace(str)) return false;
+
             string[] str1 = str.Split(':');
-            if (str1.Length == 2)
+            if (str1.Length != 2) return false;
+
+            if (int.TryParse(str1[0].Trim(), out int hours) &&
+                int.TryParse(str1[1].Trim(), out int minutes))
             {
-                if (str1[0].Trim() != "" && str1[1].Trim() != "")
-                {
-                    if (int.Parse(str1[0]) >= 0 && int.Parse(str1[0]) <= 23)
-                    {
-                        if (int.Parse(str1[1]) >= 0 && int.Parse(str1[1]) <= 59)
-                        {
-                            return true;
-                        }
-                        else return false;
-                    }
-                    else return false;
-                }
-                else return false;
+                return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
             }
-            else return false;
+            return false;
         }
     }
 }

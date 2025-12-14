@@ -16,12 +16,9 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
             InitializeComponent();
             user_loc = _user;
 
-            if (_user.fio_user != null)
-            {
-                fio_user.Text = _user.fio_user;
-                phone_user.Text = _user.phone_num;
-                addrec_user.Text = _user.pasport_data;
-            }
+            fio_user.Text = _user?.fio_user ?? "";
+            phone_user.Text = _user?.phone_num ?? "";
+            addrec_user.Text = _user?.pasport_data ?? "";
         }
 
         private void Click_User_Redact(object sender, RoutedEventArgs e)
@@ -46,36 +43,20 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
                 int id = MainWindow.connect.SetLastId(ClassConnection.Connection.tabels.users);
                 string query = $"INSERT INTO [users]([Код], [phone_num], [FIO_user], [passport_data]) VALUES ({id.ToString()}, " +
                                $"'{phone_user.Text}', '{fio_user.Text}', '{addrec_user.Text}')";
-                var pc = MainWindow.connect.QueryAccess(query);
-                // Если запрос выполнен
-                if (pc != null)
-                {
-                    MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
-                    MessageBox.Show("Успешное добавление клиента", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.users);
-                }
-                else
-                {
-                    MessageBox.Show("Запрос на добавление клиента не был обработан", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                MainWindow.connect.QueryAccess(query);
+                MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
+                MessageBox.Show("Успешное добавление клиента", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.users);
             }
             else
             {
                 string query = $"UPDATE [users] SET [phone_num] = '{phone_user.Text}', " +
                                $"[FIO_user]='{fio_user.Text}', " +
                                $"[passport_data]='{addrec_user.Text}' WHERE Код = {user_loc.id}";
-
-                var pc = MainWindow.connect.QueryAccess(query);
-                if (pc != null)
-                {
                     MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
-                    MessageBox.Show("Успешное изменение клиента", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.connect.QueryAccess(query);
+                MessageBox.Show("Успешное изменение клиента", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
                     MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.users);
-                }
-                else
-                {
-                    MessageBox.Show("Запрос на изменение клиента не был обработан", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
             }
         }
 
@@ -107,17 +88,9 @@ namespace PhoneBook_Сабитов.Pages.PagesUser
 
                 string vs = $"DELETE FROM [users] WHERE [Код] = " + user_loc.id.ToString() + ";";
                 var pc = MainWindow.connect.QueryAccess(vs);
-                if (pc != null && pc1 != null)
-                {
-                    MessageBox.Show("Успешное удаление клиента", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
-                    MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.users);
-                }
-                else
-                {
-                    // выводим пользователю сообщение
-                    MessageBox.Show("Запрос на удаление клиента не был обработан", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                MessageBox.Show("Успешное удаление клиента", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
+                MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main, null, null, Main.page_main.users);
             }
             catch (Exception ex)
             {

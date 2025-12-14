@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ClassModule;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ClassModule;
 
 
 namespace ClassConnection
@@ -21,21 +23,30 @@ namespace ClassConnection
         {
             users, calls
         }
-        public string localPath = "";
+        public string localPath = @"C:\Users\Сабитов Назир\Desktop\PhoneBook_Сабитов\PhoneBook_Сабитов\bin\Debug";
         public OleDbDataReader QueryAccess(string query)
         {
             try
             {
                 localPath = Directory.GetCurrentDirectory();
-                OleDbConnection connect = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + localPath + "/accesbase.accdb");
+                OleDbConnection connect = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                                             localPath + "/accesbase.accdb");
                 connect.Open();
                 OleDbCommand cmd = new OleDbCommand(query, connect);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                return reader;
+
+                if (query.Trim().ToUpper().StartsWith("SELECT"))
+                    return cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                else
+                {
+                    cmd.ExecuteNonQuery();
+                    connect.Close();
+                    return null;
+                }
+
             }
             catch
             {
-                return null;
+                throw;
             } 
         }
         public int SetLastId(tabels tabel)
@@ -54,7 +65,7 @@ namespace ClassConnection
                         }
                         return 1;
                     case "calls":
-                        if (users.Count >= 1)
+                        if (calls.Count >= 1)
                         {
                             int max = calls[0].id;
                             max = calls.Max(x => x.id);
@@ -132,7 +143,7 @@ namespace ClassConnection
         {
             try
             {
-                if (str.Length > 10 && str.Length < 13 && RegularMath(str, @"^(\+?7|8)?[\s\-]?\(?([3489][0-9]{2})\)?[\s\-]?([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})$"))
+                if (RegularMath(str, @"^(\+?7|8)?[\s\-]?\(?([3489][0-9]{2})\)?[\s\-]?([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})$"))
                 {
                     return true;
                 }
