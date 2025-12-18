@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Constructors_Сабитов.Classes
+﻿namespace Constructors_Сабитов.Classes
 {
     public class Student
     {
-        public string Firstname = "", Lastname = "", Surname = "";
+        public string Firstname = "", Lastname = "", Surname = "", Src = @"pack://application:,,,/Constructors_Сабитов;component/Images/ic_user.png";
         public bool Scholarship = false;
         public int Course = 4;
 
@@ -28,6 +22,11 @@ namespace Constructors_Сабитов.Classes
             : this(firstname, lastname, surname, scholarship)
         {
             Course = course;
+        }
+        public Student(string firstname, string lastname, string surname, bool scholarship, int course, string src)
+            : this(firstname, lastname, surname, scholarship, course)
+        {
+            Src = src;
         }
         public string GetFIO()
         {

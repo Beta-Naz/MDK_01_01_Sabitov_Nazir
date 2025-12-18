@@ -1,34 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Constructors_Сабитов
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Classes.Student> AllStudent = Classes.RepoStudents.AllStudents();
+        private List<Classes.Student> _allStudentsOriginal = Classes.RepoStudents.AllStudents();
+
+        public List<Classes.Student> AllStudent;
 
         public int Count = 10;
-
         public int Step = 0;
-        //фывфыв
+
         public MainWindow()
         {
             InitializeComponent();
+
+            AllStudent = new List<Classes.Student>(_allStudentsOriginal);
 
             CreateStudent(Step, Count);
         }
@@ -44,20 +34,64 @@ namespace Constructors_Сабитов
             }
             this.Step += Count;
         }
+
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             ScrollViewer scroll = sender as ScrollViewer;
-
             double ParentHeight = parent.ActualHeight;
-
             double WindowHeight = scroll.ActualHeight - 20;
-
             double DeltaHeight = ParentHeight - WindowHeight;
 
             if (DeltaHeight - scroll.VerticalOffset < 140)
             {
                 CreateStudent(Step, Count);
             }
+        }
+
+        private void Sort(object sender, RoutedEventArgs e)
+        {
+            AllStudent = AllStudent.OrderBy(x => x.Lastname)
+                .ThenBy(x => x.Firstname)
+                .ThenBy(x => x.Surname)
+                .ToList();
+            UpdateDisplay();
+        }
+
+        private void NoSort(object sender, RoutedEventArgs e)
+        {
+            AllStudent = new List<Classes.Student>(_allStudentsOriginal);
+            UpdateDisplay();
+        }
+
+        private void UpdateDisplay()
+        {
+            parent.Children.Clear();
+            Step = 0;
+            CreateStudent(Step, Count);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox searchBox = sender as TextBox;
+            string searchText = searchBox?.Text?.Trim().ToLower() ?? "";
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                AllStudent = new List<Classes.Student>(_allStudentsOriginal);
+            }
+            else
+            {
+                AllStudent = _allStudentsOriginal
+                    .Where(student =>
+                        (!string.IsNullOrEmpty(student.Lastname) &&
+                         student.Lastname.ToLower().Contains(searchText)) ||
+                        (!string.IsNullOrEmpty(student.Firstname) &&
+                         student.Firstname.ToLower().Contains(searchText)) ||
+                        (!string.IsNullOrEmpty(student.Surname) &&
+                         student.Surname.ToLower().Contains(searchText)))
+                    .ToList();
+            }
+            UpdateDisplay();
         }
     }
 }
