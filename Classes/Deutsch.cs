@@ -16,7 +16,7 @@ namespace Human_Сабитов.Classes
                 return stepAudio;
             }
             set
-            {
+            { 
                 stepAudio = value;
                 if (stepAudio > Phrases.Count - 1)
                 {

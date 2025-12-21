@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Controls;
-
-namespace Human_Сабитов.Classes
+﻿namespace Human_Сабитов.Classes
 {
     public class Phrase
     {
