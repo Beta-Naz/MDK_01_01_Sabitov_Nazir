@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Batlle_Сабитов.Elements
 {
@@ -101,8 +92,8 @@ namespace Batlle_Сабитов.Elements
         {
             if (PeacefulWorld.init.Titri.Height <= 800)
             {
-                PeacefulWorld.init.EndVictory.Foreground = new SolidColorBrush(Colors.Black);
-                PeacefulWorld.init.EndVictoryText.Foreground = new SolidColorBrush(Colors.Black);
+                PeacefulWorld.init.EndVictory.Foreground = new SolidColorBrush(Colors.Green);
+                PeacefulWorld.init.EndVictoryText.Foreground = new SolidColorBrush(Colors.Green);
                 PeacefulWorld.init.VictoryButton.Children.Add(new Elements.VyButton());
                 init.VictorButton.Content = "Спасибо за игру";
                 DisposeTimer();

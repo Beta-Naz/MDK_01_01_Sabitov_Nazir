@@ -1,22 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Batlle_Сабитов.Classes
 {
     public class RepoAlwaysMonsters
     {
-        //public double Healt { get; set; }
-        //public double Damage { get; set; }
-        //public double Armor { get; set; }
-        //public double EXP { get; set; }
-        //public double Levels { get; set; }
-        //public string Power { get; set; }
-        //public string[] Vulnerability { get; set; }
-        //public string Imges { get; set; }
-        //"Cutting", "Stabbing", "Crushing"
         public static List<AlwaysMonsters> AllMonster()
         {
             string[] UnnamedVulnerability;
