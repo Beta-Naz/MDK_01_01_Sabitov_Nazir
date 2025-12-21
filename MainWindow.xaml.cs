@@ -16,7 +16,7 @@ namespace Human_Сабитов
         private Classes.Russian Russian = new Classes.Russian("Александр", @"C:\Users\student-a502\Desktop\Human_Сабитов\Images\ic_russian.png");
         private Classes.English English = new Classes.English("Alena", @"C:\Users\student-a502\Desktop\Human_Сабитов\Images\ic_english.png");
         private Classes.Deutsch Deutsch = new Classes.Deutsch("Sasha", @"C:\Users\student-a502\Desktop\Human_Сабитов\Images\ic_deutsch.png");
-        public static List<Elements.Item> items = new List<Elements.Item>();
+        public static List<Elements.Item> items = new List<Elements.Item>(); 
         public MainWindow()
         {
             var russian = new Elements.Item(Russian);
