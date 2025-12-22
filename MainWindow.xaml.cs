@@ -17,7 +17,7 @@ namespace Shop_Сабитов
             InitializeComponent();
             CreateUI();
         }
-        public void CreateUI()
+        public void CreateUI() 
         {
             parent.Children.Clear();
             foreach (object item in AllItems)
