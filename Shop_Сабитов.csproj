@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Interfaces\IContext.cs" />
     <Compile Include="Models\Children.cs" />
     <Compile Include="Models\Electronics.cs" />
     <Compile Include="Classes\RepoItems.cs" />
