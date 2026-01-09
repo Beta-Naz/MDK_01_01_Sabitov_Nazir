@@ -6,31 +6,37 @@ using Shop_Сабитов.Classes.Common;
 
 namespace Shop_Сабитов.Classes
 {
-    public class ShopContext : Shop, IContext
+    public class ChildrenContext : Children, IContext
     {
-        public ShopContext() { }
-        public ShopContext(int id, string Name, int Price) : base(id, Name, Price) {}
+        public ChildrenContext() { }
+        public ChildrenContext(int id, string Name, int Price, int Age, int IdShop) : base(id, Name, Price, Age, IdShop)
+        {
+        }
         public List<object> All()
         {
-            List<object> allShops = new List<object>();
+            List<object> AllShop = new ShopContext().All();
+            List<object> allChildren = new List<object>();
             using (OleDbConnection connection = DBConnection.Connection())
             {
                 connection.Open();
-                string query = $@"SELECT * FROM [Товар]";
+                string query = $@"SELECT * FROM [Детские Вещи]";
                 using (OleDbDataReader reader = DBConnection.Query(query, connection))
                 {
                     while (reader.Read())
                     {
-                        ShopContext newShop = new ShopContext(
-                            reader.GetInt32(0),
-                            reader.GetString(1),
+                        ShopContext shopElement = AllShop.Find(x => (x as ShopContext).Id == reader.GetInt32(2)) as ShopContext;
+                        ChildrenContext newChildren = new ChildrenContext(
+                            shopElement.Id,
+                            shopElement.Name,
+                            shopElement.Price,
+                            reader.GetInt32(1),
                             reader.GetInt32(2));
-                        allShops.Add(newShop);
+                        allChildren.Add(newChildren);
                     }
                 }
                 ;
             }
-            return allShops;
+            return allChildren;
         }
         public void Delete()
         {

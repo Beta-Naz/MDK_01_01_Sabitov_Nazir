@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
+        public Shop() { }
         public Shop(int id, string Name, int Price)
         {
             this.Name = Name;
