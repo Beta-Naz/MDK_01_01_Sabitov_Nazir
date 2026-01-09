@@ -4,7 +4,7 @@
     {
         public int Age { get; set; }
 
-        public Children(string Name, int Price, int Age) : base(Name, Price)
+        public Children(int id, string Name, int Price, int Age) : base(id, Name, Price)
         {
             this.Age = Age;
         }

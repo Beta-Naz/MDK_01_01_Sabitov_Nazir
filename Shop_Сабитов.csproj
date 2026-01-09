@@ -71,7 +71,7 @@
     <Compile Include="Interfaces\IContext.cs" />
     <Compile Include="Models\Children.cs" />
     <Compile Include="Models\Electronics.cs" />
-    <Compile Include="Classes\RepoItems.cs" />
+    <Compile Include="Classes\ShopContext.cs" />
     <Compile Include="Models\Shop.cs" />
     <Compile Include="Models\Sport.cs" />
     <Compile Include="Elements\Item.xaml.cs">

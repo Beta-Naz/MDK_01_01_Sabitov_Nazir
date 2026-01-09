@@ -11,13 +11,13 @@ namespace Shop_Сабитов
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<object> AllItems = RepoItems.AllItems();
+        List<object> AllItems;
         public MainWindow()
         {
             InitializeComponent();
             CreateUI();
         }
-        public void CreateUI() 
+        public void CreateUI()
         {
             parent.Children.Clear();
             foreach (object item in AllItems)
@@ -65,19 +65,19 @@ namespace Shop_Сабитов
                     if (ShopData is Electronics)
                     {
                         Electronics ElectDate = ShopData as Electronics;
-                        if ($"{ElectDate.BatteryCapacity}".Trim().ToLower().Contains(search) || 
+                        if ($"{ElectDate.BatteryCapacity}".Trim().ToLower().Contains(search) ||
                             $"{ElectDate.DrivingSpeed}".Trim().ToLower().Contains(search))
                         {
                             tr = true;
                         }
                     }
-                    if(tr)
+                    if (tr)
                     {
                         parent.Children.Add(new Elements.Item(item));
                     }
                 }
             }
-            catch 
+            catch
             {
                 CreateUI();
             }
