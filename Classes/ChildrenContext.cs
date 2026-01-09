@@ -18,7 +18,6 @@ namespace Shop_Сабитов.Classes
             List<object> allChildren = new List<object>();
             using (OleDbConnection connection = DBConnection.Connection())
             {
-                connection.Open();
                 string query = $@"SELECT * FROM [Детские Вещи]";
                 using (OleDbDataReader reader = DBConnection.Query(query, connection))
                 {
@@ -33,8 +32,7 @@ namespace Shop_Сабитов.Classes
                             reader.GetInt32(2));
                         allChildren.Add(newChildren);
                     }
-                }
-                ;
+                };
             }
             return allChildren;
         }

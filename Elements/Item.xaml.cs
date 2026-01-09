@@ -1,48 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Shop_Сабитов.Models;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Shop_Сабитов.Elements
 {
-    /// <summary>
-    /// Логика взаимодействия для Item.xaml
-    /// </summary>
     public partial class Item : UserControl
     {
         public Item(object ItemData)
         {
             InitializeComponent();
             // Преобразование полученный объект в базовый класс
-            Classes.Shop ShopData = ItemData as Classes.Shop;
+            Shop ShopData = ItemData as Shop;
 
             tb_Name.Content = ShopData.Name;
             tb_Price.Content = "Цена: " + ShopData.Price;
-            if(ItemData is Classes.Children)
+            if(ItemData is Children)
             {
-                Classes.Children ChilDate = ItemData as Classes.Children;
+                Children ChilDate = ItemData as Children;
                 tb_Characteristic.Content = "Возраст: " + ChilDate.Age;
             }
-            if(ItemData is Classes.Sport)
+            if(ItemData is Sport)
             {
-                Classes.Sport SporDate = ItemData as Classes.Sport;
+                Sport SporDate = ItemData as Sport;
                 tb_Characteristic.Content = "Размер: " + SporDate.Size;
             }
-            if (ItemData is Classes.Electronics)
+            if (ItemData is Electronics)
             {
-                Classes.Electronics ElectDate = ItemData as Classes.Electronics;
+                Electronics ElectDate = ItemData as Electronics;
                 tb_Characteristic.Content = "Ёмкость аккумулятора: " + 
-                    ElectDate.BatteryCapacity + " (Ач)" + "\n" + "Скорость езды: " + ElectDate.DrivingSpeed + " (Км/ч)";
+                    ElectDate.BatteryCapacity + " (Ач)" + "\n" + "Саморазряд : " + ElectDate.DrivingSpeed + "% в год";
             }
         }
     }

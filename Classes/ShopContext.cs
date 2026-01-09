@@ -3,6 +3,7 @@ using System.Data.OleDb;
 using Shop_Сабитов.Interfaces;
 using Shop_Сабитов.Models;
 using Shop_Сабитов.Classes.Common;
+using System;
 
 namespace Shop_Сабитов.Classes
 {
@@ -15,20 +16,18 @@ namespace Shop_Сабитов.Classes
             List<object> allShops = new List<object>();
             using (OleDbConnection connection = DBConnection.Connection())
             {
-                connection.Open();
                 string query = $@"SELECT * FROM [Товар]";
                 using (OleDbDataReader reader = DBConnection.Query(query, connection))
                 {
                     while (reader.Read())
                     {
                         ShopContext newShop = new ShopContext(
-                            reader.GetInt32(0),
+                            Convert.ToInt32(reader[0]),
                             reader.GetString(1),
-                            reader.GetInt32(2));
+                            Convert.ToInt32(reader[2]));
                         allShops.Add(newShop);
                     }
-                }
-                ;
+                };
             }
             return allShops;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Shop_Сабитов.Classes;
@@ -11,7 +12,8 @@ namespace Shop_Сабитов
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<object> AllItems;
+        List<object> AllItems = new ChildrenContext().All().Concat(new ElectronicsContext()
+            .All()).Concat(new SportContext().All()).ToList();
         public MainWindow()
         {
             InitializeComponent();

@@ -4,7 +4,7 @@ namespace Shop_Сабитов.Classes.Common
 {
     internal class DBConnection
     {
-        public static readonly string Path = "";
+        public static readonly string Path = @"C:\Users\Сабитов Назир\Desktop\MDK_01_01_Sabitov_Nazir--25\bin\Debug\Shop.accdb";
         public static OleDbConnection Connection()
         {
             OleDbConnection connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0; Data Source=" + Path);
