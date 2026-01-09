@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Airlines_Сабитов.Pages
+namespace Airlines_Сабитов.Elements
 {
     /// <summary>
-    /// Логика взаимодействия для Main.xaml
+    /// Логика взаимодействия для Item.xaml
     /// </summary>
-    public partial class Main : Page
+    public partial class Item : UserControl
     {
-        public Main()
+        public Item()
         {
             InitializeComponent();
-        }
-
-        private void Hide(object sender, RoutedEventArgs e)
-        {
-            MainWindow.OpenPages("ticket");
         }
     }
 }

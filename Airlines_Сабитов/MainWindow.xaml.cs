@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +21,24 @@ namespace Airlines_Сабитов
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static MainWindow init;
         public MainWindow()
         {
             InitializeComponent();
+            init = this;
+            OpenPages("main");
+        }
+        public static void OpenPages(string page)
+        {
+            switch (page)
+            {
+                case "main":
+                    init.frame.Navigate(new Pages.Main());
+                    break;
+                case "ticket":
+                    init.frame.Navigate(new Pages.Ticket());
+                    break;
+            }
         }
     }
 }
