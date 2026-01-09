@@ -10,8 +10,8 @@ namespace Shop_Сабитов.Classes
     public class ElectronicsContext : Electronics, IContext
     {
         public ElectronicsContext() { }
-        public ElectronicsContext(int id, string Name, int Price, int BatteryCapacity, int DrivingSpeed, int idShop) : 
-            base(id, Name, Price, BatteryCapacity, DrivingSpeed, idShop)
+        public ElectronicsContext(int id, string Name, int Price, int BatteryCapacity, int DrivingSpeed, int idShop, string src, int discount) : 
+            base(id, Name, Price, BatteryCapacity, DrivingSpeed, idShop, src, discount)
         {
 
         }
@@ -26,15 +26,17 @@ namespace Shop_Сабитов.Classes
                 {
                     while (reader.Read())
                     {
-                        ShopContext shopElements = allShop.Find(x => (x as ShopContext).Id == reader.GetInt32(3)) as ShopContext;
+                        ShopContext shopElement = allShop.Find(x => (x as ShopContext).Id == reader.GetInt32(3)) as ShopContext;
                         ElectronicsContext newElectronic = new ElectronicsContext(
 
-                            shopElements.Id,
-                            shopElements.Name,
-                            shopElements.Price,
+                            shopElement.Id,
+                            shopElement.Name,
+                            shopElement.Price,
                             reader.GetInt32(1),
                             reader.GetInt32(2),
-                            reader.GetInt32(3)
+                            reader.GetInt32(3),
+                            shopElement.Src,
+                            shopElement.Discount
                         );
                         allElectronics.Add(newElectronic);
                     }

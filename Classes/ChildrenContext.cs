@@ -9,7 +9,7 @@ namespace Shop_Сабитов.Classes
     public class ChildrenContext : Children, IContext
     {
         public ChildrenContext() { }
-        public ChildrenContext(int id, string Name, int Price, int Age, int IdShop) : base(id, Name, Price, Age, IdShop)
+        public ChildrenContext(int id, string Name, int Price, int Age, int IdShop, string src, int discount) : base(id, Name, Price, Age, IdShop, src, discount)
         {
         }
         public List<object> All()
@@ -29,7 +29,10 @@ namespace Shop_Сабитов.Classes
                             shopElement.Name,
                             shopElement.Price,
                             reader.GetInt32(1),
-                            reader.GetInt32(2));
+                            reader.GetInt32(2),
+                            shopElement.Src,
+                            shopElement.Discount
+                            );
                         allChildren.Add(newChildren);
                     }
                 };

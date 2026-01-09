@@ -10,7 +10,7 @@ namespace Shop_Сабитов.Classes
     public class ShopContext : Shop, IContext
     {
         public ShopContext() { }
-        public ShopContext(int id, string Name, int Price) : base(id, Name, Price) {}
+        public ShopContext(int id, string Name, int Price, string src, int discount) : base(id, Name, Price, src, discount) {}
         public List<object> All()
         {
             List<object> allShops = new List<object>();
@@ -24,7 +24,9 @@ namespace Shop_Сабитов.Classes
                         ShopContext newShop = new ShopContext(
                             Convert.ToInt32(reader[0]),
                             reader.GetString(1),
-                            Convert.ToInt32(reader[2]));
+                            Convert.ToInt32(reader[2]),
+                            reader.GetString(3),
+                            Convert.ToInt32(reader[4]));
                         allShops.Add(newShop);
                     }
                 };

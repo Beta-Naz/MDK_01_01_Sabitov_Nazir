@@ -1,5 +1,7 @@
 ﻿using Shop_Сабитов.Models;
+using System;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Shop_Сабитов.Elements
 {
@@ -10,10 +12,11 @@ namespace Shop_Сабитов.Elements
             InitializeComponent();
             // Преобразование полученный объект в базовый класс
             Shop ShopData = ItemData as Shop;
-
+            src.Source = new BitmapImage(new Uri(ShopData.Src, UriKind.Relative));
             tb_Name.Content = ShopData.Name;
-            tb_Price.Content = "Цена: " + ShopData.Price;
-            if(ItemData is Children)
+            tb_Price.Content = ShopData.Price - (ShopData.Price / 100 * ShopData.Discount);
+            tb_Discount.Content = ShopData.Discount;
+            if (ItemData is Children)
             {
                 Children ChilDate = ItemData as Children;
                 tb_Characteristic.Content = "Возраст: " + ChilDate.Age;

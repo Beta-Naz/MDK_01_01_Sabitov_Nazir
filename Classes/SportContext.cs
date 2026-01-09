@@ -10,7 +10,7 @@ namespace Shop_Сабитов.Classes
     public class SportContext : Sport, IContext
     {
         public SportContext() {}
-        public SportContext(int id, string Name, int Price, string Size, int idShop) : base(id, Name, Price, Size, idShop)
+        public SportContext(int id, string Name, int Price, string Size, int idShop, string src, int discount) : base(id, Name, Price, Size, idShop, src, discount)
         {
         }
         public List<object> All()
@@ -24,14 +24,15 @@ namespace Shop_Сабитов.Classes
                 {
                     while (reader.Read())
                     {
-                        ShopContext shopElements = allShop.Find(x => (x as ShopContext).Id == reader.GetInt32(2)) as ShopContext;
-                        SportContext newSport = new SportContext(
-                        
-                            shopElements.Id,
-                            shopElements.Name,
-                            shopElements.Price,
+                        ShopContext shopElement = allShop.Find(x => (x as ShopContext).Id == reader.GetInt32(2)) as ShopContext;
+                        SportContext newSport = new SportContext(             
+                            shopElement.Id,
+                            shopElement.Name,
+                            shopElement.Price,
                             reader.GetString(1),
-                            reader.GetInt32(2)
+                            reader.GetInt32(2),
+                            shopElement.Src,
+                            shopElement.Discount
                         );
                         allSports.Add(newSport);
                     }

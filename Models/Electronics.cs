@@ -7,7 +7,7 @@
 
         public int IdShop { get; set; }
         public Electronics() { }
-        public Electronics(int id, string Name, int Price, int BatteryCapacity, int DrivingSpeed, int idShop) : base(id, Name, Price)
+        public Electronics(int id, string Name, int Price, int BatteryCapacity, int DrivingSpeed, int idShop, string src, int discount) : base(id, Name, Price, src, discount)
         {
             this.BatteryCapacity = BatteryCapacity;
             this.DrivingSpeed = DrivingSpeed;
