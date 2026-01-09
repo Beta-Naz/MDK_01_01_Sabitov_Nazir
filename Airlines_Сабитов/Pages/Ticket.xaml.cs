@@ -20,10 +20,17 @@ namespace Airlines_Сабитов.Pages
     /// </summary>
     public partial class Ticket : Page
     {
-        public Ticket()
+        MainWindow mainWindow;
+        public Ticket(MainWindow window, string from, string to)
         {
             InitializeComponent();
+            mainWindow = window;
             parrent.Children.Add(new Elements.Item());
+        }
+
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            mainWindow.frame.Navigate(new Main(mainWindow));
         }
     }
 }

@@ -21,24 +21,10 @@ namespace Airlines_Сабитов
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow init;
         public MainWindow()
         {
             InitializeComponent();
-            init = this;
-            OpenPages("main");
-        }
-        public static void OpenPages(string page)
-        {
-            switch (page)
-            {
-                case "main":
-                    init.frame.Navigate(new Pages.Main());
-                    break;
-                case "ticket":
-                    init.frame.Navigate(new Pages.Ticket());
-                    break;
-            }
+            frame.Navigate(new Pages.Main(this));
         }
     }
 }

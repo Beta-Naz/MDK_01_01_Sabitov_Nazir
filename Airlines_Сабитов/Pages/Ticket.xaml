@@ -27,8 +27,8 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1">
-                <Button HorizontalAlignment="Right" Height="30" 
-                     Margin="10" Padding="30,0,30,0" FontSize="18" Content="Выход"/>
+                <Button Click="Back" HorizontalAlignment="Right" Height="30"   Background="White"
+                     Margin="10" Padding="30,0,30,0" FontSize="18" Content="Вернуться"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1"  Background="White">
