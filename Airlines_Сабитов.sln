@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36717.8 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airlines_Сабитов", "Airlines_Сабитов\Airlines_Сабитов.csproj", "{FFBF20C6-F0FA-4E52-A238-910D54026E65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingBD", "WorkingBD\WorkingBD.csproj", "{D01B651C-31B8-4FAD-A361-C254C23C23A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FFBF20C6-F0FA-4E52-A238-910D54026E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFBF20C6-F0FA-4E52-A238-910D54026E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFBF20C6-F0FA-4E52-A238-910D54026E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D01B651C-31B8-4FAD-A361-C254C23C23A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01B651C-31B8-4FAD-A361-C254C23C23A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D01B651C-31B8-4FAD-A361-C254C23C23A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01B651C-31B8-4FAD-A361-C254C23C23A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
