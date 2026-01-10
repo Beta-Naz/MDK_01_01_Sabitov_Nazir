@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Airlines_Сабитов.Pages
@@ -17,8 +18,9 @@ namespace Airlines_Сабитов.Pages
 
         private void Hide(object sender, RoutedEventArgs e)
         {
-            mainWindow.frame.Navigate(new Ticket(mainWindow, from.Text, to.Text));
-
+            DateTime? selectedDepartureDate = startDate.SelectedDate;
+            DateTime? selectedReturnDate = wayDate.SelectedDate;
+            mainWindow.frame.Navigate(new Ticket(mainWindow, from.Text, to.Text, selectedDepartureDate, selectedReturnDate));
         }
         private void Exit(object sender, RoutedEventArgs e)
         {

@@ -21,17 +21,48 @@ namespace Airlines_Сабитов.Pages
     public partial class Ticket : Page
     {
         MainWindow mainWindow;
-        public Ticket(MainWindow window, string from, string to)
+        public Ticket(MainWindow window, string from, string to, DateTime? start, DateTime? retur)
         {
             InitializeComponent();
             mainWindow = window;
-            DateLoad();
+            DateLoad(from, to, start, retur);
         }
-        void DateLoad()
+        void DateLoad(string from, string to, DateTime? start, DateTime? retur)
         {
-            foreach(Models.TicketClass ticket in mainWindow.ticketClasses)
+            foreach (Models.TicketClass ticket in mainWindow.ticketClasses)
             {
-                parrent.Children.Add(new Elements.Item(ticket));
+                bool valid = true;
+                bool validRevers = false;
+                if (!string.IsNullOrEmpty(from) && ticket.from != from)
+                {
+                    valid = false;
+                }
+                if (!string.IsNullOrEmpty(to) && ticket.to != to)
+                {
+                    valid = false;
+                }
+                if (start.HasValue) 
+                {
+                    if (ticket.time_start.Date != start.Value.Date)
+                    {
+                        valid = false;
+                    }
+                }
+                if (retur.HasValue && !string.IsNullOrEmpty(to) && !string.IsNullOrEmpty(from))
+                {
+                    if (ticket.from == "Екатеринбург")
+                    {
+                        validRevers = false;
+                    }
+                    if (ticket.time_start.Date == retur.Value.Date && ticket.from == to && ticket.to == from)
+                    {
+                        validRevers = true;
+                    }
+                }
+                if(valid || validRevers)
+                {
+                    parrent.Children.Add(new Elements.Item(ticket));
+                }
             }
         }
         private void Back(object sender, RoutedEventArgs e)
