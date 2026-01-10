@@ -25,9 +25,15 @@ namespace Airlines_Сабитов.Pages
         {
             InitializeComponent();
             mainWindow = window;
-            parrent.Children.Add(new Elements.Item());
+            DateLoad();
         }
-
+        void DateLoad()
+        {
+            foreach(Models.TicketClass ticket in mainWindow.ticketClasses)
+            {
+                parrent.Children.Add(new Elements.Item(ticket));
+            }
+        }
         private void Back(object sender, RoutedEventArgs e)
         {
             mainWindow.frame.Navigate(new Main(mainWindow));

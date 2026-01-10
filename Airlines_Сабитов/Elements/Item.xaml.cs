@@ -20,9 +20,18 @@ namespace Airlines_Сабитов.Elements
     /// </summary>
     public partial class Item : UserControl
     {
-        public Item()
+        public Item(Models.TicketClass ticket)
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            price.Content = ticket.price.ToString() + " P";
+            startDate.Content = ticket.time_start.ToString("dd.MMMM.yyyy");
+            startTime.Content = ticket.time_start.ToString("t");
+            endDate.Content = ticket.time_way.ToString("dd.MMMM.yyyy"); ;
+            endTime.Content = ticket.time_way.ToString("t");
+            TimeSpan duration = ticket.time_way - ticket.time_start;
+            timer.Content = $"В пути {(int)duration.TotalHours}ч {duration.Minutes}мин";
+            city.Content = ticket.from.ToString();
+            endCity.Content = ticket.to.ToString();
         }
     }
 }

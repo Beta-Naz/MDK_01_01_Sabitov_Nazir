@@ -172,5 +172,11 @@
   <ItemGroup>
     <Resource Include="Images\airIconDown.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WorkingBD\WorkingBD.csproj">
+      <Project>{d01b651c-31b8-4fad-a361-c254c23c23a8}</Project>
+      <Name>WorkingBD</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
