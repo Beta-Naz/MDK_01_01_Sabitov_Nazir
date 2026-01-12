@@ -19,7 +19,7 @@ namespace Сinema_Сабитов.Classes
             List<object> allCinema = new List<object>();
             using (MySqlConnection connection = DBConnection.Connection())
             {
-                string sqlScript = $@"SELECT * FROM [Cinema]";
+                string sqlScript = $@"SELECT * FROM [cinema]";
                 using (MySqlDataReader reader = DBConnection.Query(sqlScript, connection))
                 {
                     while (reader.Read())

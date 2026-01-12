@@ -10,7 +10,7 @@ namespace Сinema_Сабитов.Classes
     public class PosterContext : Poster, IContext
     {
         public PosterContext() { }
-        public PosterContext(int id, string idCinema, string film, 
+        public PosterContext(int id, int idCinema, string film, 
             TimeSpan timeSession, decimal priceSession, decimal priceTicket) : 
             base(id, idCinema, film, timeSession, priceSession, priceTicket)
         {
@@ -20,7 +20,7 @@ namespace Сinema_Сабитов.Classes
             List<object> allPoster = new List<object>();
             using (MySqlConnection connection = DBConnection.Connection())
             {
-                string sqlScript = $@"SELECT * FROM [Cinema]";
+                string sqlScript = $@"SELECT * FROM [poster]";
                 using (MySqlDataReader reader = DBConnection.Query(sqlScript, connection))
                 {
                     while (reader.Read())
@@ -38,7 +38,6 @@ namespace Сinema_Сабитов.Classes
             }
             return allPoster;
         }
-
         public void Delete()
         {
             throw new System.NotImplementedException();
