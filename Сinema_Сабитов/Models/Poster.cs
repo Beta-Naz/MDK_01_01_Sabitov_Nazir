@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Сinema_Сабитов.Models
 {
     public class Poster
-    {
+    { 
         public int Id { get; set; }
         public string IdCinema { get; set; }
         public string Film { get; set; }
