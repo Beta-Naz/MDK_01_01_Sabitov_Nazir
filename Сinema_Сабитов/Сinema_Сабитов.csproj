@@ -113,7 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\CinemaContext.cs" />
-    <Compile Include="Classes\Common\DBConnectioncs.cs" />
+    <Compile Include="Classes\Common\DBConnection.cs" />
     <Compile Include="Classes\PosterContext.cs" />
     <Compile Include="Interface\IContext.cs" />
     <Compile Include="MainWindow.xaml.cs">
