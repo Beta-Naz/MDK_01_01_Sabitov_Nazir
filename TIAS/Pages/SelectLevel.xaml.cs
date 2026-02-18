@@ -15,9 +15,11 @@ namespace TIAS.Pages
         public SelectLevel()
         {
             InitializeComponent();
+
             ThisSelectLevelView = new SelectLevelView();
             DataContext = ThisSelectLevelView;
             MainWindow.Instance.MapChanged += ChangeSelectLevel;
+            MainWindow.Instance.LoadMapsFromDatabase();
             LoadLevel();
         }
         public void LoadLevel()
@@ -68,6 +70,22 @@ namespace TIAS.Pages
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.frame.Navigate(new MainMenu());
+            MainWindow.Instance.MapChanged -= ChangeSelectLevel;
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if(ThisSelectLevelView.LevelMap == null)
+            {
+                return;
+            }
+            MainWindow.Instance.frame.Navigate(new LevelEdit(ThisSelectLevelView.LevelMap));
+            MainWindow.Instance.MapChanged -= ChangeSelectLevel;
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.frame.Navigate(new LevelEdit());
             MainWindow.Instance.MapChanged -= ChangeSelectLevel;
         }
     }

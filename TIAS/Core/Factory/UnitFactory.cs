@@ -17,14 +17,20 @@ namespace TIAS.Core.Factory
         {
             switch (type)
             {
-                case UnitType.Infanity:
-                    return new Infanity(id, position, alliance);
-                case UnitType.Artillery:
-                    return new Artillery(id, position, alliance);
                 case UnitType.Tank:
                     return new Tank(id, position, alliance);
+                case UnitType.Artillery:
+                    return new Artillery(id, position, alliance);
+                case UnitType.Infanity:
+                    return new Infanity(id, position, alliance);
+                default:
+                    return null;
             }
-            return null;
+        }
+
+        public Unit CreateUnit(HexCoord position, UnitType type, TypeAlliance alliance)
+        {
+            return CreateUnit(0, position, type, alliance);
         }
     }
 }

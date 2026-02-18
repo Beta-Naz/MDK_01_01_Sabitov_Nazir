@@ -1,10 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using TIAS.Core.Base;
 using TIAS.Core.Enum;
 using TIAS.Core.Factory;
 using TIAS.Core.Models;
 using TIAS.Core.Structure;
+using TIAS.Models;
 
 namespace TIAS.Core.Database
 {
@@ -116,7 +118,7 @@ namespace TIAS.Core.Database
             }
         }
 
-        public void SaveMap(HexMap map)
+        public int SaveNewMap(HexMap map)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -125,60 +127,238 @@ namespace TIAS.Core.Database
 
                 try
                 {
-                    // Сохраняем карту
-                    string insertMap = "INSERT INTO Maps (map_name, width, height) VALUES (@name, @width, @height); SELECT LAST_INSERT_ID();";
-                    int mapId;
+                    // 1. СНАЧАЛА сохраняем карту и получаем её ID
+                    string insertMap = @"
+                INSERT INTO Maps (map_name, width, height, description, created_date, is_active) 
+                VALUES (@name, @width, @height, @description, NOW(), TRUE); 
+                SELECT LAST_INSERT_ID();";
 
+                    int mapId;
                     using (var command = new MySqlCommand(insertMap, connection, transaction))
                     {
-                        command.Parameters.AddWithValue("@name", $"Level {map.Id}");
+                        command.Parameters.AddWithValue("@name", map.MapName ?? $"Level {map.Id}");
                         command.Parameters.AddWithValue("@width", map.Width);
                         command.Parameters.AddWithValue("@height", map.Height);
+                        command.Parameters.AddWithValue("@description", map.Description ?? "");
                         mapId = Convert.ToInt32(command.ExecuteScalar());
                     }
 
-                    // Сохраняем клетки
+                    // 2. ПОТОМ сохраняем клетки с полученным ID
                     for (int q = 0; q < map.Width; q++)
                     {
                         for (int r = 0; r < map.Height; r++)
                         {
-                            string insertCell = @"
-                                INSERT INTO MapCells (map_id, pos_q, pos_r, cell_type_id)
-                                VALUES (@mapId, @q, @r, (SELECT id FROM CellTypes WHERE type_name = @type))";
-
-                            using (var command = new MySqlCommand(insertCell, connection, transaction))
+                            // Проверяем, что клетка существует
+                            if (map.Cells?[q, r] != null)
                             {
-                                command.Parameters.AddWithValue("@mapId", mapId);
-                                command.Parameters.AddWithValue("@q", q);
-                                command.Parameters.AddWithValue("@r", r);
-                                command.Parameters.AddWithValue("@type", map.Cells[q, r].ToString());
-                                command.ExecuteNonQuery();
+                                string insertCell = @"
+                            INSERT INTO MapCells (map_id, pos_q, pos_r, cell_type_id)
+                            VALUES (@mapId, @q, @r, (SELECT id FROM CellTypes WHERE type_name = @type))";
+
+                                using (var command = new MySqlCommand(insertCell, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@mapId", mapId);
+                                    command.Parameters.AddWithValue("@q", q);
+                                    command.Parameters.AddWithValue("@r", r);
+                                    command.Parameters.AddWithValue("@type", map.Cells[q, r].ToString());
+                                    command.ExecuteNonQuery();
+                                }
                             }
                         }
                     }
 
-                    // Сохраняем юнитов
-                    foreach (var unit in map.Units)
+                    // 3. ПОТОМ сохраняем юнитов
+                    if (map.Units != null)
                     {
-                        string insertUnit = @"
+                        foreach (var unit in map.Units)
+                        {
+                            if (unit != null)
+                            {
+                                string insertUnit = @"
+                                  INSERT INTO MapUnits (map_id, unit_id, pos_q, pos_r)
+                                  VALUES (@mapId, 
+                                      (SELECT id FROM Units WHERE unit_type = @unitType AND alliance = @alliance LIMIT 1), 
+                                      @q, @r)";
+
+                                using (var command = new MySqlCommand(insertUnit, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@mapId", mapId);
+                                    command.Parameters.AddWithValue("@unitType", GetUnitTypeString(unit));
+                                    command.Parameters.AddWithValue("@alliance", unit.NameAlliance.ToString());
+                                    command.Parameters.AddWithValue("@q", unit.Position.Q);
+                                    command.Parameters.AddWithValue("@r", unit.Position.R);
+                                    command.ExecuteNonQuery();
+                                }
+
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                    return mapId;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    System.Diagnostics.Debug.WriteLine($"Ошибка сохранения: {ex.Message}");
+                    throw;
+                }
+            }
+        }
+        private string GetUnitTypeString(Unit unit)
+        {
+            if (unit is Tank) return "Tank";
+            if (unit is Infanity) return "Infanity";
+            if (unit is Artillery) return "Artillery";
+            return "Infanity";
+        }
+        public void UpdateMap(HexMap map)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                var transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // 1. Обновляем основные данные карты
+                    string updateMap = @"
+                UPDATE Maps 
+                SET map_name = @name, 
+                    width = @width, 
+                    height = @height,
+                    description = @description
+                WHERE id = @mapId";
+
+                    using (var command = new MySqlCommand(updateMap, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@mapId", map.Id);
+                        command.Parameters.AddWithValue("@name", map.MapName ?? $"Level {map.Id}");
+                        command.Parameters.AddWithValue("@width", map.Width);
+                        command.Parameters.AddWithValue("@height", map.Height);
+                        command.Parameters.AddWithValue("@description", map.Description ?? "");
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            throw new Exception($"Карта с ID {map.Id} не найдена");
+                        }
+                    }
+
+                    // 2. Удаляем старые клетки и юнитов
+                    string deleteCells = "DELETE FROM MapCells WHERE map_id = @mapId";
+                    using (var command = new MySqlCommand(deleteCells, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@mapId", map.Id);
+                        command.ExecuteNonQuery();
+                    }
+
+                    string deleteUnits = "DELETE FROM MapUnits WHERE map_id = @mapId";
+                    using (var command = new MySqlCommand(deleteUnits, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@mapId", map.Id);
+                        command.ExecuteNonQuery();
+                    }
+
+                    // 3. Сохраняем новые клетки
+                    for (int q = 0; q < map.Width; q++)
+                    {
+                        for (int r = 0; r < map.Height; r++)
+                        {
+                            if (map.Cells?[q, r] != null)
+                            {
+                                string insertCell = @"
+                            INSERT INTO MapCells (map_id, pos_q, pos_r, cell_type_id)
+                            VALUES (@mapId, @q, @r, (SELECT id FROM CellTypes WHERE type_name = @type))";
+
+                                using (var command = new MySqlCommand(insertCell, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@mapId", map.Id);
+                                    command.Parameters.AddWithValue("@q", q);
+                                    command.Parameters.AddWithValue("@r", r);
+                                    command.Parameters.AddWithValue("@type", map.Cells[q, r].ToString());
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+
+                    // 4. Сохраняем новых юнитов
+                    if (map.Units != null)
+                    {
+                        foreach (var unit in map.Units)
+                        {
+                            if (unit != null)
+                            {
+                                string insertUnit = @"
                             INSERT INTO MapUnits (map_id, unit_id, pos_q, pos_r)
                             VALUES (@mapId, (SELECT id FROM Units WHERE unit_name = @unitName), @q, @r)";
 
-                        using (var command = new MySqlCommand(insertUnit, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@mapId", mapId);
-                            command.Parameters.AddWithValue("@unitName", unit.UnitName);
-                            command.Parameters.AddWithValue("@q", unit.Position.Q);
-                            command.Parameters.AddWithValue("@r", unit.Position.R);
-                            command.ExecuteNonQuery();
+                                using (var command = new MySqlCommand(insertUnit, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@mapId", map.Id);
+                                    command.Parameters.AddWithValue("@unitName", unit.UnitName);
+                                    command.Parameters.AddWithValue("@q", unit.Position.Q);
+                                    command.Parameters.AddWithValue("@r", unit.Position.R);
+                                    command.ExecuteNonQuery();
+                                }
+                            }
                         }
                     }
 
                     transaction.Commit();
                 }
-                catch
+                catch (Exception ex)
                 {
                     transaction.Rollback();
+                    System.Diagnostics.Debug.WriteLine($"Ошибка обновления: {ex.Message}");
+                    throw;
+                }
+            }
+        }
+        public void DeleteMap(int mapId)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                var transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Сначала удаляем связанные записи (хотя они должны удаляться каскадно, но для надежности)
+                    string deleteUnits = "DELETE FROM MapUnits WHERE map_id = @mapId";
+                    using (var command = new MySqlCommand(deleteUnits, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@mapId", mapId);
+                        command.ExecuteNonQuery();
+                    }
+
+                    string deleteCells = "DELETE FROM MapCells WHERE map_id = @mapId";
+                    using (var command = new MySqlCommand(deleteCells, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@mapId", mapId);
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Удаляем саму карту
+                    string deleteMap = "DELETE FROM Maps WHERE id = @mapId";
+                    using (var command = new MySqlCommand(deleteMap, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@mapId", mapId);
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            throw new Exception($"Карта с ID {mapId} не найдена");
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    System.Diagnostics.Debug.WriteLine($"Ошибка удаления: {ex.Message}");
                     throw;
                 }
             }

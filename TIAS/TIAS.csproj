@@ -113,6 +113,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\LevelEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -142,6 +146,9 @@
     </Compile>
     <Compile Include="Elements\Level.xaml.cs">
       <DependentUpon>Level.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LevelEdit.xaml.cs">
+      <DependentUpon>LevelEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interface\IArmor.cs" />
     <Compile Include="Interface\IAttack.cs" />
@@ -217,7 +224,9 @@
   <ItemGroup>
     <Resource Include="Images\Background\BackgroundSelectLevel.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Unit\infanity_ussr.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Unit\infanity_germany.png" />
   </ItemGroup>

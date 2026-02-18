@@ -46,7 +46,7 @@
         <Grid Margin="50,120,50,50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto" MinWidth="300"/>
+                <ColumnDefinition Width="Auto" MinWidth="500"/>
             </Grid.ColumnDefinitions>
 
             <!-- Левая колонка: список уровней -->
@@ -97,7 +97,8 @@
                             BorderThickness="2"
                             FontSize="14"
                             FontWeight="Bold"
-                            Cursor="Hand">
+                            Cursor="Hand"
+                            Click="Add_Click">
 
                         <Button.Style>
                             <Style TargetType="Button">
@@ -275,7 +276,8 @@
                                 BorderThickness="2"
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Cursor="Hand">
+                                Cursor="Hand"
+                                Click="Edit_Click">
 
                             <Button.Style>
                                 <Style TargetType="Button">
@@ -301,8 +303,9 @@
                                 </Style>
                             </Button.Style>
                         </Button>
+                        
                     </StackPanel>
-
+                    
                     <!-- Подсказка (отображается когда уровень не выбран) -->
                     <TextBlock Grid.Row="2" 
                                Text="Выберите уровень из списка" 

@@ -12,7 +12,12 @@ namespace TIAS.Core.Models
         public int Height { get; set; }
         public CellType[,] Cells { get; set; }
         public List<Unit> Units { get; private set; }
-        public HexMap() { }
+        public HexMap()
+        {
+            Units = new List<Unit>();
+        }
+        public string MapName { get; set; }
+        public string Description { get; set; }
         public HexMap(int id, int width, int height)
         {
             Id = id;

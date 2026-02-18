@@ -450,8 +450,7 @@ namespace TIAS.Pages
                 case CellType.Water: return new SolidColorBrush(Color.FromRgb(64, 164, 223));
                 case CellType.City: return new SolidColorBrush(Color.FromRgb(169, 169, 169));
                 default: return new SolidColorBrush(Color.FromRgb(200, 200, 200));
-            }
-            ;
+            };
         }
 
         private void DrawHexCell(HexCoord hexCoord)

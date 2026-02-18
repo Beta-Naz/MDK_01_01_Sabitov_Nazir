@@ -50,11 +50,10 @@ namespace TIAS
 
             // Загружаем карты из БД
             LoadMapsFromDatabase();
-            AddTestLevel();
             frame.Navigate(new Pages.MainMenu());
         }
 
-        private void LoadMapsFromDatabase()
+        public void LoadMapsFromDatabase()
         {
             try
             {
