@@ -10,7 +10,8 @@ namespace TIAS.Models
         public Artillery(int id, HexCoord position, TypeAlliance typeAlliance)
          : base(id, 75, 5, position, typeAlliance)
         {
-            IntializedStrategy(
+            UnitName = "Артиллерия";
+            InitializeStrategy(
                 new GroundMoveStrategy(12, position),
                 new SplashDamageStrategy(25, 2, 15));
         }

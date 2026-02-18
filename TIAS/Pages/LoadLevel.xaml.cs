@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using TIAS.Core.Base;
 using TIAS.Core.Enum;
+using TIAS.Core.Managers;
 using TIAS.Core.Models;
 using TIAS.Core.Structure;
 using TIAS.Elements;
@@ -16,16 +19,19 @@ namespace TIAS.Pages
     {
         private HexMap CurrentLevel;
         private static readonly float _hexSize = 50f;
+        private GameManager _gameManager;
 
+        // Highlighting
+        private List<Polygon> _highlightedCells = new List<Polygon>();
+        private Dictionary<HexCoord, Polygon> _hexPolygons = new Dictionary<HexCoord, Polygon>();
+
+        // Dragging
         private bool _isDragging = false;
         private Point _lastMousePosition;
         private double _scrollViewerHorizontalOffset;
         private double _scrollViewerVerticalOffset;
-
-        private double _minHorizontalOffset = 0;
-        private double _maxHorizontalOffset = 0;
-        private double _minVerticalOffset = 0;
-        private double _maxVerticalOffset = 0;
+        private double _minHorizontalOffset, _maxHorizontalOffset;
+        private double _minVerticalOffset, _maxVerticalOffset;
 
         public LoadLevel(HexMap currentLevel)
         {
@@ -33,30 +39,161 @@ namespace TIAS.Pages
 
             if (currentLevel == null)
             {
+                NavigationService?.GoBack();
                 return;
             }
 
             CurrentLevel = currentLevel;
+            _gameManager = GameManager.Instance;
+            _gameManager.SetCurrentMap(currentLevel);
 
-            Loaded += (s, e) => UpdateScrollBounds();
-            HexClicked += OnClickHex;
+            Loaded += Page_Loaded;
+            SizeChanged += Page_SizeChanged;
+
+            // Subscribe to game events
+            _gameManager.OnUnitSelected += OnUnitSelected;
+            _gameManager.OnPhaseChanged += OnPhaseChanged;
+            _gameManager.OnGameMessages += OnGameMessages;
+
             CreateMap(currentLevel);
+            _gameManager.StartGame(currentLevel.Units);
+
+            // Add turn button to UI
+            AddTurnButton();
         }
-        private void OnClickHex(HexCoord hex)
+
+        private void AddTurnButton()
         {
-            if(MainWindow.Instance.SelectUnit != null)
+            var turnButton = new Button
             {
-                MessageBox.Show("Идем на этот хекс");
-                MainWindow.Instance.SelectUnit.Move(hex);
-                CreateMap(CurrentLevel);
-                MainWindow.Instance.SelectUnit = null;
+                Content = "ЗАКОНЧИТЬ ХОД",
+                Width = 150,
+                Height = 40,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0, 10, 10, 0),
+                Background = new SolidColorBrush(Color.FromArgb(170, 0, 71, 171)),
+                Foreground = Brushes.White,
+                FontWeight = FontWeights.Bold,
+                Cursor = Cursors.Hand
+            };
+
+            turnButton.Click += (s, e) => _gameManager.EndTurn();
+
+            var grid = (Grid)Content;
+            grid.Children.Add(turnButton);
+        }
+
+        private void OnPhaseChanged(GamePhase newPhase)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                PhaseTextBlock.Text = newPhase == GamePhase.PlayerTurn ? "ВАШ ХОД" : "ХОД ПРОТИВНИКА";
+                PhaseTextBlock.Foreground = newPhase == GamePhase.PlayerTurn ? Brushes.Green : Brushes.Red;
+
+                if (newPhase == GamePhase.GameOver)
+                {
+                    ShowGameOverMessage();
+                }
+            });
+        }
+
+        private void OnUnitSelected(Unit unit)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ClearHighlights();
+
+                if (unit != null)
+                {
+                    // Highlight reachable positions
+                    foreach (var pos in unit.ReachablePositions)
+                    {
+                        HighlightHex(pos, Brushes.Green, 0.3);
+                    }
+
+                    // Highlight attackable positions
+                    foreach (var pos in unit.AttackablePositions)
+                    {
+                        if (_hexPolygons.TryGetValue(pos, out var polygon))
+                        {
+                            if (CurrentLevel.GetUnit(pos) != null)
+                            {
+                                HighlightHex(pos, Brushes.Red, 0.5);
+                            }
+                        }
+                    }
+
+                    // Highlight unit itself
+                    if (_hexPolygons.TryGetValue(unit.Position, out var unitHex))
+                    {
+                        unitHex.Stroke = Brushes.Gold;
+                        unitHex.StrokeThickness = 3;
+                    }
+
+                    UnitInfoTextBlock.Text = $"{unit.UnitName}\nHP: {unit.Health}/{unit.MaxHealth}\n" +
+                                             $"Действия: {(unit.HasMovedThisTurn ? "✓" : "✗")} ход, " +
+                                             $"{(unit.HasAttackedThisTurn ? "✓" : "✗")} атака";
+                }
+                else
+                {
+                    UnitInfoTextBlock.Text = "Выберите юнита";
+                }
+            });
+        }
+
+        private void OnGameMessages(List<string> messages)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MessagesListBox.ItemsSource = null;
+                MessagesListBox.ItemsSource = messages;
+                MessagesScrollViewer.ScrollToBottom();
+            });
+        }
+
+        private void HighlightHex(HexCoord coord, Brush color, double opacity = 0.3)
+        {
+            if (_hexPolygons.TryGetValue(coord, out var polygon))
+            {
+                var highlight = new Polygon
+                {
+                    Points = polygon.Points,
+                    Fill = color,
+                    Opacity = opacity,
+                    IsHitTestVisible = false
+                };
+
+                Canvas.SetLeft(highlight, Canvas.GetLeft(polygon));
+                Canvas.SetTop(highlight, Canvas.GetTop(polygon));
+
+                parrent.Children.Add(highlight);
+                _highlightedCells.Add(highlight);
             }
         }
+
+        private void ClearHighlights()
+        {
+            foreach (var highlight in _highlightedCells)
+            {
+                parrent.Children.Remove(highlight);
+            }
+            _highlightedCells.Clear();
+
+            // Reset hex borders
+            foreach (var kvp in _hexPolygons)
+            {
+                kvp.Value.Stroke = Brushes.Black;
+                kvp.Value.StrokeThickness = 1;
+            }
+        }
+
         private void CreateMap(HexMap currentLevel)
         {
             parrent.Children.Clear();
+            _hexPolygons.Clear();
+            _unitElements.Clear();
 
-            // Устанавливаем размер Canvas
             UpdateCanvasSize();
 
             for (int i = 0; i < currentLevel.Width; i++)
@@ -67,45 +204,132 @@ namespace TIAS.Pages
                     DrawHexCell(hexCoord);
                 }
             }
-        }
 
-        private void UpdateCanvasSize()
-        {
-            float xOffset = _hexSize * (float)Math.Sqrt(3);
-            float yOffset = _hexSize * 1.5f;
-
-            double width = xOffset * CurrentLevel.Width + (xOffset / 2) + 200;
-            double height = yOffset * CurrentLevel.Height + 200;
-
-            parrent.Width = width;
-            parrent.Height = height;
-        }
-
-        private void DrawHexCell(HexCoord hexCoord)
-        {
-            Point center = GetPixelPosition(hexCoord, _hexSize);
-            Point[] points = GetHexVertices(center, _hexSize);
-
-            Polygon hexagon = new Polygon()
+            // Add units
+            foreach (var unit in currentLevel.Units)
             {
-                Points = new PointCollection(points),
-                Stroke = Brushes.Black,
-                StrokeThickness = 1,
-                Fill = GetTerrainBrush(hexCoord),
-                Tag = hexCoord
+                AddUnitToMap(unit);
+            }
+        }
+        private Dictionary<Unit, ElementUnit> _unitElements = new Dictionary<Unit, ElementUnit>();
+        private void AddUnitToMap(Unit unit)
+        {
+            // Устанавливаем ссылку на карту для юнита
+            unit.SetCurrentMap(CurrentLevel);
+
+            Point center = GetPixelPosition(unit.Position, _hexSize);
+            var unitElement = new ElementUnit(unit);
+
+            // Подписываемся на событие изменения позиции
+            unit.OnPositionChanged += (oldPos, newPos) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    UpdateUnitPosition(unitElement, newPos);
+                });
             };
-            hexagon.MouseLeftButtonDown += (s, e) => OnHexClicked(hexCoord);
-            parrent.Children.Add(hexagon);
-            Unit currentUnit = CurrentLevel.GetUnit(hexCoord);
-            if (currentUnit != null)
+
+            // Подписываемся на событие смерти
+            unit.OnUnitDied += () =>
             {
-                ElementUnit unitElement = new ElementUnit(currentUnit);
+                Dispatcher.Invoke(() =>
+                {
+                    if (_unitElements.ContainsKey(unit))
+                    {
+                        parrent.Children.Remove(unitElement);
+                        _unitElements.Remove(unit);
+                    }
+                });
+            };
 
-                // Позиционируем юнита в центре гекса
-                Canvas.SetLeft(unitElement, center.X - 20);
-                Canvas.SetTop(unitElement, center.Y - 20);
+            Canvas.SetLeft(unitElement, center.X - 25);
+            Canvas.SetTop(unitElement, center.Y - 25);
 
-                parrent.Children.Add(unitElement);
+            if (!_unitElements.ContainsKey(unit))
+            {
+                _unitElements[unit] = unitElement;
+            }
+
+            parrent.Children.Add(unitElement);
+        }
+        private void UpdateUnitPosition(ElementUnit unitElement, HexCoord newPos)
+        {
+            if (unitElement == null || parrent == null) return;
+
+            Point newCenter = GetPixelPosition(newPos, _hexSize);
+            Canvas.SetLeft(unitElement, newCenter.X - 25);
+            Canvas.SetTop(unitElement, newCenter.Y - 25);
+        }
+        private void OnClickHex(HexCoord hex)
+        {
+            if (_gameManager.CurrentPhase != GamePhase.PlayerTurn)
+            {
+                AddMessage("Сейчас не ваш ход!");
+                return;
+            }
+
+            var unit = CurrentLevel.GetUnit(hex);
+
+            if (unit != null)
+            {
+                // Клик по юниту
+                if (unit.NameAlliance == _gameManager.CurrentPlayer)
+                {
+                    // Свой юнит - выбираем
+                    _gameManager.SelectUnit(unit);
+                }
+                else
+                {
+                    // Враг - атакуем если выбран юнит
+                    if (_gameManager.SelectedUnit == null)
+                    {
+                        AddMessage("Сначала выберите своего юнита для атаки!");
+                    }
+                    else
+                    {
+                        _gameManager.AttackWithSelectedUnit(unit);
+                    }
+                }
+            }
+            else
+            {
+                // Пустая клетка - перемещаем выбранного юнита
+                if (_gameManager.SelectedUnit == null)
+                {
+                    AddMessage("Сначала выберите юнита!");
+                }
+                else
+                {
+                    _gameManager.MoveSelectedUnit(hex);
+                }
+            }
+        }
+        private void AddMessage(string message)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var messages = new List<string>(MessagesListBox.ItemsSource as List<string> ?? new List<string>());
+                messages.Add($"[{DateTime.Now:T}] {message}");
+                MessagesListBox.ItemsSource = null;
+                MessagesListBox.ItemsSource = messages;
+                MessagesScrollViewer.ScrollToBottom();
+            });
+        }
+
+        private void ShowGameOverMessage()
+        {
+            var result = MessageBox.Show(
+                _gameManager.PlayerUnits.Count > 0 ? "Победа! Хотите сыграть еще?" : "Поражение... Хотите попробовать снова?",
+                "Игра окончена",
+                MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                NavigationService.Navigate(new SelectLevel());
+            }
+            else
+            {
+                NavigationService.Navigate(new MainMenu());
             }
         }
 
@@ -123,7 +347,7 @@ namespace TIAS.Pages
                 x += xOffset / 2;
             }
 
-            return new Point(x, y);
+            return new Point(x + 100, y + 100); // Add padding
         }
 
         private Point[] GetHexVertices(Point center, float size)
@@ -155,25 +379,57 @@ namespace TIAS.Pages
             ;
         }
 
-        // ============= УПРАВЛЕНИЕ ГРАНИЦАМИ =============
+        private void DrawHexCell(HexCoord hexCoord)
+        {
+            Point center = GetPixelPosition(hexCoord, _hexSize);
+            Point[] points = GetHexVertices(center, _hexSize);
+
+            Polygon hexagon = new Polygon()
+            {
+                Points = new PointCollection(points),
+                Stroke = Brushes.Black,
+                StrokeThickness = 1,
+                Fill = GetTerrainBrush(hexCoord),
+                Tag = hexCoord
+            };
+
+            Canvas.SetLeft(hexagon, 0);
+            Canvas.SetTop(hexagon, 0);
+
+            hexagon.MouseLeftButtonDown += (s, e) =>
+            {
+                OnClickHex(hexCoord);
+                e.Handled = true;
+            };
+
+            parrent.Children.Add(hexagon);
+            _hexPolygons[hexCoord] = hexagon;
+        }
+
+        private void UpdateCanvasSize()
+        {
+            float xOffset = _hexSize * (float)Math.Sqrt(3);
+            float yOffset = _hexSize * 1.5f;
+
+            double width = xOffset * CurrentLevel.Width + (xOffset / 2) + 200;
+            double height = yOffset * CurrentLevel.Height + 200;
+
+            parrent.Width = width;
+            parrent.Height = height;
+        }
 
         private void UpdateScrollBounds()
         {
             if (MainScrollViewer == null || parrent == null)
                 return;
 
-            // Рассчитываем максимальные смещения
             _maxHorizontalOffset = Math.Max(0, parrent.Width - MainScrollViewer.ViewportWidth);
             _maxVerticalOffset = Math.Max(0, parrent.Height - MainScrollViewer.ViewportHeight);
-
-            _minHorizontalOffset = 0;
-            _minVerticalOffset = 0;
         }
 
         private void ClampScrollPosition()
         {
-            if (MainScrollViewer == null)
-                return;
+            if (MainScrollViewer == null) return;
 
             double currentH = MainScrollViewer.HorizontalOffset;
             double currentV = MainScrollViewer.VerticalOffset;
@@ -187,13 +443,13 @@ namespace TIAS.Pages
                 MainScrollViewer.ScrollToVerticalOffset(clampedV);
             }
         }
+
         private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _isDragging = true;
             _lastMousePosition = e.GetPosition(MainScrollViewer);
             _scrollViewerHorizontalOffset = MainScrollViewer.HorizontalOffset;
             _scrollViewerVerticalOffset = MainScrollViewer.VerticalOffset;
-
             parrent.Cursor = Cursors.ScrollAll;
             e.Handled = true;
         }
@@ -203,7 +459,6 @@ namespace TIAS.Pages
             if (_isDragging && e.LeftButton == MouseButtonState.Pressed)
             {
                 Point currentMousePosition = e.GetPosition(MainScrollViewer);
-
                 double deltaX = currentMousePosition.X - _lastMousePosition.X;
                 double deltaY = currentMousePosition.Y - _lastMousePosition.Y;
 
@@ -215,7 +470,6 @@ namespace TIAS.Pages
 
                 MainScrollViewer.ScrollToHorizontalOffset(newH);
                 MainScrollViewer.ScrollToVerticalOffset(newV);
-
                 e.Handled = true;
             }
         }
@@ -230,11 +484,12 @@ namespace TIAS.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateScrollBounds();
-
             if (_maxHorizontalOffset > 0)
                 MainScrollViewer.ScrollToHorizontalOffset(_maxHorizontalOffset / 2);
             if (_maxVerticalOffset > 0)
                 MainScrollViewer.ScrollToVerticalOffset(_maxVerticalOffset / 2);
+
+            this.Focus();
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -271,6 +526,9 @@ namespace TIAS.Pages
                 case Key.Down:
                     newV += scrollSpeed;
                     break;
+                case Key.Escape:
+                    _gameManager.DeselectUnit();
+                    break;
                 default:
                     return;
             }
@@ -280,15 +538,8 @@ namespace TIAS.Pages
 
             MainScrollViewer.ScrollToHorizontalOffset(newH);
             MainScrollViewer.ScrollToVerticalOffset(newV);
-
             e.Handled = true;
         }
 
-        public event Action<HexCoord> HexClicked;
-
-        private void OnHexClicked(HexCoord hexCoord)
-        {
-            HexClicked?.Invoke(hexCoord);
-        }
     }
 }

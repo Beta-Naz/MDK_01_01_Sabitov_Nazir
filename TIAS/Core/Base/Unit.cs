@@ -1,87 +1,116 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+using System.Collections.Generic;
 using TIAS.Core.Enum;
 using TIAS.Core.Hex;
-using TIAS.Core.StrategyPatern;
+using TIAS.Core.Models;
 using TIAS.Core.StrategyPatern.Interface;
 using TIAS.Core.Structure;
 using TIAS.Interface;
 
 namespace TIAS.Core.Base
 {
-    public abstract class Unit : IAttack, IMovement, IHealth, IArmor
+    public abstract class Unit : IAttack, IMovement, IHealth, IArmor, ISelectable, ITurnBased
     {
         public int Id { get; set; }
         public TypeAlliance NameAlliance { get; private set; }
+        public string UnitName { get; protected set; }
+
         private float _health;
         public float Health
         {
-            get
+            get => _health;
+            protected set
             {
-                return _health;
-            }
-            set
-            {
-                if(value < 0)
-                {
-                    _health = 0;
-                }
-                else if(value > MaxHealth)
-                {
-                    _health = MaxHealth;
-                }
-                else
-                {
-                    _health = value;
-                }
+                _health = Math.Max(0, Math.Min(value, MaxHealth));
+                OnHealthChanged?.Invoke();
             }
         }
+
         public float MaxHealth { get; private set; }
         public float Damage => AttackStrategy?.Damage ?? 0;
         public float AttackRange => AttackStrategy?.AttackRange ?? 0;
-        public float Speed => MovementStrategy?.Speed ?? 0;
+        public int Speed => MovementStrategy?.Speed ?? 0;
         public HexCoord Position => MovementStrategy.Position;
-        public bool IsDead => Health < 0;
+        public bool IsDead => Health <= 0;
         public float Armor { get; private set; }
-        public event Action OnTakeDamage;
-        public Unit(int id, float maxHeahth, float armor, HexCoord position, TypeAlliance typeAlliance)
+
+        // Turn-based properties
+        public bool HasMovedThisTurn { get; set; }
+        public bool HasAttackedThisTurn { get; set; }
+        public bool IsSelected { get; set; }
+
+        // Events
+        public event Action OnHealthChanged;
+        public event Action OnUnitDied;
+        public event Action<Unit> OnSelectedChanged;
+        public event Action<HexCoord, HexCoord> OnPositionChanged;
+
+        protected IAttackStrategy AttackStrategy { get; private set; }
+        protected IMovementStrategy MovementStrategy { get; private set; }
+
+        // Cached reachable positions
+        public HashSet<HexCoord> ReachablePositions { get; private set; }
+        public HashSet<HexCoord> AttackablePositions { get; private set; }
+
+        // Reference to current map
+        protected HexMap CurrentMap { get; set; }
+
+        protected Unit(int id, float maxHealth, float armor, HexCoord position, TypeAlliance typeAlliance)
         {
             Id = id;
             Armor = armor;
-            Health = maxHeahth;
-            MaxHealth = maxHeahth;
+            MaxHealth = maxHealth;
+            Health = maxHealth;
             NameAlliance = typeAlliance;
+            ReachablePositions = new HashSet<HexCoord>();
+            AttackablePositions = new HashSet<HexCoord>();
         }
-        protected void IntializedStrategy(IMovementStrategy movementStrategy, IAttackStrategy attackStrategy)
+
+        public void SetCurrentMap(HexMap map)
+        {
+            CurrentMap = map;
+        }
+
+        protected void InitializeStrategy(IMovementStrategy movementStrategy, IAttackStrategy attackStrategy)
         {
             MovementStrategy = movementStrategy;
             AttackStrategy = attackStrategy;
         }
 
-        protected IAttackStrategy AttackStrategy { get; private set; }
-        protected IMovementStrategy MovementStrategy { get; private set; }
         public void Attack(Unit target)
         {
-            if (IsDead) return;
-            if (!CanAttack(target)) return;
+            if (IsDead || HasAttackedThisTurn || !CanAttack(target)) return;
+
             AttackStrategy?.ExecuteAttack(target);
+            HasAttackedThisTurn = true;
+
+            // If target died, handle it
+            if (target.IsDead)
+            {
+                target.OnUnitDied?.Invoke();
+            }
         }
+
         public bool CanAttack(Unit target)
         {
-            if(AttackStrategy == null) return false;
-            if(target  == null) return false;
+            if (AttackStrategy == null || target == null || target.IsDead) return false;
+            if (target.NameAlliance == NameAlliance) return false; // Can't attack allies
+
             float distance = HexMath.Distance(Position, target.Position);
-            return AttackRange >= distance;
+            return AttackRange >= distance - 0.1f; // Небольшой допуск для погрешности
         }
+
         public void Move(HexCoord target)
         {
-            if (IsDead) return;
-            if (!target.Equals(Position))
-            {
-                MovementStrategy?.Move(target);
-            }
+            if (IsDead || HasMovedThisTurn || !ReachablePositions.Contains(target)) return;
+
+            var oldPosition = Position;
+            MovementStrategy?.Move(target);
+
+            HasMovedThisTurn = true;
+
+            // Вызываем событие об изменении позиции
+            OnPositionChanged?.Invoke(oldPosition, target);
         }
 
         public float ReduceDamage(float incomingDamage)
@@ -91,19 +120,118 @@ namespace TIAS.Core.Base
 
         public void TakeDamage(float damage)
         {
-            if(IsDead) return;
+            if (IsDead) return;
+
             float reducedDamage = ReduceDamage(damage);
-            Health = Math.Max(0, Health - reducedDamage);
-            OnTakeDamage?.Invoke();
+            Health -= reducedDamage;
+
             if (IsDead)
             {
-                OnDead();
+                OnUnitDied?.Invoke();
             }
         }
 
-        protected void OnDead()
+        public void ResetTurn()
         {
-            MessageBox.Show($"Юнит под айди {Id} умер");
+            HasMovedThisTurn = false;
+            HasAttackedThisTurn = false;
         }
+
+        public bool CanAct()
+        {
+            return !IsDead && (!HasMovedThisTurn || !HasAttackedThisTurn);
+        }
+
+        public void OnSelected()
+        {
+            IsSelected = true;
+            CalculateReachablePositions();
+            CalculateAttackablePositions();
+            OnSelectedChanged?.Invoke(this);
+        }
+
+        public void OnDeselected()
+        {
+            IsSelected = false;
+            ReachablePositions.Clear();
+            AttackablePositions.Clear();
+            OnSelectedChanged?.Invoke(this);
+        }
+
+        private void CalculateReachablePositions()
+        {
+            ReachablePositions.Clear();
+            if (HasMovedThisTurn) return;
+
+            var map = CurrentMap ?? GetCurrentMapFromMainWindow();
+            if (map == null) return;
+
+            // BFS for reachable positions
+            var queue = new Queue<(HexCoord pos, int cost)>();
+            var visited = new Dictionary<HexCoord, int>();
+
+            queue.Enqueue((Position, 0));
+            visited[Position] = 0;
+            ReachablePositions.Add(Position);
+
+            while (queue.Count > 0)
+            {
+                var (current, currentCost) = queue.Dequeue();
+
+                foreach (var neighbor in HexDirections.GetAllNeighBor(current))
+                {
+                    if (!map.IsWithinBounds(neighbor)) continue;
+
+                    int moveCost = map.GetMovementCost(neighbor);
+                    if (moveCost == int.MaxValue) continue; // Impassable
+
+                    int newCost = currentCost + moveCost;
+
+                    if (newCost <= Speed && (!visited.ContainsKey(neighbor) || visited[neighbor] > newCost))
+                    {
+                        visited[neighbor] = newCost;
+                        ReachablePositions.Add(neighbor);
+                        queue.Enqueue((neighbor, newCost));
+                    }
+                }
+            }
+        }
+
+        private void CalculateAttackablePositions()
+        {
+            AttackablePositions.Clear();
+            if (HasAttackedThisTurn) return;
+
+            var map = CurrentMap ?? GetCurrentMapFromMainWindow();
+            if (map == null) return;
+
+            // Get all units that can be attacked
+            foreach (var pos in ReachablePositions)
+            {
+                float distance = HexMath.Distance(pos, Position);
+                if (distance <= AttackRange + 0.1f)
+                {
+                    var unitAtPos = map.GetUnit(pos);
+                    if (unitAtPos != null && unitAtPos.NameAlliance != NameAlliance)
+                    {
+                        AttackablePositions.Add(pos);
+                    }
+                }
+            }
+        }
+
+        private HexMap GetCurrentMapFromMainWindow()
+        {
+            try
+            {
+                return MainWindow.Instance?.Maps?[MainWindow.Instance.CurrentLevel];
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        float IMovement.Speed => Speed;
     }
 }

@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TIAS.Core.Base;
 using TIAS.Core.Enum;
+using TIAS.Core.Managers;
 using TIAS.Models;
 
 namespace TIAS.Elements
@@ -24,70 +16,142 @@ namespace TIAS.Elements
     public partial class ElementUnit : UserControl
     {
         public Unit CurrentUnit { get; private set; }
-        private readonly int stadtartWitdh = 30;
+        private readonly int _startWidth = 30;
+
         public ElementUnit(Unit unit)
         {
             InitializeComponent();
             CurrentUnit = unit;
+
             LoadImages();
-            CurrentUnit.OnTakeDamage += UpdateHealtBar;
+            UpdateHealthBar();
+
+            // Подписываемся на событие изменения здоровья
+            if (CurrentUnit != null)
+            {
+                CurrentUnit.OnHealthChanged += UpdateHealthBar;
+                CurrentUnit.OnUnitDied += OnUnitDied;
+            }
         }
-        public void UpdateHealtBar()
+
+        private void UpdateHealthBar()
         {
-            double multiHealth = stadtartWitdh / CurrentUnit.MaxHealth;
-            HealtBar.Width = CurrentUnit.Health > 0 ? CurrentUnit.Health * multiHealth : 0;
+            Dispatcher.Invoke(() =>
+            {
+                if (CurrentUnit == null || HealtBar == null) return;
+
+                double healthPercent = CurrentUnit.Health / CurrentUnit.MaxHealth;
+                HealtBar.Width = Math.Max(0, _startWidth * healthPercent);
+
+                // Меняем цвет полоски здоровья в зависимости от процента
+                if (healthPercent > 0.6)
+                    HealtBar.Background = System.Windows.Media.Brushes.Green;
+                else if (healthPercent > 0.3)
+                    HealtBar.Background = System.Windows.Media.Brushes.Orange;
+                else
+                    HealtBar.Background = System.Windows.Media.Brushes.Red;
+            });
         }
-        void LoadImages()
+
+        private void OnUnitDied()
         {
-            if (CurrentUnit is Tank tank)
+            Dispatcher.Invoke(() =>
             {
-                if(tank.NameAlliance == TypeAlliance.USSR)
+                // Можно добавить анимацию смерти или просто скрыть юнита
+                this.Visibility = Visibility.Collapsed;
+            });
+        }
+
+        private void LoadImages()
+        {
+            try
+            {
+                if (CurrentUnit is Tank)
                 {
-                    UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/T34.png", UriKind.Relative));
+                    if (CurrentUnit.NameAlliance == TypeAlliance.USSR)
+                    {
+                        UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/T34.png", UriKind.Relative));
+                    }
+                    else
+                    {
+                        UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/Panjer.png", UriKind.Relative));
+                    }
                 }
-                else
+                else if (CurrentUnit is Infanity)
                 {
-                    UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/Panjer.png", UriKind.Relative));
+                    // Исправляем: для СССР и Германии разные текстуры пехоты
+                    if (CurrentUnit.NameAlliance == TypeAlliance.USSR)
+                    {
+                        UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/infanity_ussr.png", UriKind.Relative));
+                    }
+                    else
+                    {
+                        UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/infanity_germany.png", UriKind.Relative));
+                    }
+                }
+                else if (CurrentUnit is Artillery)
+                {
+                    if (CurrentUnit.NameAlliance == TypeAlliance.USSR)
+                    {
+                        UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/art1.png", UriKind.Relative));
+                    }
+                    else
+                    {
+                        UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/art2.png", UriKind.Relative));
+                    }
                 }
             }
-            else if(CurrentUnit is Infanity infa)
+            catch (Exception ex)
             {
-                if (infa.NameAlliance == TypeAlliance.USSR)
-                {
-                    UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/infanity_germany.png", UriKind.Relative));
-                }
-                else
-                {
-                    UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/infanity_germany.png", UriKind.Relative));
-                }
-            }
-            else if(CurrentUnit is Artillery arta)
-            {
-                if (arta.NameAlliance == TypeAlliance.USSR)
-                {
-                    UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/art1.png", UriKind.Relative));
-                }
-                else
-                {
-                    UnitImage.Source = new BitmapImage(new Uri("/Images/Unit/art2.png", UriKind.Relative));
-                }
+                System.Diagnostics.Debug.WriteLine($"Ошибка загрузки изображения: {ex.Message}");
             }
         }
+
         private void Unit_Click(object sender, MouseButtonEventArgs e)
         {
-            if(MainWindow.Instance.SelectUnit == null)
+            if (CurrentUnit == null || CurrentUnit.IsDead) return;
+
+            var gameManager = GameManager.Instance; // Используем GameManager вместо MainWindow
+
+            if (gameManager.CurrentPhase == GamePhase.PlayerTurn)
             {
-                MainWindow.Instance.SelectUnit = CurrentUnit;
+                if (gameManager.SelectedUnit == null)
+                {
+                    // Выбираем юнита
+                    gameManager.SelectUnit(CurrentUnit);
+
+                    // Визуально выделяем выбранного юнита
+                    this.BorderBrush = System.Windows.Media.Brushes.Gold;
+                    this.BorderThickness = new Thickness(3);
+                }
+                else if (gameManager.SelectedUnit.NameAlliance != CurrentUnit.NameAlliance)
+                {
+                    // Атакуем врага
+                    gameManager.AttackWithSelectedUnit(CurrentUnit);
+                }
+                else
+                {
+                    // Снимаем выделение
+                    gameManager.DeselectUnit();
+                }
             }
-            else if (MainWindow.Instance.SelectUnit.NameAlliance != CurrentUnit.NameAlliance)
+
+            e.Handled = true;
+        }
+
+        // Очищаем подписки при выгрузке
+        public void Cleanup()
+        {
+            if (CurrentUnit != null)
             {
-                MainWindow.Instance.SelectUnit.Attack(CurrentUnit);
-                MainWindow.Instance.SelectUnit = null;
-            }
-            else
-            {
-                MainWindow.Instance.SelectUnit = null;
+                CurrentUnit.OnHealthChanged -= UpdateHealthBar;
+                CurrentUnit.OnUnitDied -= OnUnitDied;
             }
         }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Cleanup();
+        }
+
     }
 }

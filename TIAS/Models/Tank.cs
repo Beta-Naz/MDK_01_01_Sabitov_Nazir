@@ -7,12 +7,13 @@ namespace TIAS.Models
 {
     public class Tank : Unit
     {
-        public Tank(int id, HexCoord position, TypeAlliance typeAlliance) 
+        public Tank(int id, HexCoord position, TypeAlliance typeAlliance)
             : base(id, 200, 45, position, typeAlliance)
         {
-            IntializedStrategy(
+            UnitName = "Танки";
+            InitializeStrategy(
                 new GroundMoveStrategy(6, position),
-                new DirectDamageStrategy(45, 1));
+                new DirectDamageStrategy(75, 1));
         }
     }
 }

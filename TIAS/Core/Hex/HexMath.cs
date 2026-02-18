@@ -41,5 +41,6 @@ namespace TIAS.Core.Hex
                 Math.Abs(cubeA.Z - cubeB.Z)) / 2;
             return distance;
         }
+
     }
 }

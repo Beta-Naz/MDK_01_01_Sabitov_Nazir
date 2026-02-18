@@ -10,7 +10,8 @@ namespace TIAS.Models
         public Infanity(int id, HexCoord position, TypeAlliance typeAlliance)
            : base(id, 100, 15, position, typeAlliance)
         {
-            IntializedStrategy(
+            UnitName = "Пехота";
+            InitializeStrategy(
                 new GroundMoveStrategy(12, position),
                 new DirectDamageStrategy(25, 1));
         }
