@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Org.BouncyCastle.Ocsp;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using TIAS.Core.Base;
+using TIAS.Core.Database;
 using TIAS.Core.Models;
 using TIAS.Core.Structure;
 using TIAS.Models;
@@ -14,9 +16,10 @@ namespace TIAS
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow Instance;
-        public int CurrentLevel = 0;
-        private HexMap _selectLevel {  get; set; }
+        public static MainWindow Instance { get; private set; }
+        public List<HexMap> Maps { get; set; }
+        public HexMap _selectLevel { get; set; }
+        public int CurrentLevel { get; set; }
         public HexMap SelectLevel
         {
             get
@@ -25,39 +28,57 @@ namespace TIAS
             }
             set
             {
-                if(value != null)
+                if( _selectLevel != value)
                 {
                     _selectLevel = value;
-                    MapChanged?.Invoke(_selectLevel);
+                    MapChanged?.Invoke(value);
                 }
             }
         }
-        public List<HexMap> Maps = new List<HexMap>();
+        public Unit SelectUnit { get; set; }
+        public List<string> ErrorMessages { get; set; }
+
+        private MapDatabase _db;
         public event Action<HexMap> MapChanged;
-        //Вот это это потом уберю в отдельный класс, для логов, но щяс пускай тут будет
-        private List<string> _errorMessages = new List<string>();
-        public List<string> ErrorMessages
-        {
-            get
-            {
-                return _errorMessages;
-            }
-            set
-            {
-                _errorMessages = value;
-                MessageBox.Show($"Ошибка: {_errorMessages[_errorMessages.Count-1]}","Error",MessageBoxButton.OK,MessageBoxImage.Error);
-            }
-        }
         public MainWindow()
         {
             InitializeComponent();
             Instance = this;
-            HexMap map = new HexMap(0, 25, 25);
-            map.AddUnit(new Tank(0, new HexCoord(3, 2), Core.Enum.TypeAlliance.USSR));
-            map.AddUnit(new Tank(0, new HexCoord(4, 2), Core.Enum.TypeAlliance.Germany));
-            Maps.Add(map);
-            frame.Navigate(new MainMenu());
+
+            // Инициализируем подключение к БД
+            _db = new MapDatabase("localhost", "TIAS_Game", "root", "1234");
+
+            // Загружаем карты из БД
+            LoadMapsFromDatabase();
+            AddTestLevel();
+            frame.Navigate(new Pages.MainMenu());
         }
-        public Unit SelectUnit;
+
+        private void LoadMapsFromDatabase()
+        {
+            try
+            {
+                Maps = _db.LoadAllMaps();
+                CurrentLevel = 0;
+                ErrorMessages = new List<string>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки карт: {ex.Message}");
+            }
+        }
+        private void AddTestLevel()
+        {
+            HexMap map = new HexMap(0,12,12);
+            Unit unit = new Tank(0,new HexCoord(3,2), Core.Enum.TypeAlliance.USSR);
+            Unit unit1 = new Tank(1, new HexCoord(5, 2), Core.Enum.TypeAlliance.Germany);
+            Unit unit2 = new Artillery(2, new HexCoord(4, 2), Core.Enum.TypeAlliance.USSR);
+            Unit unit3 = new Infanity(3, new HexCoord(6, 2), Core.Enum.TypeAlliance.Germany);
+            map.AddUnit(unit);
+            map.AddUnit(unit1);
+            map.AddUnit(unit2);
+            map.AddUnit(unit3);
+            Maps.Add(map);
+        }
     }
 }

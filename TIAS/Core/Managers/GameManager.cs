@@ -135,6 +135,15 @@ namespace TIAS.Core.Managers
                 return false;
             }
 
+            // Получаем путь до цели
+            var path = SelectedUnit.GetPathTo(target);
+
+            // Сохраняем путь для анимации
+            if (path != null && path.Count > 0)
+            {
+                SelectedUnit.CurrentPath = path;
+            }
+
             // Выполняем перемещение
             SelectedUnit.Move(target);
             AddMessage($"{SelectedUnit.UnitName} переместился");
@@ -153,6 +162,7 @@ namespace TIAS.Core.Managers
 
             return true;
         }
+
 
         public bool AttackWithSelectedUnit(Unit target)
         {
@@ -287,69 +297,112 @@ namespace TIAS.Core.Managers
 
     public class BasicAIStrategy : AIStrategy
     {
+        private Random _random = new Random();
+
         public void ExecuteTurn(GameManager gameManager)
         {
-            var aliveAIUnits = gameManager.AIUnits.Where(u => !u.IsDead && u.CanAct()).ToList();
+            var aliveAIUnits = gameManager.AIUnits.Where(u => !u.IsDead && u.CanAct())
+                                .OrderBy(u => u.Health) // Сначала слабые юниты
+                                .ToList();
 
             foreach (var aiUnit in aliveAIUnits)
             {
-                // Находим ближайшего врага
-                var closestEnemy = FindClosestEnemy(aiUnit, gameManager.PlayerUnits.Where(u => !u.IsDead).ToList());
+                // Находим всех врагов
+                var enemies = gameManager.PlayerUnits.Where(u => !u.IsDead).ToList();
+                if (enemies.Count == 0) continue;
 
-                if (closestEnemy == null) continue;
+                // Сортируем врагов по приоритету (ближайшие и слабые)
+                var prioritizedEnemies = enemies
+                    .Select(e => new
+                    {
+                        Unit = e,
+                        Distance = HexMath.Distance(aiUnit.Position, e.Position),
+                        Health = e.Health
+                    })
+                    .OrderBy(e => e.Distance)
+                    .ThenBy(e => e.Health)
+                    .ToList();
 
-                int distance = HexMath.Distance(aiUnit.Position, closestEnemy.Position);
+                bool acted = false;
 
-                // Пробуем атаковать, если в радиусе
-                if (distance <= aiUnit.AttackRange && !aiUnit.HasAttackedThisTurn)
+                // Пытаемся атаковать
+                foreach (var enemy in prioritizedEnemies)
                 {
-                    aiUnit.Attack(closestEnemy);
-                    System.Threading.Thread.Sleep(500); // Небольшая задержка для визуализации
-                    continue;
+                    if (!aiUnit.HasAttackedThisTurn &&
+                        enemy.Distance <= aiUnit.AttackRange &&
+                        aiUnit.CanAttack(enemy.Unit))
+                    {
+                        aiUnit.Attack(enemy.Unit);
+                        gameManager.AddMessage($"{aiUnit.UnitName} атаковал {enemy.Unit.UnitName}!");
+                        acted = true;
+                        break;
+                    }
                 }
 
-                // Пробуем приблизиться, если еще не двигались
-                if (!aiUnit.HasMovedThisTurn)
+                // Если не атаковали, пытаемся двигаться
+                if (!acted && !aiUnit.HasMovedThisTurn)
                 {
-                    var moveTarget = FindBestMoveTowards(aiUnit, closestEnemy, gameManager.CurrentMap);
+                    var bestEnemy = prioritizedEnemies.First();
+                    var moveTarget = FindBestStrategicMove(aiUnit, bestEnemy.Unit, gameManager.CurrentMap, enemies);
+
                     if (!moveTarget.Equals(aiUnit.Position))
                     {
                         aiUnit.Move(moveTarget);
-                        System.Threading.Thread.Sleep(500);
+                        gameManager.AddMessage($"{aiUnit.UnitName} перемещается к врагу");
+                        acted = true;
                     }
                 }
-            }
-        }
 
-        private Unit FindClosestEnemy(Unit aiUnit, List<Unit> playerUnits)
-        {
-            Unit closest = null;
-            int minDistance = int.MaxValue;
-
-            foreach (var enemy in playerUnits.Where(u => !u.IsDead))
-            {
-                int dist = HexMath.Distance(aiUnit.Position, enemy.Position);
-                if (dist < minDistance)
+                // Небольшая задержка для визуализации
+                if (acted)
                 {
-                    minDistance = dist;
-                    closest = enemy;
+                    System.Threading.Thread.Sleep(600);
                 }
             }
-
-            return closest;
         }
 
-        private HexCoord FindBestMoveTowards(Unit unit, Unit target, HexMap map)
+        private HexCoord FindBestStrategicMove(Unit unit, Unit primaryTarget, HexMap map, List<Unit> allEnemies)
         {
             HexCoord bestMove = unit.Position;
-            int bestDistance = HexMath.Distance(unit.Position, target.Position);
+            int bestScore = int.MinValue;
 
             foreach (var pos in unit.ReachablePositions)
             {
-                int distance = HexMath.Distance(pos, target.Position);
-                if (distance < bestDistance && map.IsCellFree(pos))
+                if (!map.IsCellFree(pos) && !pos.Equals(unit.Position)) continue;
+
+                int score = 0;
+
+                // Оцениваем позицию по нескольким критериям
+                foreach (var enemy in allEnemies)
                 {
-                    bestDistance = distance;
+                    int distToEnemy = HexMath.Distance(pos, enemy.Position);
+
+                    // Ближе к главной цели - хорошо
+                    if (enemy == primaryTarget)
+                    {
+                        score += (100 - distToEnemy * 10);
+                    }
+
+                    // В радиусе атаки врага - плохо
+                    if (distToEnemy <= enemy.AttackRange)
+                    {
+                        score -= 50;
+                    }
+
+                    // Рядом с союзниками - хорошо
+                    foreach (var ally in GameManager.Instance.CurrentMap.Units.Where(u => u.NameAlliance == unit.NameAlliance && !u.IsDead))
+                    {
+                        int distToAlly = HexMath.Distance(pos, ally.Position);
+                        if (distToAlly <= 2)
+                        {
+                            score += 20;
+                        }
+                    }
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
                     bestMove = pos;
                 }
             }

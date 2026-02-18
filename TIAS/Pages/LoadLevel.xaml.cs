@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using TIAS.Core.Base;
 using TIAS.Core.Enum;
@@ -106,25 +108,34 @@ namespace TIAS.Pages
 
                 if (unit != null)
                 {
-                    // Highlight reachable positions
-                    foreach (var pos in unit.ReachablePositions)
+                    if (!unit.HasMovedThisTurn)
                     {
-                        HighlightHex(pos, Brushes.Green, 0.3);
-                    }
-
-                    // Highlight attackable positions
-                    foreach (var pos in unit.AttackablePositions)
-                    {
-                        if (_hexPolygons.TryGetValue(pos, out var polygon))
+                        // Подсвечиваем доступные для перемещения клетки
+                        foreach (var pos in unit.ReachablePositions)
                         {
-                            if (CurrentLevel.GetUnit(pos) != null)
+                            if (!pos.Equals(unit.Position))
                             {
-                                HighlightHex(pos, Brushes.Red, 0.5);
+                                HighlightHex(pos, Brushes.Green, 0.3);
                             }
                         }
                     }
 
-                    // Highlight unit itself
+                    if (!unit.HasAttackedThisTurn)
+                    {
+                        // Подсвечиваем доступные для атаки клетки
+                        foreach (var pos in unit.AttackablePositions)
+                        {
+                            if (_hexPolygons.TryGetValue(pos, out var polygon))
+                            {
+                                if (CurrentLevel.GetUnit(pos) != null)
+                                {
+                                    HighlightHex(pos, Brushes.Red, 0.5);
+                                }
+                            }
+                        }
+                    }
+
+                    // Подсвечиваем самого юнита
                     if (_hexPolygons.TryGetValue(unit.Position, out var unitHex))
                     {
                         unitHex.Stroke = Brushes.Gold;
@@ -132,8 +143,8 @@ namespace TIAS.Pages
                     }
 
                     UnitInfoTextBlock.Text = $"{unit.UnitName}\nHP: {unit.Health}/{unit.MaxHealth}\n" +
-                                             $"Действия: {(unit.HasMovedThisTurn ? "✓" : "✗")} ход, " +
-                                             $"{(unit.HasAttackedThisTurn ? "✓" : "✗")} атака";
+                                             $"Действия: {(unit.HasMovedThisTurn ? "✗" : "✓")} ход, " +
+                                             $"{(unit.HasAttackedThisTurn ? "✗" : "✓")} атака";
                 }
                 else
                 {
@@ -225,7 +236,15 @@ namespace TIAS.Pages
             {
                 Dispatcher.Invoke(() =>
                 {
-                    UpdateUnitPosition(unitElement, newPos);
+                    if (unit.CurrentPath != null && unit.CurrentPath.Count > 0)
+                    {
+                        AnimateUnitMovement(unitElement, unit.CurrentPath);
+                        unit.CurrentPath = null; // Очищаем путь после анимации
+                    }
+                    else
+                    {
+                        UpdateUnitPosition(unitElement, newPos);
+                    }
                 });
             };
 
@@ -236,9 +255,28 @@ namespace TIAS.Pages
                 {
                     if (_unitElements.ContainsKey(unit))
                     {
-                        parrent.Children.Remove(unitElement);
-                        _unitElements.Remove(unit);
+                        // Анимация смерти
+                        var deathAnimation = new System.Windows.Media.Animation.DoubleAnimation
+                        {
+                            To = 0,
+                            Duration = TimeSpan.FromMilliseconds(300)
+                        };
+                        deathAnimation.Completed += (s, e) =>
+                        {
+                            parrent.Children.Remove(unitElement);
+                            _unitElements.Remove(unit);
+                        };
+                        unitElement.BeginAnimation(UIElement.OpacityProperty, deathAnimation);
                     }
+                });
+            };
+
+            // Подписываемся на событие получения урона
+            unit.OnTakeDamage += (damage) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    ShowDamageNumber(unitElement, damage);
                 });
             };
 
@@ -251,6 +289,43 @@ namespace TIAS.Pages
             }
 
             parrent.Children.Add(unitElement);
+        }
+        private void ShowDamageNumber(ElementUnit unitElement, float damage)
+        {
+            var damageText = new TextBlock
+            {
+                Text = $"-{damage}",
+                Foreground = Brushes.Red,
+                FontSize = 16,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            Canvas.SetLeft(damageText, Canvas.GetLeft(unitElement) + 20);
+            Canvas.SetTop(damageText, Canvas.GetTop(unitElement) - 10);
+
+            parrent.Children.Add(damageText);
+
+            // Анимация появления и исчезновения
+            var fadeOut = new System.Windows.Media.Animation.DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromMilliseconds(1000)
+            };
+
+            var moveUp = new System.Windows.Media.Animation.DoubleAnimation
+            {
+                From = Canvas.GetTop(damageText),
+                To = Canvas.GetTop(damageText) - 30,
+                Duration = TimeSpan.FromMilliseconds(1000)
+            };
+
+            fadeOut.Completed += (s, e) => parrent.Children.Remove(damageText);
+
+            damageText.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            damageText.BeginAnimation(Canvas.TopProperty, moveUp);
         }
         private void UpdateUnitPosition(ElementUnit unitElement, HexCoord newPos)
         {
@@ -325,11 +400,11 @@ namespace TIAS.Pages
 
             if (result == MessageBoxResult.Yes)
             {
-                NavigationService.Navigate(new SelectLevel());
+                MainWindow.Instance.frame.Navigate(new SelectLevel());
             }
             else
             {
-                NavigationService.Navigate(new MainMenu());
+                MainWindow.Instance.frame.Navigate(new MainMenu());
             }
         }
 
@@ -540,6 +615,30 @@ namespace TIAS.Pages
             MainScrollViewer.ScrollToVerticalOffset(newV);
             e.Handled = true;
         }
+        private void AnimateUnitMovement(ElementUnit unitElement, List<HexCoord> path)
+        {
+            if (path == null || path.Count < 2) return;
 
+            int currentStep = 1;
+            var timer = new System.Windows.Threading.DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(200);
+
+            timer.Tick += (s, e) =>
+            {
+                if (currentStep < path.Count)
+                {
+                    Point targetPos = GetPixelPosition(path[currentStep], _hexSize);
+                    Canvas.SetLeft(unitElement, targetPos.X - 25);
+                    Canvas.SetTop(unitElement, targetPos.Y - 25);
+                    currentStep++;
+                }
+                else
+                {
+                    timer.Stop();
+                }
+            };
+
+            timer.Start();
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace TIAS.Core.Base
         public bool HasMovedThisTurn { get; set; }
         public bool HasAttackedThisTurn { get; set; }
         public bool IsSelected { get; set; }
-
+        public event Action<float> OnTakeDamage;
         // Events
         public event Action OnHealthChanged;
         public event Action OnUnitDied;
@@ -54,7 +54,21 @@ namespace TIAS.Core.Base
 
         // Reference to current map
         protected HexMap CurrentMap { get; set; }
+        public void TakeDamage(float damage)
+        {
+            if (IsDead) return;
 
+            float reducedDamage = ReduceDamage(damage);
+            Health -= reducedDamage;
+
+            // Вызываем событие получения урона
+            OnTakeDamage?.Invoke(reducedDamage);
+
+            if (IsDead)
+            {
+                OnUnitDied?.Invoke();
+            }
+        }
         protected Unit(int id, float maxHealth, float armor, HexCoord position, TypeAlliance typeAlliance)
         {
             Id = id;
@@ -117,20 +131,7 @@ namespace TIAS.Core.Base
         {
             return Math.Max(1, incomingDamage - Armor);
         }
-
-        public void TakeDamage(float damage)
-        {
-            if (IsDead) return;
-
-            float reducedDamage = ReduceDamage(damage);
-            Health -= reducedDamage;
-
-            if (IsDead)
-            {
-                OnUnitDied?.Invoke();
-            }
-        }
-
+        public List<HexCoord> CurrentPath { get; set; }
         public void ResetTurn()
         {
             HasMovedThisTurn = false;
@@ -219,7 +220,42 @@ namespace TIAS.Core.Base
                 }
             }
         }
+        public List<HexCoord> GetPathTo(HexCoord target)
+        {
+            if (!ReachablePositions.Contains(target)) return null;
 
+            var map = CurrentMap ?? GetCurrentMapFromMainWindow();
+            if (map == null) return null;
+
+            // BFS для поиска пути
+            var queue = new Queue<(HexCoord pos, List<HexCoord> path)>();
+            var visited = new HashSet<HexCoord>();
+
+            queue.Enqueue((Position, new List<HexCoord> { Position }));
+            visited.Add(Position);
+
+            while (queue.Count > 0)
+            {
+                var (current, path) = queue.Dequeue();
+
+                if (current.Equals(target))
+                {
+                    return path;
+                }
+
+                foreach (var neighbor in HexDirections.GetAllNeighBor(current))
+                {
+                    if (!visited.Contains(neighbor) && map.IsCellFree(neighbor) && ReachablePositions.Contains(neighbor))
+                    {
+                        visited.Add(neighbor);
+                        var newPath = new List<HexCoord>(path) { neighbor };
+                        queue.Enqueue((neighbor, newPath));
+                    }
+                }
+            }
+
+            return null;
+        }
         private HexMap GetCurrentMapFromMainWindow()
         {
             try

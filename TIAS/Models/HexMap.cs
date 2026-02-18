@@ -8,9 +8,9 @@ namespace TIAS.Core.Models
     public class HexMap
     {
         public int Id { get; set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public CellType[,] Cells { get; private set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public CellType[,] Cells { get; set; }
         public List<Unit> Units { get; private set; }
         public HexMap() { }
         public HexMap(int id, int width, int height)

@@ -39,6 +39,7 @@ namespace TIAS.Pages
         {
             if (newLevel == null)
             {
+                MessageBox.Show("newLevel == null");
                 return;
             }
             ThisSelectLevelView.LevelMap = newLevel;
@@ -50,13 +51,11 @@ namespace TIAS.Pages
             {
                 PanelNoSeletLevel.Visibility = Visibility.Visible;
                 PanelSeletLevel.Visibility = Visibility.Collapsed;
-                MessageBox.Show("1");
             }
             else
             {
                 PanelSeletLevel.Visibility = Visibility.Visible;
                 PanelNoSeletLevel.Visibility = Visibility.Collapsed;
-                MessageBox.Show("2");
             }
         }
         private void Play_Click(object sender, RoutedEventArgs e)

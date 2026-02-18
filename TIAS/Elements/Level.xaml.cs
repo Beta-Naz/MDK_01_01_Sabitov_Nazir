@@ -27,7 +27,7 @@ namespace TIAS.Elements
         public Level(HexMap level)
         {
             InitializeComponent();
-            if (level == null)
+            if (level == null || level.Units == null)
             {
                 MessageBox.Show("Ошибка level == null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -42,6 +42,11 @@ namespace TIAS.Elements
         }
         private void SelectLevel(object sender, MouseButtonEventArgs e)
         {
+            if (CurrentLevel.LevelMap == null)
+            {
+                MessageBox.Show("CurrentLevel.LevelMap == null");
+                return;
+            }
             MainWindow.Instance.SelectLevel = CurrentLevel.LevelMap;
         }
     }
