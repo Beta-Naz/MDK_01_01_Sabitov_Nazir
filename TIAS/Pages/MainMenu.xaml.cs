@@ -24,5 +24,9 @@ namespace TIAS.Pages
         {
             InitializeComponent();
         }
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.frame.Navigate(new SelectLevel());
+        }
     }
 }

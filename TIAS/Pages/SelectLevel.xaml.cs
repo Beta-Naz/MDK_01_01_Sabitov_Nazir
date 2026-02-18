@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TIAS.ClassView.Pages;
+using TIAS.Core.Models;
+using TIAS.Elements;
 
 namespace TIAS.Pages
 {
@@ -20,9 +11,65 @@ namespace TIAS.Pages
     /// </summary>
     public partial class SelectLevel : Page
     {
+        public SelectLevelView ThisSelectLevelView {get; private set; }
         public SelectLevel()
         {
             InitializeComponent();
+            ThisSelectLevelView = new SelectLevelView();
+            DataContext = ThisSelectLevelView;
+            MainWindow.Instance.MapChanged += ChangeSelectLevel;
+            LoadLevel();
+        }
+        public void LoadLevel()
+        {
+            if(MainWindow.Instance.Maps == null)
+            {
+                return;
+            }
+            parrent.Children.Clear();
+            foreach (var map in MainWindow.Instance.Maps)
+            {
+                if(map != null)
+                {
+                    parrent.Children.Add(new Level(map));
+                }
+            }
+        }
+        public void ChangeSelectLevel(HexMap newLevel)
+        {
+            if (newLevel == null)
+            {
+                return;
+            }
+            ThisSelectLevelView.LevelMap = newLevel;
+            UpdatePanelSelectLevel();
+        }
+        public void UpdatePanelSelectLevel()
+        {
+            if (ThisSelectLevelView.LevelMap == null)
+            {
+                PanelNoSeletLevel.Visibility = Visibility.Visible;
+                PanelSeletLevel.Visibility = Visibility.Collapsed;
+                MessageBox.Show("1");
+            }
+            else
+            {
+                PanelSeletLevel.Visibility = Visibility.Visible;
+                PanelNoSeletLevel.Visibility = Visibility.Collapsed;
+                MessageBox.Show("2");
+            }
+        }
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+            if(ThisSelectLevelView.LevelMap != null)
+            {
+                MainWindow.Instance.frame.Navigate(new LoadLevel(ThisSelectLevelView.LevelMap));
+            }
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.frame.Navigate(new MainMenu());
+            MainWindow.Instance.MapChanged -= ChangeSelectLevel;
         }
     }
 }

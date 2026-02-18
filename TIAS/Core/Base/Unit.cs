@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using TIAS.Core.Enum;
 using TIAS.Core.Hex;
+using TIAS.Core.StrategyPatern;
 using TIAS.Core.StrategyPatern.Interface;
 using TIAS.Core.Structure;
 using TIAS.Interface;
-using TIAS.Models;
-using static TIAS.Core.Base.Unit;
 
 namespace TIAS.Core.Base
 {
@@ -48,6 +45,7 @@ namespace TIAS.Core.Base
         public HexCoord Position => MovementStrategy.Position;
         public bool IsDead => Health < 0;
         public float Armor { get; private set; }
+        public event Action OnTakeDamage;
         public Unit(int id, float maxHeahth, float armor, HexCoord position, TypeAlliance typeAlliance)
         {
             Id = id;
@@ -96,11 +94,13 @@ namespace TIAS.Core.Base
             if(IsDead) return;
             float reducedDamage = ReduceDamage(damage);
             Health = Math.Max(0, Health - reducedDamage);
+            OnTakeDamage?.Invoke();
             if (IsDead)
             {
                 OnDead();
             }
         }
+
         protected void OnDead()
         {
             MessageBox.Show($"Юнит под айди {Id} умер");

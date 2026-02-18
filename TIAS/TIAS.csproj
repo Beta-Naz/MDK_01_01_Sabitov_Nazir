@@ -56,6 +56,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Elements\ElementUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Elements\Level.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -64,7 +72,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ClassView\Pages\SelectLevelView.cs" />
     <Compile Include="Core\Enum\TypeAlliance.cs" />
+    <Compile Include="Core\Enum\CellType.cs" />
     <Compile Include="Core\Enum\UnitType.cs" />
     <Compile Include="Core\Factory\UnitFactory.cs" />
     <Compile Include="Core\Hex\HexDirections.cs" />
@@ -76,6 +86,12 @@
     <Compile Include="Core\StrategyPatern\SplashDamageStrategy.cs" />
     <Compile Include="Core\Structure\CubeCoord.cs" />
     <Compile Include="Core\Structure\HexCoord.cs" />
+    <Compile Include="Elements\ElementUnit.xaml.cs">
+      <DependentUpon>ElementUnit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\Level.xaml.cs">
+      <DependentUpon>Level.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interface\IArmor.cs" />
     <Compile Include="Interface\IAttack.cs" />
     <Compile Include="Interface\IHealth.cs" />
@@ -90,6 +106,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\LoadLevel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SelectLevel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,11 +118,15 @@
   <ItemGroup>
     <Compile Include="Core\Base\Unit.cs" />
     <Compile Include="Models\Artillery.cs" />
-    <Compile Include="Core\Hex\HexMap.cs" />
+    <Compile Include="Models\HexMap.cs" />
     <Compile Include="Models\Infanity.cs" />
+    <Compile Include="ClassView\Elements\LevelModel.cs" />
     <Compile Include="Models\Tank.cs" />
     <Compile Include="Pages\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoadLevel.xaml.cs">
+      <DependentUpon>LoadLevel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SelectLevel.xaml.cs">
       <DependentUpon>SelectLevel.xaml</DependentUpon>
@@ -136,7 +160,19 @@
     <Resource Include="Images\Background\BackgroundMainMenu.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Background\BackgroundSelectLevel.png" />
+    <Resource Include="Images\Background\BackgroundSelectLevel.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Unit\infanity_germany.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Unit\art1.png" />
+    <Resource Include="Images\Unit\T34.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Unit\art2.png" />
+    <Resource Include="Images\Unit\Panjer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TIAS.Core.Base;
 using TIAS.Core.Hex;
+using TIAS.Core.Models;
 using TIAS.Core.StrategyPatern.Interface;
 using TIAS.Core.Structure;
 using TIAS.Interface;

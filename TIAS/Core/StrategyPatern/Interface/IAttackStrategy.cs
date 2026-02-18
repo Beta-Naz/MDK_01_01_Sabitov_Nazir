@@ -1,6 +1,4 @@
 ﻿using TIAS.Core.Base;
-using TIAS.Interface;
-using TIAS.Models;
 
 namespace TIAS.Core.StrategyPatern.Interface
 {

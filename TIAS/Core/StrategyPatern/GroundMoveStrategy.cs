@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TIAS.Core.Hex;
+using TIAS.Core.Models;
 using TIAS.Core.StrategyPatern.Interface;
 using TIAS.Core.Structure;
 
@@ -8,11 +10,18 @@ namespace TIAS.Core.StrategyPatern
     public class GroundMoveStrategy : IMovementStrategy
     {
         public int Speed { get; private set; }
-        public HexCoord Position { get; private set; }
+        private HexCoord _position;
+        public HexCoord Position
+        {
+            get => _position;
+            private set
+            {
+                _position = value;
+            }
+        }
         private MainWindow _playerPrefs => MainWindow.Instance;
-        public List<HexCoord> FullPath { get; private set; } //Являеться картой, то есть какие клетки нужно преодолеть чтобы из пункта а добраться в пункт б
+        public List<HexCoord> FullPath { get; private set; }
         private HexMap CurrentLevel => _playerPrefs.Maps[_playerPrefs.CurrentLevel];
-
         public GroundMoveStrategy(int speed, HexCoord position)
         {
             Speed = speed;

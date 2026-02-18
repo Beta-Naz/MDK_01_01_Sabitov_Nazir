@@ -81,66 +81,9 @@
                     <ScrollViewer Grid.Row="1" 
                                   VerticalScrollBarVisibility="Auto"
                                   Background="Transparent">
+                        <StackPanel x:Name="parrent">
 
-                        <ItemsControl x:Name="LevelsList" 
-                                      Background="Transparent"
-                                      HorizontalContentAlignment="Stretch">
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="#4AFFFFFF" 
-                                            CornerRadius="10" 
-                                            Margin="0,0,0,10"
-                                            Padding="15"
-                                            Cursor="Hand">
-
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="#4AFFFFFF"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="Blue"/>
-                                                        <Setter Property="BorderBrush" Value="Blue"/>
-                                                        <Setter Property="BorderThickness" Value="2"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <!-- Иконка уровня (можно заменить на картинку) -->
-                                            <Border Grid.Column="0" 
-                                                    Background="Gold" 
-                                                    Width="40" 
-                                                    Height="40" 
-                                                    CornerRadius="20"
-                                                    Margin="0,0,15,0">
-                                                <TextBlock Text="⚔" 
-                                                           FontSize="20" 
-                                                           HorizontalAlignment="Center" 
-                                                           VerticalAlignment="Center"
-                                                           Foreground="Black"/>
-                                            </Border>
-
-                                            <StackPanel Grid.Column="1">
-                                                <TextBlock Text="{Binding Name}" 
-                                                           FontSize="16" 
-                                                           FontWeight="Bold" 
-                                                           Foreground="White"/>
-                                                <TextBlock Text="{Binding Description}" 
-                                                           FontSize="12" 
-                                                           Foreground="#CCFFFFFF"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        </StackPanel>
                     </ScrollViewer>
 
                     <!-- Кнопка добавления уровня -->
@@ -217,20 +160,63 @@
                             CornerRadius="15"
                             Padding="20"
                             VerticalAlignment="Top">
-
                         <StackPanel>
                             <!-- Здесь будет ваш пользовательский элемент -->
-                            <TextBlock Text="Выберите уровень для просмотра информации" 
+                            <TextBlock x:Name="PanelNoSeletLevel"
+                                       Text="Выберите уровень для просмотра информации" 
                                        TextWrapping="Wrap"
                                        Foreground="#CCFFFFFF"
                                        FontSize="14"
                                        HorizontalAlignment="Center"
                                        Margin="0,20"/>
+                            <StackPanel x:Name="PanelSeletLevel" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Наименование уровня:" 
+                                         TextWrapping="Wrap"
+                                         Foreground="#CCFFFFFF"
+                                         FontSize="14"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding LevelName}" 
+                                         TextWrapping="Wrap"
+                                         Foreground="#CCFFFFFF"
+                                         FontSize="14"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"
+                                         Margin="5,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Размер уровня:" 
+                                         TextWrapping="Wrap"
+                                         Foreground="#CCFFFFFF"
+                                         FontSize="14"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding SizeLevel}" 
+                                         TextWrapping="Wrap"
+                                         Foreground="#CCFFFFFF"
+                                         FontSize="14"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"
+                                         Margin="5,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Количество юнитов:" 
+                                         TextWrapping="Wrap"
+                                         Foreground="#CCFFFFFF"
+                                         FontSize="14"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding CountUnits}" 
+                                         TextWrapping="Wrap"
+                                         Foreground="#CCFFFFFF"
+                                         FontSize="14"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"
+                                         Margin="5,0"/>
+                                </StackPanel>
+                            </StackPanel>
 
-                            <!-- Пример того, как будет выглядеть ваш кастомный контрол -->
-                            <!-- 
-                            <controls:LevelInfoControl Width="250" Height="200"/>
-                            -->
                         </StackPanel>
                     </Border>
 
@@ -251,7 +237,8 @@
                                 BorderThickness="2"
                                 FontSize="16"
                                 FontWeight="Bold"
-                                Cursor="Hand">
+                                Cursor="Hand"
+                                Click="Play_Click">
 
                             <Button.Style>
                                 <Style TargetType="Button">
@@ -339,7 +326,8 @@
                 Foreground="White"
                 BorderBrush="LightBlue"
                 BorderThickness="1"
-                Cursor="Hand" Height="23" Width="54">
+                Cursor="Hand" Height="23" Width="54"
+                Click="Back_Click">
 
             <Button.Style>
                 <Style TargetType="Button">
