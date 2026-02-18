@@ -8,12 +8,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>TIAS</RootNamespace>
     <AssemblyName>TIAS</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,12 +64,49 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\Enum\TypeAlliance.cs" />
+    <Compile Include="Core\Enum\UnitType.cs" />
+    <Compile Include="Core\Factory\UnitFactory.cs" />
+    <Compile Include="Core\Hex\HexDirections.cs" />
+    <Compile Include="Core\Hex\HexMath.cs" />
+    <Compile Include="Core\StrategyPatern\DirectDamageStrategy.cs" />
+    <Compile Include="Core\StrategyPatern\GroundMoveStrategy.cs" />
+    <Compile Include="Core\StrategyPatern\Interface\IMovementStrategy.cs" />
+    <Compile Include="Core\StrategyPatern\Interface\IAttackStrategy.cs" />
+    <Compile Include="Core\StrategyPatern\SplashDamageStrategy.cs" />
+    <Compile Include="Core\Structure\CubeCoord.cs" />
+    <Compile Include="Core\Structure\HexCoord.cs" />
+    <Compile Include="Interface\IArmor.cs" />
+    <Compile Include="Interface\IAttack.cs" />
+    <Compile Include="Interface\IHealth.cs" />
+    <Compile Include="Interface\IMovement.cs" />
+    <Compile Include="Interface\IBuy.cs" />
+    <Compile Include="Interface\IUnitFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SelectLevel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Base\Unit.cs" />
+    <Compile Include="Models\Artillery.cs" />
+    <Compile Include="Core\Hex\HexMap.cs" />
+    <Compile Include="Models\Infanity.cs" />
+    <Compile Include="Models\Tank.cs" />
+    <Compile Include="Pages\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SelectLevel.xaml.cs">
+      <DependentUpon>SelectLevel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background\BackgroundMainMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Background\BackgroundSelectLevel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
