@@ -42,7 +42,7 @@ namespace ComputerClub_Сабитов.Pages
         {
             if(_change)
             {
-                
+                 
             }
             else
             {
