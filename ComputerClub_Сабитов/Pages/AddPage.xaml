@@ -7,8 +7,58 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddPage">
-
-    <Grid>
-        
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition  Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Background="Wheat">
+            <Border Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                CornerRadius="30" Background="Gray">
+                <TextBlock x:Name="Title" Padding="15" FontSize="40" Text="Создание" 
+               Foreground="White" FontWeight="Bold"/>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Margin="5" Background="LightGray" x:Name="parrent">
+                <StackPanel VerticalAlignment="Top">
+                    <Label Height="25" Margin="5" Content="Полное имя"/>
+                    <TextBox x:Name="Name" Height="25" Margin="5"/>
+                </StackPanel>
+                <StackPanel x:Name="AddressPanel" VerticalAlignment="Top">
+                    <Label Height="25" Margin="5" Content="Адресс"/>
+                    <TextBox x:Name="Address" Height="25" Margin="5"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top">
+                    <Label Height="25" Margin="5" Content="Время начала"/>
+                    <Grid Height="25" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker x:Name="StartDate"/>
+                        <TextBox x:Name="StartTime" Grid.Column="1"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top">
+                    <Label Height="25" Margin="5" Content="Время конца"/>
+                    <Grid Height="25" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker x:Name="EndDate"/>
+                        <TextBox x:Name="EndTime" Grid.Column="1"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Background="DarkGray">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Click="Cancel_Click" Background="Red" Padding="15,0" Content="Cancel" Margin="5" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                <Button Click="SaveOrEdit_Click" Background="Green" Padding="15,0" Content="Save" Margin="5" Foreground="White" FontWeight="Bold" FontSize="16"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

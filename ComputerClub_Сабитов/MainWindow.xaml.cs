@@ -50,24 +50,26 @@ namespace ComputerClub_Сабитов
                         menu = new MainMenu(this);
                         _pages.Add(menu);
                     }
+                    menu.OnChanged();
                     frame.Navigate(menu);
                     break;
                 case PageType.addPage:
                     AddPage add = null;
+                    MainMenu menu1 = null;
                     foreach (var page in _pages)
                     {
                         if (page is MainMenu)
                         {
                             add = page as AddPage;
                         }
+                        else if (menu1 is MainMenu)
+                        {
+                            menu1 = page as MainMenu;
+                        }
                     }
                     if (add == null)
                     {
-                        if(obj == null)
-                        {
-                            return;
-                        }
-                        add = new AddPage(this, obj);
+                        add = new AddPage(this, obj, menu1);
                         _pages.Add(add);
                     }
                     frame.Navigate(add);
