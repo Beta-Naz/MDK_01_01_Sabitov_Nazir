@@ -27,7 +27,7 @@
                     <TextBox x:Name="Name" Height="25" Margin="5"/>
                 </StackPanel>
                 <StackPanel x:Name="AddressPanel" VerticalAlignment="Top">
-                    <Label Height="25" Margin="5" Content="Адресс"/>
+                    <Label Height="25" Margin="5" Content="Адрес"/>
                     <TextBox x:Name="Address" Height="25" Margin="5"/>
                 </StackPanel>
                 <StackPanel VerticalAlignment="Top">

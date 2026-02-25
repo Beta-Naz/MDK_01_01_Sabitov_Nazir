@@ -1,8 +1,11 @@
 ﻿using ComputerClub_Сабитов.Core.DataBaseHelper;
+using ComputerClub_Сабитов.Core.Enums;
 using ComputerClub_Сабитов.Interface;
 using ComputerClub_Сабитов.Models;
 using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,37 +73,50 @@ namespace ComputerClub_Сабитов.Core.Context
             }
         }
 
-        public void Save()
+        public void Save(bool update = false)
         {
             try
             {
                 using (MySqlConnection connection = DBConnection.Connection())
                 {
-                    string quere = $@"INSERT INTO compiterclub(name, address, startTimeWork,  endTimeWork)
-                                    VALUES ({Name},{Address},{StartTimeWork},{EndTimeWork})";
-                    DBConnection.Query(quere, connection);
-                    DBConnection.CloseConnection(connection);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error text: {ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+                    string query;
+                    if (update)
+                    {
+                        query = $@"UPDATE compiterclub
+                                SET name = @name, 
+                                    address = @addres, 
+                                    startTimeWork = @start,  
+                                    endTimeWork = @end
+                                    Where id = @id";
+                    }
+                    else
+                    {
+                        query = $@"INSERT INTO `compiterclub`(`name`,`address`,`startTimeWork`,`endTimeWork`)
+                                    VALUES (@name,@addres,@start,@end)";
+                    }
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", Name);
+                        command.Parameters.AddWithValue("@addres", Address);
+                        command.Parameters.AddWithValue("@start", StartTimeWork.ToString("yyyy-MM-dd HH:mm:ss"));
+                        command.Parameters.AddWithValue("@end", EndTimeWork.ToString("yyyy-MM-dd HH:mm:ss"));
 
-        public void Update()
-        {
-            try
-            {
-                using (MySqlConnection connection = DBConnection.Connection())
-                {
-                    string quere = $@"UPDATE compiterclub
-                                SET name = {Name}, 
-                                    address = {Address}, 
-                                    startTimeWork = {StartTimeWork},  
-                                    endTimeWork = {EndTimeWork};
-                                    Where id = {Id}";
-                    DBConnection.Query(quere, connection);
+                        if (update)
+                        {
+                            command.Parameters.AddWithValue("@id", Id);
+                        }
+
+                        int result = command.ExecuteNonQuery();
+
+                        if (result > 0)
+                        {
+                            MessageBox.Show("Сохранение успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Сохранение провалилось!", "Успех", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
                     DBConnection.CloseConnection(connection);
                 }
             }

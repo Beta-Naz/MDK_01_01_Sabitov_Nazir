@@ -120,6 +120,7 @@
     <Compile Include="Core\Context\ContextPlayerComputer.cs" />
     <Compile Include="Core\DataBaseHelper\DBConnection.cs" />
     <Compile Include="Core\Enums\PageType.cs" />
+    <Compile Include="Core\Enums\RoleType.cs" />
     <Compile Include="Elements\Item.xaml.cs">
       <DependentUpon>Item.xaml</DependentUpon>
     </Compile>

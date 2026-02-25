@@ -13,7 +13,7 @@
         <Grid>
             <StackPanel x:Name="parrent">
                 <Image Width="50" Height="50"/>
-                <TextBlock x:Name="Address" Text="Пермский край, с. Кояново"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Address" Text="Пермский край, с. Кояново"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1">
@@ -35,7 +35,7 @@
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
                                x:Name="Name" Text="Igra" Padding="5"/>
                 </Grid>
-                <Grid Grid.Column="2">
+                <Grid x:Name="BtnDelete" Grid.Column="2">
                     <Button Click="Delete_Click" Background="Red" Content="Delete" Foreground="white" FontWeight="Bold"/>
                 </Grid>
             </Grid>
@@ -48,7 +48,7 @@
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
                                x:Name="StartAndEndTime" Text="12.12.2007 12:30 - 12.12.2007 17:30" Padding="5"/>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid x:Name="BtnEdit" Grid.Column="1">
                     <Button Click="Edit_Click" Background="Blue" Content="Edit" Foreground="white" FontWeight="Bold"/>
                 </Grid>
             </Grid>

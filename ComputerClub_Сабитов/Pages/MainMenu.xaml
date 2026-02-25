@@ -18,21 +18,43 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition/>
+                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
             <Grid Background="Wheat">
-                <Border Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                <Border Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" 
                         CornerRadius="30" Background="Gray">
-                    <TextBlock x:Name="Title" Padding="15" FontSize="40" Text="Компьютерные клубы" 
+                    <TextBlock x:Name="Title" Padding="10" FontSize="20" Text="Компьютерные клубы" 
                                Foreground="White" FontWeight="Bold"/>
                 </Border>
-                <Button Click="Club_Click" Content="PlayerComputer" VerticalAlignment="Center" HorizontalAlignment="Right" Height="40" Width="150" Margin="15"/>
-                <Button Click="Player_Click" Content="CompiterClub" VerticalAlignment="Center" HorizontalAlignment="Left" Height="40" Width="150" Margin="15"/>
+                <Button x:Name="BtnC" Click="Club_Click" Content="CompiterClub" HorizontalAlignment="Right" Height="40" Width="120" Margin="15"/>
+                <Button x:Name="BtnP" Click="Player_Click" Content="PlayerComputer" HorizontalAlignment="Left" Height="40" Width="120" Margin="15"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5">
+                    <TextBox TextChanged="Search_TextChanged" x:Name="Search" Height="25" Width="400"/>
+                </StackPanel>
+
             </Grid>
             <Grid Grid.Row="1">
                 <ScrollViewer HorizontalScrollBarVisibility="Hidden">
                     <StackPanel x:Name="parrent" Margin="15"/>
                 </ScrollViewer>
             </Grid>
+            <Grid Background="DarkSlateGray" Grid.Row="2">
+                <Button Click="Add_Click" Content="Add" VerticalAlignment="Center" HorizontalAlignment="Right" Height="40" Width="120" Margin="5"/>
+                <Button Click="Exit_Click" Content="Exit" VerticalAlignment="Center" Background="Red" HorizontalAlignment="Left" Height="40" Width="120" Margin="5"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="PanelRegister">
+            <Image Source="/Image/Background.png" Stretch="UniformToFill"/>
+            <Border CornerRadius="20" Background="#CC000000" Height="300" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel Margin="15">
+                    <Label Margin="25" FontSize="35" Content="Регистрация" Foreground="White" FontWeight="Bold"/>
+                    <Label  Content="Имя пользователя" Foreground="White" />
+                    <TextBox x:Name="NameUser"/>
+                    <Label  Content="Пароль пользователя" Foreground="White" />
+                    <TextBox x:Name="PasswordUser"/>
+                    <Button Click="Register_Click" Content="Войти" Margin="15"/>
+                </StackPanel>
+            </Border>
         </Grid>
     </Grid>
 </Page>

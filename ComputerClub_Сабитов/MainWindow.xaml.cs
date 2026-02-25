@@ -24,8 +24,22 @@ namespace ComputerClub_Сабитов
     public partial class MainWindow : Window
     {
         public List<object> _pages;
-        public List<object> allObject = new ContextCompiterClub().GetAll().
-            Concat(new ContextPlayerComputer().GetAll()).ToList();  
+        public List<object> AllObject(RoleType? role)
+        {
+            if(role == RoleType.Admin)
+            {
+                return new ContextCompiterClub().GetAll().Concat(new ContextPlayerComputer().GetAll()).ToList();
+            }
+            else if(role == RoleType.User)
+            {
+                return new ContextPlayerComputer().GetAll();
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -34,44 +48,28 @@ namespace ComputerClub_Сабитов
         }
         public void LoadPages(PageType type, object obj = null)
         {
+            MainMenu menu = null;
+            foreach (var page in _pages)
+            {
+                if (page is MainMenu)
+                {
+                    menu = page as MainMenu;
+                    break;
+                }
+            }
+            if (menu == null)
+            {
+                menu = new MainMenu(this);
+                _pages.Add(menu);
+            }
             switch (type)
             {
                 case PageType.mainPage:
-                    MainMenu menu = null;
-                    foreach (var page in _pages)
-                    {
-                        if(page is MainMenu)
-                        {
-                            menu = page as MainMenu;
-                        }
-                    }
-                    if(menu == null)
-                    {
-                        menu = new MainMenu(this);
-                        _pages.Add(menu);
-                    }
                     menu.OnChanged();
                     frame.Navigate(menu);
                     break;
                 case PageType.addPage:
-                    AddPage add = null;
-                    MainMenu menu1 = null;
-                    foreach (var page in _pages)
-                    {
-                        if (page is MainMenu)
-                        {
-                            add = page as AddPage;
-                        }
-                        else if (menu1 is MainMenu)
-                        {
-                            menu1 = page as MainMenu;
-                        }
-                    }
-                    if (add == null)
-                    {
-                        add = new AddPage(this, obj, menu1);
-                        _pages.Add(add);
-                    }
+                    AddPage add = new AddPage(this, obj, menu);
                     frame.Navigate(add);
                     break;
             }

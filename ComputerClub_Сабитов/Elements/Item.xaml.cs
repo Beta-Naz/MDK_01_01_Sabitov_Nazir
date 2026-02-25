@@ -36,25 +36,29 @@ namespace ComputerClub_Сабитов.Elements
                 _currentMain.parrent.Children.Remove(this);
                 return;
             }
+            if(main.Role == RoleType.User)
+            {
+                BtnDelete.Visibility = Visibility.Collapsed;
+                BtnEdit.Visibility = Visibility.Collapsed;
+            }
             _currentObject = obj;
             if(obj is ContextCompiterClub club)
             {
-                Id.Text = club.Id.ToString();
-                Name.Text = club.Name.ToString();
-                StartAndEndTime.Text = club.StartTimeWork.ToString("g") + "-" + club.EndTimeWork.ToString("g");
-                Address.Text = club.Address.ToString();
+                Id.Text = "Айди: " + club.Id.ToString();
+                Name.Text = "Наименование: " + club.Name.ToString();
+                StartAndEndTime.Text = "Дата начала и конца работы: " + club.StartTimeWork.ToString("g") + "-" + club.EndTimeWork.ToString("g");
+                Address.Text = "Адрес: " + club.Address.ToString();
             }
             else if(obj is ContextPlayerComputer player)
             {
-                Id.Text = player.Id.ToString();
-                Name.Text = player.FullName.ToString();
-                StartAndEndTime.Text = player.StartTimeRent.ToString("g") + "-" + player.EndTimeRent.ToString("g");
+                Id.Text = "Айди: " + player.Id.ToString();
+                Name.Text = "Полное имя: " + player.FullName.ToString();
+                StartAndEndTime.Text = "Дата начала и конца аренды: " + player.StartTimeRent.ToString("g") + "-" + player.EndTimeRent.ToString("g");
                 parrent.Children.Remove(Address);
             }
         }
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            _currentMain.parrent.Children.Remove(this);
             if (_currentObject is ContextCompiterClub club)
             {
                 club.Delete();

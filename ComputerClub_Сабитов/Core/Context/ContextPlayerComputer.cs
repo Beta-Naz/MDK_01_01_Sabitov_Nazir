@@ -3,7 +3,9 @@ using ComputerClub_Сабитов.Interface;
 using ComputerClub_Сабитов.Models;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Windows;
 
 namespace ComputerClub_Сабитов.Core.Context
@@ -11,7 +13,7 @@ namespace ComputerClub_Сабитов.Core.Context
     public class ContextPlayerComputer : PlayerComputer, IContext
     {
         public ContextPlayerComputer() { }
-        public ContextPlayerComputer(int id, DateTime startTimeRent, DateTime endTimeRent, string fullName) : 
+        public ContextPlayerComputer(int id, DateTime startTimeRent, DateTime endTimeRent, string fullName) :
             base(id, startTimeRent, endTimeRent, fullName)
         {
         }
@@ -35,8 +37,7 @@ namespace ComputerClub_Сабитов.Core.Context
         }
         public List<object> GetAll()
         {
-            try
-            {
+
                 List<object> allObject = new List<object>();
                 using (MySqlConnection connection = DBConnection.Connection())
                 {
@@ -58,49 +59,52 @@ namespace ComputerClub_Сабитов.Core.Context
                     DBConnection.CloseConnection(connection);
                 }
                 return allObject;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error text: {ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return new List<object>();
-            }
+            
         }
-        public void Save()
+        public void Save(bool update = false)
         {
-            try
-            {
+
                 using (MySqlConnection connection = DBConnection.Connection())
                 {
-                    string quere = $@"INSERT INTO playercomputer(startTimeRent, endTimeRent, fullName)
-                                    VALUES ({StartTimeRent},{EndTimeRent}, {FullName}),";
-                    DBConnection.Query(quere, connection);
+                    string query;
+                    if (update)
+                    {
+                        query = $@"UPDATE playercomputer
+                                SET startTimeRent = @start, 
+                                   endTimeRent = @end, 
+                                   fullName = @name
+                                   Where id = @id";
+                    }
+                    else
+                    {
+                        query = $@"INSERT INTO playercomputer(startTimeRent,endTimeRent,fullName)
+                                    VALUES (@start,@end,@name)";
+                    }
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@start", StartTimeRent);
+                        command.Parameters.AddWithValue("@end", EndTimeRent);
+                        command.Parameters.AddWithValue("@name", FullName);
+
+                        if (update)
+                        {
+                            command.Parameters.AddWithValue("@id", Id);
+                        }
+
+                        int result = command.ExecuteNonQuery();
+
+                        if (result > 0)
+                        {
+                            MessageBox.Show("Сохранение успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Сохранение провалилось!", "Успех", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
                     DBConnection.CloseConnection(connection);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error text: {ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        public void Update()
-        {
-            try
-            {
-                using (MySqlConnection connection = DBConnection.Connection())
-                {
-                    string quere = $@"UPDATE playercomputer
-                                SET startTimeRent = {StartTimeRent}, 
-                                   endTimeRent = {EndTimeRent}, 
-                                   fullName = {FullName};
-                                   Where id = {Id}";
-                    DBConnection.Query(quere, connection);
-                    DBConnection.CloseConnection(connection);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error text: {ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
         }
     }
 }

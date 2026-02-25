@@ -9,8 +9,7 @@ namespace ComputerClub_Сабитов.Interface
     public interface IContext
     {
         List<object> GetAll();
-        void Save();
-        void Update();
+        void Save(bool update = false);
         void Delete();
     }
 }
