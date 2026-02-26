@@ -7,7 +7,38 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel  VerticalAlignment="Center"
+              HorizontalAlignment="Left" 
+                   Orientation="Horizontal">
+                <Button
+          x:Name="BtnClub"
+          Click="SelectClub_Click"
+          Height="25"
+          Margin="10"
+          Width="100"
+          Background="#FF46FD00"
+          BorderBrush="#FF46FD00"
+          Foreground="White"
+          Content="Клубы"/>
+                <Button
+          x:Name="BtnUser"
+          Click="SelectUser_Click"
+          Height="25"
+          Margin="10"
+          Width="100"
+          Background="#FF46FD00"
+          BorderBrush="#FF46FD00"
+          Foreground="White"
+          Content="Пользователи"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>
+        </Grid>
     </Grid>
 </Window>
