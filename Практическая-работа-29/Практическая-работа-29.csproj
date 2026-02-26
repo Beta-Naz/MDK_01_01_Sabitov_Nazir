@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Classes\Common\" />
     <Folder Include="Images\" />
-    <Folder Include="Models\" />
     <Folder Include="Clubs\" />
     <Folder Include="Pages\Clubs\Elements\" />
     <Folder Include="Pages\Clubs\" />
