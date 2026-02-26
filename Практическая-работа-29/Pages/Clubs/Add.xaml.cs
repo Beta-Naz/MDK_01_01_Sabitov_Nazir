@@ -75,7 +75,7 @@ namespace Практическая_работа_29.Pages.Clubs
             }
             if (_currentClub == null)
             {
-                _currentClub = new Club()
+                _currentClub = new Club() 
                 {
                     Name = Name.Text,
                     Address = Address.Text,
