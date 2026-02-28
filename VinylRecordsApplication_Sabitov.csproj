@@ -94,5 +94,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resourse\Images\ic_Manufacture.png" />
+    <Resource Include="Resourse\Images\ic_State.png" />
+    <Resource Include="Resourse\Images\ic_supply.png" />
+    <Resource Include="Resourse\Images\ic_VinilRecord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resourse\Data\BD.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
