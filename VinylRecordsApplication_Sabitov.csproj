@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\DBConnection.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,13 +96,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resourse\Images\ic_Manufacture.png" />
-    <Resource Include="Resourse\Images\ic_State.png" />
-    <Resource Include="Resourse\Images\ic_supply.png" />
-    <Resource Include="Resourse\Images\ic_VinilRecord.png" />
+    <Resource Include="Resourses\Images\ic_Manufacture.png" />
+    <Resource Include="Resourses\Images\ic_State.png" />
+    <Resource Include="Resourses\Images\ic_supply.png" />
+    <Resource Include="Resourses\Images\ic_VinilRecord.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resourse\Data\BD.sql" />
+    <Content Include="Resourses\Data\BD.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
