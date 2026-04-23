@@ -3,20 +3,20 @@
     public class User
     {
         public string? Id { get; set; }
-        public string? LastName { get; set; }
-        public string? FirstName { get; set; }
+        public string? Lastname { get; set; }
+        public string? Firstname { get; set; }
         public string? Surname { get; set; }
         public byte[]? Photo {  get; set; }
-        public User(string lastName, string firstName, string surname, byte[] photo)
+        public User(string lastname, string firstname, string surname, byte[] photo)
         {
-            LastName = lastName;
-            FirstName = firstName;
+            Lastname = lastname;
+            Firstname = firstname;
             Surname = surname;
             Photo = photo;
         }
         public string ToFIO()
         {
-            return $"{LastName} {FirstName} {Surname}";
+            return $"{Lastname} {Firstname} {Surname}";
         }
     }
 }

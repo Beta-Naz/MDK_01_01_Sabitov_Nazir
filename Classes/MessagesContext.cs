@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChatStudents_Sabitov.Classes.Common;
+﻿using ChatStudents_Sabitov.Classes.Common;
 using ChatStudents_Sabitov.Models;
 using Microsoft.EntityFrameworkCore;
 
