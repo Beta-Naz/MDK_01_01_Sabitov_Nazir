@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Pages\" />
     <Folder Include="Images\" />
-    <Folder Include="Classes\" />
   </ItemGroup>
 
 </Project>
