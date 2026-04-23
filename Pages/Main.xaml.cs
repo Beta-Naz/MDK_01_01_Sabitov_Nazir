@@ -36,20 +36,38 @@ namespace ChatStudents_Sabitov.Pages
             Timer.Tick += Timer_Tick;
             Timer.Start();
         }
-
-        private void Timer_Tick1(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         public void LoadUsers()
         {
+            if (MainWindow.Instance == null || MainWindow.Instance.LoginUser == null)
+            {
+                return;
+            }
             ParentUsers.Children.Clear();
             foreach (var user in UsersContext.Users)
             {
-                if(user.Id != MainWindow.Instance?.LoginUser?.Id)
+                if(user.Id != MainWindow.Instance.LoginUser.Id)
                 {
-                    ParentUsers.Children.Add(new Items.ItUser(user, this));
+                    Message messages =
+                        MessagesContext.Messages.Where(x =>
+                        (x.UserFrom == MainWindow.Instance.LoginUser.Id &&
+                        x.UserTo == user.Id) ||
+                        (x.UserTo == MainWindow.Instance.LoginUser.Id &&
+                        x.UserFrom == user.Id)).OrderByDescending(x => x.TimeSending).First();
+                    ParentUsers.Children.Add(new Items.ItUser(user, this, messages.ContentMessage));
+                }
+            }
+        }
+        public void IsOnlineUser()
+        {
+            foreach (var user in UsersContext.Users)
+            {
+                if (user.Id != MainWindow.Instance?.LoginUser?.Id)
+                {
+                    if(DateTime.Now - user.LastLogin > TimeSpan.FromMinutes(5))
+                    {
+                        LoadUsers();
+                        break;
+                    }
                 }
             }
         }
@@ -65,7 +83,7 @@ namespace ChatStudents_Sabitov.Pages
                 (x.UserFrom == MainWindow.Instance.LoginUser.Id &&
                 x.UserTo == SelectUser.Id) ||
                 (x.UserTo == MainWindow.Instance.LoginUser.Id &&
-                x.UserFrom == SelectUser.Id)).ToList();
+                x.UserFrom == SelectUser.Id)).OrderBy(x => x.TimeSending).ToList();
             foreach (var message in messages)
             {
                 ParentMessages.Children.Add(new Items.ItMessage(message, UsersContext.Users.Where(x => x.Id == message.UserFrom).First()));
@@ -74,6 +92,13 @@ namespace ChatStudents_Sabitov.Pages
         private void Timer_Tick(object sender, System.EventArgs e)
         {
             UpdateSelectUser();
+            if (MainWindow.Instance != null && MainWindow.Instance.LoginUser != null)
+            {
+                UsersContext.Users.Where(x => x.Firstname == MainWindow.Instance.LoginUser.Firstname &&
+                                   x.Lastname == MainWindow.Instance.LoginUser.Lastname &&
+                                   x.Surname == MainWindow.Instance.LoginUser.Surname).First().LastLogin = DateTime.Now;
+                UsersContext.SaveChanges();
+            }
         }
         public void UpdateSelectUser()
         {

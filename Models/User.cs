@@ -7,12 +7,14 @@
         public string? Firstname { get; set; }
         public string? Surname { get; set; }
         public byte[]? Photo {  get; set; }
+        public DateTime? LastLogin {  get; set; }
         public User(string lastname, string firstname, string surname, byte[] photo)
         {
             Lastname = lastname;
             Firstname = firstname;
             Surname = surname;
             Photo = photo;
+            LastLogin = DateTime.Now;
         }
         public string ToFIO()
         {

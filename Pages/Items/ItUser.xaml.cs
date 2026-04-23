@@ -11,7 +11,7 @@ namespace ChatStudents_Sabitov.Pages.Items
     {
         private User _currentUser;
         private Main _currentMain;
-        public ItUser(User user, Main main)
+        public ItUser(User user, Main main, string lastMessage = "")
         {
             InitializeComponent();
             _currentUser = user;
@@ -20,7 +20,22 @@ namespace ChatStudents_Sabitov.Pages.Items
             {
                 imgUser.Source = BitmapFromArrayByte.LoadImage(_currentUser.Photo);
             }
+            
             FIO.Content = user.ToFIO();
+            imageOnline.Visibility = DateTime.Now - user.LastLogin < 
+                TimeSpan.FromMinutes(5) ? System.Windows.Visibility.Visible : 
+                System.Windows.Visibility.Collapsed;
+            if (!string.IsNullOrEmpty(lastMessage))
+            {
+                if(lastMessage.Length < 20)
+                {
+                    LastMessage.Content = lastMessage;
+                }
+                else
+                {
+                    LastMessage.Content = lastMessage[..20] + "...";
+                }
+            }
         }
 
         private void SelectChat(object sender, System.Windows.Input.MouseButtonEventArgs e)

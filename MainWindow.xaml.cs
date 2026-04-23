@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ChatStudents_Sabitov.Classes;
 using ChatStudents_Sabitov.Models;
 
 namespace ChatStudents_Sabitov
@@ -20,6 +21,17 @@ namespace ChatStudents_Sabitov
         public void OpenPages(Page page)
         {
             frame.Navigate(page);
+        }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (LoginUser != null)
+            {
+                UsersContext usersContext = new UsersContext();
+                usersContext.Users.Where(x => x.Firstname == LoginUser.Firstname &&
+                                   x.Lastname == LoginUser.Lastname &&
+                                   x.Surname == LoginUser.Surname).First().LastLogin = DateTime.Now;
+                usersContext.SaveChanges();
+            }
         }
     }
 }

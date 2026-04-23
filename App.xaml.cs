@@ -10,5 +10,4 @@ namespace ChatStudents_Sabitov
     public partial class App : Application
     {
     }
-
 }
