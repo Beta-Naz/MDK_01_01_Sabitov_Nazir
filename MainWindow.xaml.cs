@@ -9,7 +9,7 @@ namespace ChatStudents_Sabitov
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow Instance { get; private set; }
+        public static MainWindow? Instance { get; private set; }
         public User? LoginUser = null;
         public MainWindow()
         {

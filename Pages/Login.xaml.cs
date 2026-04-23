@@ -44,6 +44,10 @@ namespace ChatStudents_Sabitov.Pages
         }
         private void Continue(object sender, RoutedEventArgs e)
         {
+            if(MainWindow.Instance == null)
+            {
+                return;
+            }
             foreach (var obj in _textBoxKeys)
             {
                 if (!CheckEmpty(obj.Value[0], obj.Key.Text))

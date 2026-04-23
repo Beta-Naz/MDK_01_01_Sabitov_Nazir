@@ -18,13 +18,13 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Background="LightSkyBlue">
                 <StackPanel x:Name="ParentUsers">
                     
                 </StackPanel>
             </ScrollViewer>
             <Grid Grid.Column="1" x:Name="Chat" Visibility="Hidden">
-                <Grid Height="50" VerticalAlignment="Top">
+                <Grid  Height="50" VerticalAlignment="Top" Background="LightSkyBlue">
                     <Image x:Name="imgUser" Margin="10,0,0,0" Width="30" Height="30" HorizontalAlignment="Left" Source="/Images/ic-user.png">
                         <Image.Clip>
                             <RectangleGeometry RadiusX="15" RadiusY="15" Rect="0,0,30,30"/>
