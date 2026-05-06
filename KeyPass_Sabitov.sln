@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyPass_Sabitov", "KeyPass_Sabitov\KeyPass_Sabitov.csproj", "{9C98623B-5D1D-40DE-B7B0-AA070C909B4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C98623B-5D1D-40DE-B7B0-AA070C909B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C98623B-5D1D-40DE-B7B0-AA070C909B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C98623B-5D1D-40DE-B7B0-AA070C909B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C98623B-5D1D-40DE-B7B0-AA070C909B4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59C7B384-FC7D-45CE-9CC0-86185BC1A0A6}
+	EndGlobalSection
+EndGlobal
