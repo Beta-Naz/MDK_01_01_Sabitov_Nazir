@@ -41,6 +41,18 @@ namespace ChatStudents_Sabitov.Pages.Items
         private void SelectChat(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentMain.SelectUser = _currentUser;
+            _currentMain.SelectItUser = this;
+        }
+        public void UpdateLastMessage(string lastMessage)
+        {
+            if (lastMessage.Length < 20)
+            {
+                LastMessage.Content = lastMessage;
+            }
+            else
+            {
+                LastMessage.Content = lastMessage[..20] + "...";
+            }
         }
     }
 }

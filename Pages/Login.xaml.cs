@@ -24,7 +24,7 @@ namespace ChatStudents_Sabitov.Pages
         }
         private void Serialize()
         {
-            _textBoxKeys[Lastname] = new string[] {"^[А-ЯёЁ][а-яА-ЯёЁ]*$","Укажите фамилию"};
+            _textBoxKeys[Lastname] = new string[] { "^[А-ЯёЁ][а-яА-ЯёЁ]*$", "Укажите фамилию" };
             _textBoxKeys[Firstname] = new string[] { "^[А-ЯёЁ][а-яА-ЯёЁ]*$", "Укажите имя" };
             _textBoxKeys[Surname] = new string[] { "^[А-ЯёЁ][а-яА-ЯёЁ]*$", "Укажите отчество" };
         }
@@ -44,7 +44,7 @@ namespace ChatStudents_Sabitov.Pages
         }
         private void Continue(object sender, RoutedEventArgs e)
         {
-            if(MainWindow.Instance == null)
+            if (MainWindow.Instance == null)
             {
                 return;
             }
@@ -64,7 +64,10 @@ namespace ChatStudents_Sabitov.Pages
             if (FirstUser() != null)
             {
                 MainWindow.Instance.LoginUser = FirstUser();
-                MainWindow.Instance.LoginUser.Photo = File.ReadAllBytes(SrcUserImage);
+                if (MainWindow.Instance.LoginUser != null)
+                {
+                    MainWindow.Instance.LoginUser.Photo = File.ReadAllBytes(SrcUserImage);
+                }
             }
             else
             {
@@ -75,11 +78,23 @@ namespace ChatStudents_Sabitov.Pages
             _usersContext.SaveChanges();
             MainWindow.Instance.OpenPages(new Pages.Main());
         }
-        private User FirstUser()
+        private User? FirstUser()
         {
-            return _usersContext.Users.Where(x => x.Firstname == Firstname.Text &&
-                                   x.Lastname == Lastname.Text &&
-                                   x.Surname == Surname.Text).First();
+            try
+            {
+                if (_usersContext.Users == null || _usersContext.Users.ToList().Count == 0)
+                {
+                    return null;
+                }
+                return _usersContext.Users.Where(x => x.Firstname == Firstname.Text &&
+                                       x.Lastname == Lastname.Text &&
+                                       x.Surname == Surname.Text).First();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+                return null;
+            }
         }
         public bool CheckEmpty(string Pattern, string Input)
         {

@@ -1,4 +1,5 @@
-﻿using ChatStudents_Sabitov.Models;
+﻿using ChatStudents_Sabitov.Classes.Common;
+using ChatStudents_Sabitov.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatStudents_Sabitov.Classes
@@ -11,7 +12,7 @@ namespace ChatStudents_Sabitov.Classes
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=users.db");
+            optionsBuilder.UseSqlServer(Config.config);
         }
     }
 }

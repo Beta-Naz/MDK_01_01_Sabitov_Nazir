@@ -5,6 +5,7 @@ using ChatStudents_Sabitov.Classes.Common;
 using ChatStudents_Sabitov.Models;
 using Microsoft.Windows.Themes;
 using System.Windows.Input;
+using ChatStudents_Sabitov.Pages.Items;
 
 namespace ChatStudents_Sabitov.Pages
 {
@@ -26,6 +27,7 @@ namespace ChatStudents_Sabitov.Pages
                 UpdateSelectUser();
             }
         }
+        public ItUser SelectItUser;
         public UsersContext UsersContext = new();
         public MessagesContext MessagesContext = new();
         public DispatcherTimer Timer = new() { Interval =new System.TimeSpan(0,0,3) };
@@ -47,13 +49,25 @@ namespace ChatStudents_Sabitov.Pages
             {
                 if(user.Id != MainWindow.Instance.LoginUser.Id)
                 {
-                    Message messages =
-                        MessagesContext.Messages.Where(x =>
+                    Message? message = null;
+                    if (MessagesContext.Messages != null && MessagesContext.Messages.ToList().Count != 0)
+                    {
+                        message = MessagesContext.Messages.Where(x =>
                         (x.UserFrom == MainWindow.Instance.LoginUser.Id &&
                         x.UserTo == user.Id) ||
                         (x.UserTo == MainWindow.Instance.LoginUser.Id &&
                         x.UserFrom == user.Id)).OrderByDescending(x => x.TimeSending).First();
-                    ParentUsers.Children.Add(new Items.ItUser(user, this, messages.ContentMessage));
+                    }
+                    ItUser itUser;
+                    if (message != null)
+                    {
+                        itUser = new Items.ItUser(user, this, message.ContentMessage);
+                    }
+                    else
+                    {
+                        itUser = new Items.ItUser(user, this);
+                    }
+                    ParentUsers.Children.Add(itUser);
                 }
             }
         }
@@ -87,6 +101,11 @@ namespace ChatStudents_Sabitov.Pages
             foreach (var message in messages)
             {
                 ParentMessages.Children.Add(new Items.ItMessage(message, UsersContext.Users.Where(x => x.Id == message.UserFrom).First()));
+                IsOnlineUser();
+                if(SelectItUser != null)
+                {
+                    SelectItUser.UpdateLastMessage(message.ContentMessage);
+                }
             }
         }
         private void Timer_Tick(object sender, System.EventArgs e)
