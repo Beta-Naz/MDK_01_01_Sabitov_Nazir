@@ -6,6 +6,7 @@ using ChatStudents_Sabitov.Models;
 using Microsoft.Windows.Themes;
 using System.Windows.Input;
 using ChatStudents_Sabitov.Pages.Items;
+using System.Windows;
 
 namespace ChatStudents_Sabitov.Pages
 {
@@ -52,11 +53,17 @@ namespace ChatStudents_Sabitov.Pages
                     Message? message = null;
                     if (MessagesContext.Messages != null && MessagesContext.Messages.ToList().Count != 0)
                     {
-                        message = MessagesContext.Messages.Where(x =>
-                        (x.UserFrom == MainWindow.Instance.LoginUser.Id &&
-                        x.UserTo == user.Id) ||
-                        (x.UserTo == MainWindow.Instance.LoginUser.Id &&
-                        x.UserFrom == user.Id)).OrderByDescending(x => x.TimeSending).First();
+                        try
+                        {
+                            message = MessagesContext.Messages.Where(x =>
+                            (x.UserFrom == MainWindow.Instance.LoginUser.Id &&
+                            x.UserTo == user.Id) ||
+                            (x.UserTo == MainWindow.Instance.LoginUser.Id &&
+                            x.UserFrom == user.Id)).OrderByDescending(x => x.TimeSending).First();
+                        }
+                        catch
+                        {
+                        }
                     }
                     ItUser itUser;
                     if (message != null)

@@ -17,6 +17,7 @@ namespace ChatStudents_Sabitov.Pages
         public string SrcUserImage = "";
         private Dictionary<System.Windows.Controls.TextBox, string[]> _textBoxKeys = new();
         private UsersContext _usersContext = new();
+        private bool IsLoad = false;
         public Login()
         {
             InitializeComponent();
@@ -71,9 +72,10 @@ namespace ChatStudents_Sabitov.Pages
             }
             else
             {
-                _usersContext.Users.Add(new User(
-                    Lastname.Text, Firstname.Text, Surname.Text, File.ReadAllBytes(SrcUserImage)));
-                MainWindow.Instance.LoginUser = FirstUser();
+                User newUser = new User(
+                    Lastname.Text, Firstname.Text, Surname.Text, File.ReadAllBytes(SrcUserImage));
+                _usersContext.Users.Add(newUser);
+                MainWindow.Instance.LoginUser = newUser;
             }
             _usersContext.SaveChanges();
             MainWindow.Instance.OpenPages(new Pages.Main());
@@ -90,9 +92,8 @@ namespace ChatStudents_Sabitov.Pages
                                        x.Lastname == Lastname.Text &&
                                        x.Surname == Surname.Text).First();
             }
-            catch (Exception ex)
+            catch
             {
-                System.Windows.MessageBox.Show(ex.Message);
                 return null;
             }
         }
