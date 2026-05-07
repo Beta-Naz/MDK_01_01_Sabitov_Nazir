@@ -38,5 +38,29 @@ namespace KeyPass_Sabitov.Controllers
                 return StatusCode(501, ex.Message);
             }
         }
+        /// <summary>
+        /// Мктод для создания пользователя
+        /// </summary>
+        /// <param name="newUser">Данные нового пользователя</param>
+        /// <returns></returns>
+        [Route("create")]
+        [HttpPost]
+        public ActionResult Create([FromBody] User newUser)
+        {
+            try
+            {
+                if(newUser == null)
+                {
+                    return StatusCode(401);
+                }
+                _dataBaseManager.Users.Add(newUser);
+                _dataBaseManager.SaveChanges();
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(501, ex.Message);
+            }
+        }
     }
 }

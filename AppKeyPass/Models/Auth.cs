@@ -1,6 +1,6 @@
 ﻿namespace AppKeyPass.Models
 {
-    class Auth
+    public class Auth
     {
         public string Token { get; set; }
     }
