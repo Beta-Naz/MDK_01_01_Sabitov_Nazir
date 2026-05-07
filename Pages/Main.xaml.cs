@@ -101,7 +101,6 @@ namespace ChatStudents_Sabitov.Pages
             foreach (var message in messages)
             {
                 ParentMessages.Children.Add(new Items.ItMessage(message, UsersContext.Users.Where(x => x.Id == message.UserFrom).First()));
-                IsOnlineUser();
                 if(SelectItUser != null)
                 {
                     SelectItUser.UpdateLastMessage(message.ContentMessage);
@@ -117,6 +116,7 @@ namespace ChatStudents_Sabitov.Pages
                                    x.Lastname == MainWindow.Instance.LoginUser.Lastname &&
                                    x.Surname == MainWindow.Instance.LoginUser.Surname).First().LastLogin = DateTime.Now;
                 UsersContext.SaveChanges();
+                IsOnlineUser();
             }
         }
         public void UpdateSelectUser()
