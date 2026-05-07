@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using AppKeyPass.Context;
 using AppKeyPass.Models;
 
 namespace AppKeyPass.Pages
@@ -42,7 +43,7 @@ namespace AppKeyPass.Pages
                     Login = tbLogin.Text,
                     Url = tbUrl.Text,
                 };
-                StorageContext.Add(storage);
+                StorageContext.Add(newStorage);
             }
             else
             {

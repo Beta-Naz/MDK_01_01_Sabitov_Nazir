@@ -22,7 +22,7 @@ namespace KeyPass_Sabitov.Controllers
             try
             {
                 User? AuthUser = _dataBaseManager.Users
-                    .Where(x => x.Login == login && x.Password == password)
+                    .Where(x => x.Login == login && x.Password == BCrypt.Net.BCrypt.HashPassword(password))
                     .FirstOrDefault();
                 if(AuthUser == null)
                 {
@@ -53,6 +53,7 @@ namespace KeyPass_Sabitov.Controllers
                 {
                     return StatusCode(401);
                 }
+                newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
                 _dataBaseManager.Users.Add(newUser);
                 _dataBaseManager.SaveChanges();
                 return StatusCode(200);
